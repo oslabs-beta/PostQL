@@ -1,0 +1,37 @@
+@import url('https://fonts.googleapis.com/css?family=Nunito|Rubik&display=swap');
+
+.logo {
+    height: 162px;
+    width: 244px;
+  }
+
+$nunito-font: 'Nunito', sans-serif;
+$rubik-font: 'Rubik', sans-serif;
+$font-stack: $rubik-font, $nunito-font, Helvetica, sans-serif;
+$primary-color:darken(gray, 25);
+  
+.app {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 120vh;
+  }
+
+body {
+font: 100% $font-stack;
+background-color: $primary-color;
+}
+
+button {
+background-color: #667;
+color: white;
+border-radius: 6px;
+padding: 0.6rem 1.2rem;
+width: 200px;
+font-size: 1.2rem;
+margin: 0.5rem;
+cursor: pointer;
+border: none;
+}

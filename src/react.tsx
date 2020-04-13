@@ -1,8 +1,7 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
+import App from './client/components/App';
 
-const Index = () => {
-    return <div>Hello PostQL</div>;
-}
 
-ReactDOM.render(<Index />, document.getElementById('app'));
+
+ReactDOM.render(<App />, document.getElementById('app'));
