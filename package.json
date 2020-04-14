@@ -1,16 +1,15 @@
 {
-  "name": "react-kickstart",
+  "name": "postql",
   "version": "1.0.0",
   "description": "A lightweight and portable solution for full-stack React applications.",
   "main": "index.js",
   "scripts": {
-    "start": "cross-env NODE_ENV=production webpack && cross-env NODE_ENV=production nodemon server/index.js --exec babel-node",
     "dev": "cross-env NODE_ENV=development concurrently \"nodemon server/index.ts --exec babel-node --extensions \".ts\"\" \"webpack-dev-server\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "author": "Jason Heinowitz",
-  "license": "ISC",
+  "author": "David Zhang, Mario D'Andreas, Jason Heinowitz, Lisa Han",
+  "license": "MIT",
   "dependencies": {
     "@material-ui/core": "^4.9.10",
     "body-parser": "^1.19.0",
