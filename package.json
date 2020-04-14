@@ -22,6 +22,7 @@
     "express": "^4.17.1",
     "file-loader": "^6.0.0",
     "graphql-playground-react": "^1.7.22",
+    "@material-ui/core": "^4.9.10",
     "react": "^16.13.0",
     "react-dom": "^16.13.0",
     "react-redux": "^7.2.0",
