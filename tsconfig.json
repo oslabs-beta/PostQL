@@ -1,5 +1,19 @@
 {
-    "compilerOptions": {
-        "jsx": "react"
-    }
+  "compilerOptions": {
+    "jsx": "react",
+    "module": "commonjs",
+    "noImplicitAny": false,
+    "outDir": "./build/",
+    "removeComments": true,
+    "sourceMap": true,
+    "target": "ESNext",
+    "esModuleInterop": true
+  },
+  "include": [
+    "./src/**/**/*", "types"
+  ],
+  "typeRoots": [
+    "../node_modules/@types",
+    "../@types"
+]
 }

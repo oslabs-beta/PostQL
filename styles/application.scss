@@ -1,0 +1,16 @@
+// some google fonts
+@import url('https://fonts.googleapis.com/css?family=Nunito|Rubik&display=swap');
+
+$nunito-font: 'Nunito', sans-serif;
+$rubik-font: 'Rubik', sans-serif;
+$font-stack: $rubik-font, $nunito-font, Helvetica, sans-serif;
+$primary-color:darken(gray, 25);
+
+$light-color: gray;
+body {
+  font: 100% $font-stack;
+  color: $primary-color;
+}
+
+
+ 
