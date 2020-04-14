@@ -12,6 +12,8 @@ app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+app.use('/image', express.static(path.join(__dirname, '../client/src/image')));
+
 // serve bundle.js in prod for every url
 if (process.env.NODE_ENV === 'production') {
   // statically serve everything in the build folder on the route '/build'

@@ -12,6 +12,7 @@
   "author": "Jason Heinowitz",
   "license": "ISC",
   "dependencies": {
+    "@material-ui/core": "^4.9.10",
     "body-parser": "^1.19.0",
     "concurrently": "^5.1.0",
     "cookie-parser": "^1.4.5",

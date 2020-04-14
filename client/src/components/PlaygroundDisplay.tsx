@@ -36,6 +36,9 @@ const playgroundSettings = {
 
 const PlaygroundDisplay: FC = () => (
   <Provider store={store}>
+
+    <img className="logo" src="/image/title.png" />
+
     <Playground
       endpoint="https://rickandmortyapi.com/graphql"
       subscriptionEndpoint="https://rickandmortyapi.com/graphql"

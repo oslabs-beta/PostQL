@@ -13,6 +13,9 @@ module.exports = {
   },
   devtool: 'source-map',
   devServer: {
+    proxy: {
+      '/image': 'http://localhost:5000'
+    },
     public: 'localhost:8080',
     host: '0.0.0.0',
     port: 8080,
