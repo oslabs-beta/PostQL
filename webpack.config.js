@@ -1,85 +1,62 @@
-const path = require('path');
 const webpack = require('webpack');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-  entry: {
-    app: ['./src/client/index.tsx', 'webpack-hot-middleware/client'],
-    vendor: ['react', 'react-dom']
-  },
+  entry: ['./client/inc/polyfills.js', './client/src/index.tsx'],
   output: {
-    path: path.resolve(__dirname, 'build'),
-    filename: 'bundle.js'
+    path: __dirname,
+    filename: './build/bundle.js',
+    publicPath: '/',
   },
-  mode: process.NODE_ENV,
-  devtool: 'source-map',
+  mode: process.env.NODE_ENV,
   resolve: {
-    extensions: ['.mjs','.ts', '.tsx', '.js', '.jsx']
+    extensions: ['.ts', '.tsx', '.js', '.jsx', '.mjs'],
   },
+  devtool: 'source-map',
+  devServer: {
+    proxy: {
+      '/image': 'http://localhost:5000'
+    },
+    public: 'localhost:8080',
+    host: '0.0.0.0',
+    port: 8080,
+    historyApiFallback: true,
+  },
+  plugins: [
+    new webpack.HotModuleReplacementPlugin()
+  ],
   module: {
     rules: [
       {
-        test: /\.ts(x?)$/,
+        test: /\.mjs?$/,
+        type: 'javascript/auto',
+      },
+      {
+        test: /\.tsx?$/,
         exclude: /node_modules/,
-        use:
+        use: [
           {
             loader: 'ts-loader',
-            options: {
-              compilerOptions: {
-                sourceMap: !(process.NODE_ENV === 'production')
-              }
-            }
-          }
+          },
+        ],
       },
       {
-        enforce: 'pre',
-        test: /\.js$/,
-        loader: 'source-map-loader'
-      },
-      {
-        test: /\.(js|jsx)$/,
+        test: /.jsx?$/,
         exclude: /node_modules/,
         use: {
           loader: 'babel-loader',
           options: {
-            presets: ['@babel/preset-env', '@babel/preset-react']
-          }
-        }
+            presets: ['@babel/preset-env', '@babel/preset-react'],
+          },
+        },
       },
       {
-        test: /\.s[ac]ss$/i,
-        exclude: /(node_modules)/,
-        use: ['style-loader', 'css-loader', 'sass-loader']
-      },
-      {
-        // for css files & typescript interactions
-        test: /\.css$/i,
-        use: [
-          'style-loader',
-          '@teamsupercell/typings-for-css-modules-loader',
-          {
-            loader: 'css-loader',
-            options: { modules: true }
-          }
-        ]
+        test: /.((s(a|c))|c)ss$/,
+        use: ['style-loader', 'css-loader', 'sass-loader'],
       },
       {
         test: /\.(jpe?g|png|gif|svg)$/i,
         loader: 'file-loader?name=/public/icons/[name].[ext]'
       }
-    ]
+    ],
   },
-  plugins: [
-    new HtmlWebpackPlugin({ template: path.resolve(__dirname, 'index.html') }),
-    new webpack.HotModuleReplacementPlugin()
-  ],
-  devServer: {
-    publicPath: '/build/',
-    port: 9090,
-    proxy: {
-      '/client': 'http://localhost:3000'
-    },
-    hot: true,
-    historyApiFallback: true
-  }
 };
