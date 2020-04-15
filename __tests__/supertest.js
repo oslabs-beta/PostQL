@@ -62,7 +62,7 @@ describe('miscellaneous tasks', () => {
   });
 });
 
-describe('can login successfully', () => {
+describe('can log in successfully', () => {
   const request = supertest(app);
 
   it('recieves a 412 when username is not supplied', (done) => {
@@ -160,7 +160,7 @@ describe('can register successfully', () => {
     request
       .post('/api/auth/register')
       .send({
-        username: 'usernameinuse',
+        username: 'testuser',
         password: 'newpassword',
         email: 'newuser@email.com',
         type: 'register',
@@ -271,7 +271,7 @@ describe('can logout successfully', () => {
     expect(1).toEqual(2);
   });
 
-  it('returns a 205 if logout is requested while not logged in', (done) => {
+  it('recieves a 205 if logout is requested while not logged in', (done) => {
     expect(1).toEqual(2);
   });
 });
