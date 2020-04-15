@@ -156,13 +156,13 @@ describe('can log in successfully', () => {
 describe('can register successfully', () => {
   const request = supertest(app);
 
-  it('recives a 409 when username is in use', (done) => {
+  it('recieves a 409 when username is in use', (done) => {
     request
       .post('/api/auth/register')
       .send({
         username: 'testuser',
-        password: 'newpassword',
-        email: 'newuser@email.com',
+        password: 'password',
+        email: 'testuser@email.com',
         type: 'register',
       })
       .set('Content-Type', 'application/json')
@@ -178,9 +178,9 @@ describe('can register successfully', () => {
     request
       .post('/api/auth/register')
       .send({
-        username: 'newuser2',
-        password: 'newpassword',
-        email: 'emailinuse@email.com',
+        username: 'testuser_invalid',
+        password: 'password',
+        email: 'testuser@email.com',
         type: 'register',
       })
       .set('Content-Type', 'application/json')

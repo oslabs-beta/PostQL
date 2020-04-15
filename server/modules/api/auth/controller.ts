@@ -6,6 +6,7 @@ interface AuthController {
   doesUsernameExist(req: Request, res: Response, next): any;
   checkLogin(req: Request, res: Response, next: any): any;
   createUser(req: Request, res: Response, next: any): any;
+  doesEmailExist(req: Request, res: Response, next: any): any;
 }
 
 enum AuthTypes {
@@ -56,10 +57,11 @@ const controller: AuthController = {
   },
   doesUsernameExist(req: Request, res: Response, next: any) {
     const { username, type } = req.body;
-    const query = `SELECT u.username, u.email FROM users u WHERE u.username='${username}'`;
+    const query = `SELECT u.username FROM users u WHERE u.username='${username}'`;
 
     db.query(query, (err: Error, response) => {
       if (err) {
+        console.log(err);
         return next({
           code: 500,
           message: 'Error connecting to server.',
@@ -89,8 +91,47 @@ const controller: AuthController = {
     });
     // OUTSIDE OF QUERY
   },
-  createUser(req: Request, res: Response, next: any): any {
+  doesEmailExist(req: Request, res: Response, next: any) {
+    const { email, type } = req.body;
+    const query = `SELECT u.email FROM users u WHERE u.email='${email}'`;
+
+    db.query(query, (err, response) => {
+      if (err) {
+        return next({
+          code: 500,
+          message: 'Error connecting to server.',
+          log: 'auth.doesEmailExist: Failed to make query to database',
+        });
+      }
+
+      const emailExists = response.rows[0] !== undefined;
+      if (emailExists && type === AuthTypes.REGISTER) {
+        return next({
+          code: 409,
+          message: 'Email is linked to another account.',
+          log: 'auth.doesEmailExist: User attempted to register with email already in use',
+        });
+      }
+
+      return next();
+    });
+    // OUTSIDE QUERY
+  },
+  createUser(req: Request, res: Response, next: any) {
     const { username, password, email } = req.body;
+
+    bcrypt.hash(password, 11, (err, hashedPassword) => {
+      if (err) {
+        return next({
+          code: 500,
+          message: 'Error connecting to server.',
+          log: 'auth.createUser: Errored when hashing password with bcrypt.',
+        });
+      }
+
+      const query = `INSERT INTO user u (username, password, email) VALUES ('${username}','${hashedPassword}','${email}')`;
+    });
+    // OUTSIDE BCRYPT HASH
   },
   checkLogin(req: Request, res: Response, next: any) {
     const { username, password } = req.body;
