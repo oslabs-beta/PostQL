@@ -1,5 +1,8 @@
-import bcrypt, { hash } from 'bcrypt';
+import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
 import { db } from './db';
+
+require('dotenv').config();
 
 interface AuthController {
   validateFields(req: Request, res: Response, next: any): any;
@@ -7,6 +10,10 @@ interface AuthController {
   checkLogin(req: Request, res: Response, next: any): any;
   createUser(req: Request, res: Response, next: any): any;
   doesEmailExist(req: Request, res: Response, next: any): any;
+  createSession(req: Request, res: Response, next: any): any;
+  validateUser(req: Request, res: Response, next: any): any;
+  logout(req: Request, res: Response, next: any): any;
+  deleteUser(req: Request, res: Response, next: any): any;
 }
 
 enum AuthTypes {
@@ -129,7 +136,18 @@ const controller: AuthController = {
         });
       }
 
-      const query = `INSERT INTO user u (username, password, email) VALUES ('${username}','${hashedPassword}','${email}')`;
+      const query = `INSERT INTO users (username, password, email) VALUES ('${username}','${hashedPassword}','${email}')`;
+      db.query(query, (err, response) => {
+        if (err) {
+          return next({
+            code: 500,
+            message: 'Error connecting to server.',
+            log: 'auth.createUser: Errored when inserting new user into database',
+          });
+        }
+
+        return next();
+      });
     });
     // OUTSIDE BCRYPT HASH
   },
@@ -166,7 +184,81 @@ const controller: AuthController = {
 
         return next();
       });
+      // OUTSIDE BCRYPT
     });
+    // OUTSIDE QUERY
+  },
+  createSession(req: Request, res: Response, next: any) {
+    const { username } = req.body;
+    const query = `SELECT u.username, u.email FROM users u WHERE u.username='${username}' OR u.email='${username}'`;
+
+    db.query(query, (err, response) => {
+      if (err) {
+        return next({
+          code: 500,
+          message: 'Error connecting to server.',
+          log: 'auth.createSession: Errored when querying database',
+        });
+      }
+
+      const token = jwt.sign({ username }, process.env.JWT_SECRET);
+
+      res.cookie('auth', token, { httpOnly: true });
+
+      return next();
+    });
+    // OUTSIDE QUERY
+  },
+  validateUser(req: Request, res: Response, next: any) {
+    const { auth } = req.cookies;
+
+    jwt.verify(auth, process.env.JWT_SECRET, (err, decoded) => {
+      if (err || !decoded) {
+        return next({
+          code: 403,
+          message: 'Invalid session.',
+          log: 'auth.validateUser: User attempted to validate invalid JWT',
+        });
+      }
+
+      return next();
+    });
+    // OUTSIDE JWT
+  },
+  logout(req: Request, res: Response, next: any) {
+    const { auth } = req.cookies;
+
+    jwt.verify(auth, process.env.JWT_SECRET, (err, decoded) => {
+      if (err || !decoded) {
+        return next({
+          code: 205,
+          message: 'Cannot log out at this time.',
+          log: 'auth.validateUser: User attempted to log out before being logged in',
+        });
+      }
+
+      res.clearCookie('auth');
+
+      return next();
+    });
+    // OUTSIDE JWT
+  },
+  deleteUser(req: Request, res: Response, next: any) {
+    const { username } = req.body;
+    const query = `DELETE FROM users u WHERE u.username='${username}'`;
+
+    db.query(query, (err) => {
+      if (err) {
+        return next({
+          code: 500,
+          message: 'Error connecting to server.',
+          log: 'auth.deleteUser: Error making query to db.',
+        });
+      }
+
+      return next();
+    });
+    // OUTSIDE QUERY
   },
 };
 

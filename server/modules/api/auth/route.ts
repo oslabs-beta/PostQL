@@ -6,8 +6,14 @@ const router = express.Router();
 
 router.get('/', (req, res) => res.status(200).json({ message: 'Successfully pinged /api/auth' }));
 
-router.post('/register', controller.validateFields, controller.doesUsernameExist, controller.doesEmailExist);
+router.post('/register', controller.validateFields, controller.doesUsernameExist, controller.doesEmailExist, controller.createUser, controller.createSession, (req, res) => res.status(200).json({ message: 'Registraton is successful.' }));
 
-router.post('/login', controller.validateFields, controller.doesUsernameExist, controller.doesEmailExist);
+router.post('/login', controller.validateFields, controller.doesUsernameExist, controller.doesEmailExist, controller.checkLogin, controller.createSession, (req, res) => res.status(200).json({ message: 'Log in successful.' }));
+
+router.get('/validate', controller.validateUser, (req, res) => res.status(200).json({ message: 'User successfully validated.' }));
+
+router.post('/logout', controller.logout, (req, res) => res.status(200).json({ message: 'Successfully logged out.' }));
+
+router.delete('/user', controller.deleteUser, (req, res) => res.status(200).json({ message: 'Deleted user successfully.' }));
 
 export { router as auth };

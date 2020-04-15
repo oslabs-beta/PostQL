@@ -131,8 +131,9 @@ describe('can log in successfully', () => {
       .expect(403, done);
   });
 
+  const requestAgent = supertest.agent(app);
   it('recieves a 200 when username and password are correct', (done) => {
-    request
+    requestAgent
       .post('/api/auth/login')
       .send({
         username: 'testuser',
@@ -149,7 +150,13 @@ describe('can log in successfully', () => {
   });
 
   it('recieves cookies upon successful login', (done) => {
-    expect(1).toEqual(2);
+    requestAgent
+      .get('/api/auth/validate')
+      .expect('Content-Type', /json/)
+      .expect((response) => {
+        expect(response.body).toEqual({ message: 'User successfully validated.' });
+      })
+      .expect(200, done);
   });
 });
 
@@ -243,8 +250,9 @@ describe('can register successfully', () => {
       .expect(403, done);
   });
 
+  const requestAgent = supertest.agent(app);
   it('recieves a 200 when registration is successful', (done) => {
-    request
+    requestAgent
       .post('/api/auth/register')
       .send({
         username: 'newuser',
@@ -262,16 +270,74 @@ describe('can register successfully', () => {
   });
 
   it('recieves cookies upon successful registration', (done) => {
-    expect(1).toEqual(2);
+    requestAgent
+      .get('/api/auth/validate')
+      .expect('Content-Type', /json/)
+      .expect((response) => {
+        expect(response.body).toEqual({ message: 'User successfully validated.' });
+      })
+      .expect(200, done);
+  });
+
+  afterAll((done) => {
+    request
+      .delete('/api/auth/user')
+      .send({
+        username: 'newuser',
+      })
+      .set('Content-Type', 'application/json')
+      .accept('Accept', 'application/json')
+      .expect('Content-Type', /json/)
+      .expect((response) => {
+        expect(response.body).toEqual({ message: 'Deleted user successfully.' });
+      })
+      .expect(200, done);
   });
 });
 
 describe('can logout successfully', () => {
+  let requestAgent;
+  beforeEach(() => {
+    requestAgent = supertest.agent(app);
+
+    requestAgent
+      .post('/api/auth/login')
+      .send({
+        username: 'testuser',
+        password: 'password',
+        type: 'login',
+      })
+      .set('Content-Type', 'application/json')
+      .set('Accept', 'application/json');
+  });
+
   it('invalidates cookies on logout', (done) => {
-    expect(1).toEqual(2);
+    requestAgent
+      .post('/api/auth/logout')
+      .set('Accept', 'application/json')
+      .expect('Content-Type', /json/)
+      .expect((response) => {
+        expect(response.body).toEqual({ message: 'Successfully logged out.' });
+      })
+      .expect(200);
+
+    requestAgent
+      .get('/api/auth/validate')
+      .expect('Content-Type', /json/)
+      .expect((response) => {
+        expect(response.body).toEqual({ message: 'Invalid session.' });
+      })
+      .expect(403, done);
   });
 
   it('recieves a 205 if logout is requested while not logged in', (done) => {
-    expect(1).toEqual(2);
+    requestAgent
+      .post('/api/auth/logout')
+      .set('Accept', 'application/json')
+      .expect('Content-Type', /json/)
+      .expect((response) => {
+        expect(response.body).toEqual({ message: 'Cannot log out at this time.' });
+      })
+      .expect(205, done);
   });
 });
