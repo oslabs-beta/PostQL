@@ -14,6 +14,8 @@ router.get('/validate', controller.validateUser, (req, res) => res.status(200).j
 
 router.post('/logout', controller.logout, (req, res) => res.status(200).json({ message: 'Successfully logged out.' }));
 
-router.delete('/user', controller.deleteUser, (req, res) => res.status(200).json({ message: 'Deleted user successfully.' }));
+if (process.env.NODE_ENV === 'test') {
+  router.delete('/user', controller.deleteUser, (req, res) => res.status(200).json({ message: 'Deleted user successfully.' }));
+}
 
 export { router as auth };
