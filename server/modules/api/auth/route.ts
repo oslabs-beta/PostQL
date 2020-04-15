@@ -10,7 +10,7 @@ router.post('/register', controller.validateFields, controller.doesUsernameExist
 
 router.post('/login', controller.validateFields, controller.doesUsernameExist, controller.doesEmailExist, controller.checkLogin, controller.createSession, (req, res) => res.status(200).json({ message: 'Log in successful.' }));
 
-router.get('/validate', controller.validateUser, (req, res) => res.status(200).json({ message: 'User successfully validated.' }));
+router.get('/validate', controller.validateUser, (req, res) => res.status(200).json({ message: 'User successfully validated.', username: res.locals.username }));
 
 router.post('/logout', controller.logout, (req, res) => res.status(200).json({ message: 'Successfully logged out.' }));
 

@@ -154,7 +154,7 @@ describe('can log in successfully', () => {
       .get('/api/auth/validate')
       .expect('Content-Type', /json/)
       .expect((response) => {
-        expect(response.body).toEqual({ message: 'User successfully validated.' });
+        expect(response.body).toEqual({ message: 'User successfully validated.', username: 'testuser' });
       })
       .expect(200, done);
   });
@@ -274,7 +274,7 @@ describe('can register successfully', () => {
       .get('/api/auth/validate')
       .expect('Content-Type', /json/)
       .expect((response) => {
-        expect(response.body).toEqual({ message: 'User successfully validated.' });
+        expect(response.body).toEqual({ message: 'User successfully validated.', username: 'newuser' });
       })
       .expect(200, done);
   });
