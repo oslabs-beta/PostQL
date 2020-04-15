@@ -8,6 +8,9 @@ describe('can login successfully', () => {
     request
       .get('/api/auth')
       .expect('Content-Type', /json/)
+      .expect((response) => {
+        expect(response.body).toEqual({ message: 'Successfully pinged /api/auth' });
+      })
       .expect(200, done);
   });
 });
