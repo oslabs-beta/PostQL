@@ -1,5 +1,7 @@
 import * as React from 'react';
-import { Link, Switch, Route, useLocation } from 'react-router-dom';
+import {
+  Link, Switch, Route, useLocation,
+} from 'react-router-dom';
 import Table from '@material-ui/core/Table';
 import { makeStyles } from '@material-ui/core/styles';
 import TableBody from '@material-ui/core/TableBody';
@@ -11,26 +13,23 @@ import Paper from '@material-ui/core/Paper';
 import '../styles/application.scss';
 
 
-
-const Analytics: React.FC<{}> = () => {
-  return (
+const Analytics: React.FC<{}> = () => (
   <div className="analytics">
     <Switch>
-      <Route path = '/analytics/:query_id'>
-      <Link to="/analytics">Back</Link>
-      <img src="/image/title.png" />
-      <h2 className="analyticstitle">Query Performance Analytics</h2>
+      <Route path="/analytics/:query_id">
+        <Link to="/analytics">Back</Link>
+        <img src="/image/title.png" />
+        <h2 className="analyticstitle">Query Performance Analytics</h2>
       </Route>
-      <Route path = '/analytics'>
-      <Link to="/">Back</Link>
-      <img src="/image/title.png" />
-      <h2 className="analyticstitle">Performance Analytics</h2>
-      <SimpleTable/>
+      <Route path="/analytics">
+        <Link to="/">Back</Link>
+        <img src="/image/title.png" />
+        <h2 className="analyticstitle">Performance Analytics</h2>
+        <SimpleTable />
       </Route>
     </Switch>
   </div>
-  );
-  }
+);
 
 export default Analytics;
 
@@ -41,12 +40,12 @@ const useStyles = makeStyles({
 });
 
 interface Table {
-  query:string,
-  structure:string,
-  timesRun:number,
-  lastTime:number,
-  timestamp:number,
-  link:string
+  query: string;
+  structure: string;
+  timesRun: number;
+  lastTime: number;
+  timestamp: number;
+  link: string;
 }
 
 
@@ -67,7 +66,7 @@ function SimpleTable() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {data.content.body.map((row => (
+          {data.content.body.map(((row) => (
             <TableRow key={row.query}>
               <TableCell component="th" scope="row">
                 {row.query}
@@ -86,31 +85,30 @@ function SimpleTable() {
 }
 
 
-
 const data = {
   content: {
     body: [
       {
-        query: "query1",
-        structure: "xxxxxxxxxxxxx",
-        timesRun:3,
-        lastTime:300,
-        timestamp:1000
+        query: 'query1',
+        structure: 'xxxxxxxxxxxxx',
+        timesRun: 3,
+        lastTime: 300,
+        timestamp: 1000,
       },
       {
-        query: "query2",
-        structure: "xxxxxxxxxxxxx",
-        timesRun:3,
-        lastTime:300,
-        timestamp:1000
+        query: 'query2',
+        structure: 'xxxxxxxxxxxxx',
+        timesRun: 3,
+        lastTime: 300,
+        timestamp: 1000,
       },
       {
-        query: "query3",
-        structure: "xxxxxxxxxxxxx",
-        timesRun:3,
-        lastTime:300,
-        timestamp:1000
-      }
-    ]
-  }
+        query: 'query3',
+        structure: 'xxxxxxxxxxxxx',
+        timesRun: 3,
+        lastTime: 300,
+        timestamp: 1000,
+      },
+    ],
+  },
 };
