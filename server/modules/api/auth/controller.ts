@@ -221,6 +221,8 @@ const controller: AuthController = {
         });
       }
 
+      res.locals.username = decoded.username;
+
       return next();
     });
     // OUTSIDE JWT
