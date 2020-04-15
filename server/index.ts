@@ -46,7 +46,7 @@ app.use('*', (req, res, next) => {
 app.use((err, req, res, next) => {
   // err MUST be in format:
   // { code: status code, message: message to user, log: message to server operator }
-  console.log(err.log);
+  if (process.env.NODE_ENV !== 'test') console.log(err.log);
   return res.status(err.code).json({ message: err.message });
 });
 
