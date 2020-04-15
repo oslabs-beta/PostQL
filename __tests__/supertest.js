@@ -13,13 +13,73 @@ describe('miscellaneous tasks', () => {
       })
       .expect(200, done);
   });
+
+  it('recieves a 400 when type of submission is blank', (done) => {
+    request
+      .post('/api/auth/login')
+      .send({
+        username: '',
+        password: 'password',
+        type: '',
+      })
+      .set('Content-Type', 'application/json')
+      .expect('Content-Type', /json/)
+      .expect((response) => {
+        expect(response.body).toEqual({ message: 'Invalid request.' });
+      })
+      .expect(400, done);
+  });
+
+  it('recieves a 400 when type of submission is null', (done) => {
+    request
+      .post('/api/auth/login')
+      .send({
+        username: '',
+        password: 'password',
+        type: null,
+      })
+      .set('Content-Type', 'application/json')
+      .expect('Content-Type', /json/)
+      .expect((response) => {
+        expect(response.body).toEqual({ message: 'Invalid request.' });
+      })
+      .expect(400, done);
+  });
+
+  it('recieves a 400 when type of submission is undefined', (done) => {
+    request
+      .post('/api/auth/login')
+      .send({
+        username: '',
+        password: 'password',
+      })
+      .set('Content-Type', 'application/json')
+      .expect('Content-Type', /json/)
+      .expect((response) => {
+        expect(response.body).toEqual({ message: 'Invalid request.' });
+      })
+      .expect(400, done);
+  });
 });
 
 describe('can login successfully', () => {
   const request = supertest(app);
 
   it('recieves a 412 when username is not supplied', (done) => {
-    done();
+    request
+      .post('/api/auth/login')
+      .send({
+        username: '',
+        password: 'password',
+        type: 'login',
+      })
+      .set('Content-Type', 'application/json')
+      .set('Accept', 'application/json')
+      .expect('Content-Type', /json/)
+      .expect((response) => {
+        expect(response.body).toEqual({ message: 'Username is required.' });
+      })
+      .expect(412, done);
   });
 
   it('recieves a 412 when password is not supplied', (done) => {

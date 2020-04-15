@@ -8,6 +8,6 @@ router.get('/', (req, res) => res.status(200).json({ message: 'Successfully ping
 
 router.post('/register', (req, res) => res.status(200).json({ message: 'Pinged /register' }));
 
-router.post('/login', (req, res) => res.status(200).json({ message: 'Pinged /login' }));
+router.post('/login', controller.validateFields);
 
 export { router as auth };
