@@ -10,12 +10,12 @@ import Analytics from './Analytics';
 const App: FC = () => (
   <div className="app">
     <Router>
-      <Route path="/analytics">
+      <Route path="/a">
         <Analytics />
       </Route>
       <Switch>
         <Route path="/" exact>
-          <Link to="/analytics">Analytics</Link>
+          <Link to="/a">Analytics</Link>
           <PlaygroundDisplay />
         </Route>
 
