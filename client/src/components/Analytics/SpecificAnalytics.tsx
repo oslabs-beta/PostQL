@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { Link, useRouteMatch } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 interface PropTypes {
   previousUrl: string;

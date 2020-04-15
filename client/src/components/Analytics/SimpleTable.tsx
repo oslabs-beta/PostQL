@@ -1,15 +1,12 @@
 import React, { FC } from 'react';
 import {
-  Link, Switch, Route, useRouteMatch,
+  Link,
 } from 'react-router-dom';
 import Table from '@material-ui/core/Table';
 import { makeStyles } from '@material-ui/core/styles';
-import { TableBody } from '@material-ui/core';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
+import {
+  TableBody, TableCell, TableContainer, TableHead, TableRow, Paper,
+} from '@material-ui/core';
 import '../../styles/application.scss';
 
 const useStyles = makeStyles({
