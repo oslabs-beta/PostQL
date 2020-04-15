@@ -5,6 +5,8 @@ import path from 'path';
 import process from 'process';
 import { exec } from 'child_process';
 
+import { modules } from './modules';
+
 const app = express();
 const PORT = 5000;
 
@@ -13,6 +15,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use('/image', express.static(path.join(__dirname, '../client/src/image')));
+app.use('/api', modules.api);
 
 // serve bundle.js in prod for every url
 if (process.env.NODE_ENV === 'production') {
@@ -25,9 +28,9 @@ if (process.env.NODE_ENV === 'production') {
   });
 
   app.listen(80); // listens on port 80 -> http://localhost/
-} else {
+} else if (process.env.NODE_ENV !== 'test') {
   app.listen(PORT, () => {
-    console.log(`Listening on http://localhost:${PORT}`);
+    // console.log(`Listening on http://localhost:${PORT}`);
   });
 }
 
@@ -44,11 +47,7 @@ app.use((err, req, res, next) => {
   // err MUST be in format:
   // { code: status code, message: message to user, log: message to server operator }
   console.log(err.log);
-  return res.status(err.code).json(err.message);
+  return res.status(err.code).json({ message: err.message });
 });
 
 module.exports = app;
-
-process.on('exit', () => {
-  exec('docker-compose down');
-});
