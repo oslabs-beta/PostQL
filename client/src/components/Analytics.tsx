@@ -3,7 +3,7 @@ import {
   Link, Switch, Route, useRouteMatch,
 } from 'react-router-dom';
 import '../styles/application.scss';
-import SimpleTable from './QueryTable';
+import SimpleTable from './AnalyticsTable';
 
 
 const Analytics: React.FC<{}> = () => {

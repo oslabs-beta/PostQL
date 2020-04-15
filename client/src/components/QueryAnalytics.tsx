@@ -11,6 +11,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import '../styles/application.scss';
+import SimpleTable from './QueryTable';
 
 const QueryAnalytics: React.FC<{}> = () => (
   <div className="queryAnalytics">
@@ -31,68 +32,3 @@ const QueryAnalytics: React.FC<{}> = () => (
 );
 
 export default QueryAnalytics;
-
-const useStyles = makeStyles({
-  table: {
-    minWidth: 650,
-  },
-});
-
-  interface Table {
-    query: string;
-    timestamp: number;
-    link: string;
-  }
-
-
-function SimpleTable() {
-  const classes = useStyles();
-
-  return (
-    <TableContainer component={Paper}>
-      <Table className={classes.table} aria-label="simple table">
-        <TableHead>
-          <TableRow>
-            <TableCell>TimeStamp</TableCell>
-            <TableCell align="right">Total Time duration&nbsp;(ms)</TableCell>
-            <TableCell align="right">D3</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {data.content.body.map(((row) => (
-            <TableRow key={row.query}>
-              <TableCell component="th" scope="row">
-                {row.timestamp}
-              </TableCell>
-              <TableCell align="right">{row.duration}</TableCell>
-              <TableCell align="right"><Link to={`/analytics/${row.query}`}>{row.query}</Link></TableCell>
-            </TableRow>
-          )))}
-        </TableBody>
-      </Table>
-    </TableContainer>
-  );
-}
-
-
-const data = {
-  content: {
-    body: [
-      {
-        query: 'query1',
-        timestamp: 1000,
-        duration: 700,
-      },
-      {
-        query: 'query1',
-        timestamp: 1100,
-        duration: 800,
-      },
-      {
-        query: 'query2',
-        timestamp: 1200,
-        duartion: 400,
-      },
-    ],
-  },
-};
