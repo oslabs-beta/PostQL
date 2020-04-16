@@ -14,7 +14,8 @@ module.exports = {
   devtool: 'source-map',
   devServer: {
     proxy: {
-      '/image': 'http://localhost:5000'
+      '/api': 'http://localhost:5000',
+      '/image': 'http://localhost:5000',
     },
     public: 'localhost:8080',
     host: '0.0.0.0',
@@ -22,7 +23,7 @@ module.exports = {
     historyApiFallback: true,
   },
   plugins: [
-    new webpack.HotModuleReplacementPlugin()
+    new webpack.HotModuleReplacementPlugin(),
   ],
   module: {
     rules: [
@@ -55,8 +56,8 @@ module.exports = {
       },
       {
         test: /\.(jpe?g|png|gif|svg)$/i,
-        loader: 'file-loader?name=/public/icons/[name].[ext]'
-      }
+        loader: 'file-loader?name=/public/icons/[name].[ext]',
+      },
     ],
   },
 };

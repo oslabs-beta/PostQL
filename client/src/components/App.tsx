@@ -1,27 +1,29 @@
-import React, { FC } from 'react';
-import {
-  BrowserRouter as Router, Switch, Route, Link,
-} from 'react-router-dom';
+import React, { FC, useState, useEffect } from 'react';
 
-import '../styles/application.scss';
-import PlaygroundDisplay from './PlaygroundDisplay';
-import Analytics from './Analytics';
+import Dashboard from './Dashboard';
+import GetAuth from './Auth';
 
-const App: FC = () => (
-  <div className="app">
-    <Router>
-      <Route path="/a">
-        <Analytics />
-      </Route>
-      <Switch>
-        <Route path="/" exact>
-          <Link to="/a">Analytics</Link>
-          <PlaygroundDisplay />
-        </Route>
+const App: FC = () => {
+  const [authed, setAuthed] = useState(null);
 
-      </Switch>
-    </Router>
-  </div>
-);
+  function checkAuthed(): void {
+    fetch('/api/auth/validate')
+      .then((res) => {
+        if (res.status === 200) return setAuthed(true);
+        return setAuthed(false);
+      });
+  }
+
+  useEffect(() => {
+    if (authed === null) checkAuthed();
+  }, []);
+
+  if (authed === null) return <h1>Loading...</h1>;
+
+  return (
+    authed
+      ? <Dashboard /> : <GetAuth />
+  );
+};
 
 export default App;
