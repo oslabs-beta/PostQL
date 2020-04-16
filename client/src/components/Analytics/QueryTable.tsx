@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import {
   Link, useParams,
 } from 'react-router-dom';
@@ -21,10 +21,32 @@ const useStyles = makeStyles({
     link: string;
   }
 
+interface InstanceData {
+  outputMetrics: any;
+  queryIDs: any;
+  timeStamp: any;
+  queryString: any;
+}
 
 const QueryTable: FC = () => {
   const classes = useStyles();
   const { queryID } = useParams();
+  const [instanceData, setInstanceData] = useState<InstanceData>({
+    outputMetrics: 'Loading...',
+    queryIDs: 'Loading...',
+    timeStamp: 'Loading...',
+    queryString: 'Loading...',
+  });
+
+  function getInstanceData() {
+    fetch(`/api/logs/display/${queryID}`)
+      .then((res) => res.json())
+      .then((data) => setInstanceData(data));
+  }
+
+  useEffect(() => {
+    getInstanceData();
+  }, []);
 
   return (
     <TableContainer component={Paper}>
