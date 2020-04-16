@@ -91,16 +91,16 @@ const data = {
 };
 
 
-// const requestOptions = {
-//   method: 'POST',
-//   headers: new Headers({'Content-Type': 'application/json'}),
-//   body: JSON.stringify({username:username,password:password}),
-// //   redirect: 'follow'
-// };
+const requestOptions = {
+  method: 'GET',
+  headers: new Headers({'Content-Type': 'application/json'}),
+  body: JSON.stringify({username:username,password:password}),
+//   redirect: 'follow'
+};
 
-//     fetch('http://localhost:3000/products', requestOptions)
-//     .then((response) =>{
-//         return response.json()
-//     }).then((data) => {
-//         this.setState({...this.state,products:data});
-//     })
+    fetch('http://localhost:3000/api/logs/display', requestOptions)
+    .then((response) =>{
+        return response.json()
+    }).then((data) => {
+        this.setState({...this.state,products:data});
+    })
