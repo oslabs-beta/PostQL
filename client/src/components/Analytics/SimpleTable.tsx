@@ -52,7 +52,7 @@ const SimpleTable: FC = () => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {queryData.map((row) => (
+          {queryData ? queryData.map((row) => (
             <TableRow key={row.queryString}>
               <TableCell component="th" scope="row">
                 {row.queryString}
@@ -63,7 +63,7 @@ const SimpleTable: FC = () => {
               <TableCell align="right">{row.timeStamp}</TableCell>
               <TableCell align="right"><Link to={`${path}/${row._id}`}>More Details</Link></TableCell>
             </TableRow>
-          ))}
+          )) : <h2>No queries yet!</h2>}
         </TableBody>
       </Table>
     </TableContainer>
