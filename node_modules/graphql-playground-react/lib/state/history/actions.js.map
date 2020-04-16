@@ -1,0 +1,1 @@
+{"version":3,"file":"actions.js","sourceRoot":"","sources":["../../../src/state/history/actions.ts"],"names":[],"mappings":";;;AAAA,+CAA6C;AAE9B,QAAA,yBAAyB,IAA3B,KAAgD,6BAAa,CAAC;IACzE,4BAA4B,EAAE,UAAA,SAAS,IAAI,OAAA,CAAC,EAAE,SAAS,WAAA,EAAE,CAAC,EAAf,CAAe;IAC1D,gBAAgB,EAAE,UAAA,OAAO,IAAI,OAAA,CAAC,EAAE,OAAO,SAAA,EAAE,CAAC,EAAb,CAAa;CAC3C,CAAC,iCAHwC,QAAA,cAAc,qBAGtD"}
