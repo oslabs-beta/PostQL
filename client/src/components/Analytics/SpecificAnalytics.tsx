@@ -1,16 +1,28 @@
 import React, { FC } from 'react';
-import { Link } from 'react-router-dom';
+import {
+  useRouteMatch, Switch, Route,
+} from 'react-router-dom';
+import SpecificOverview from './SpecificOverview';
+import Graph from './Graph';
 
-interface PropTypes {
+export interface PropTypes {
   previousUrl: string;
 }
 
-const SpecificAnalytics: FC<PropTypes> = ({ previousUrl }) => (
-  <>
-    <Link to={previousUrl}>Back</Link>
-    <img src="/image/title.png" />
-    <h2 className="analyticstitle">Query Performance Analytics</h2>
-  </>
-);
+const SpecificAnalytics: FC<PropTypes> = ({ previousUrl }) => {
+  const { path } = useRouteMatch();
+  return (
+    <div className="specificanalytics">
+      <Switch>
+        <Route path={`${path}/Graph`}>
+          <Graph previousUrl={path} />
+        </Route>
+        <Route path={path} exact>
+          <SpecificOverview previousUrl={previousUrl} />
+        </Route>
+      </Switch>
+    </div>
+  );
+};
 
 export default SpecificAnalytics;

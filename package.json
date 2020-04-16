@@ -8,7 +8,7 @@
     "test": "jest ./__tests__ --verbose"
   },
   "keywords": [],
-  "author": "David Zhang, Mario D'Andreas, Jason Heinowitz, Lisa Han, Joshua Pagen",
+  "author": "David Zhang, Mario D'Andreas, Jason Heinowitz, Lisa Han, Joshua Pagan",
   "license": "MIT",
   "dependencies": {
     "@material-ui/core": "^4.9.10",
