@@ -1,6 +1,7 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
+import secure from 'express-force-https';
 import path from 'path';
 import process from 'process';
 import { exec } from 'child_process';
@@ -9,6 +10,8 @@ import modules from './modules';
 
 const app = express();
 const PORT = 5000;
+
+app.use(secure);
 
 app.use(cookieParser());
 app.use(bodyParser.json());
