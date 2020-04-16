@@ -1,24 +1,22 @@
 import React, { FC } from 'react';
 import {
-  BrowserRouter as Router, Switch, Route, Link,
+  BrowserRouter as Router, Switch, Route,
 } from 'react-router-dom';
 
+import Home from './Home';
 import '../styles/application.scss';
-import PlaygroundDisplay from './PlaygroundDisplay';
 import Analytics from './Analytics';
 
 const App: FC = () => (
   <div className="app">
     <Router>
-      <Route path="/a">
-        <Analytics />
-      </Route>
       <Switch>
         <Route path="/" exact>
-          <Link to="/a">Analytics</Link>
-          <PlaygroundDisplay />
+          <Home />
         </Route>
-
+        <Route path="/analytics">
+          <Analytics />
+        </Route>
       </Switch>
     </Router>
   </div>
