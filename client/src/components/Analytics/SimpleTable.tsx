@@ -30,7 +30,7 @@ const SimpleTable: FC = () => {
 
   const [queryData, setQueryData] = useState([]);
 
-  function getData() {
+  function getData(): void {
     fetch('/api/logs/display')
       .then((res) => res.json())
       .then((responseData) => setQueryData(responseData));
@@ -39,8 +39,6 @@ const SimpleTable: FC = () => {
   useEffect(() => {
     getData();
   }, []);
-
-  console.log(queryData);
 
   const tableRows: any[] = [];
 
