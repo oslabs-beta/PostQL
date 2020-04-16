@@ -1,0 +1,1 @@
+{"version":3,"file":"parseHeaders.js","sourceRoot":"","sources":["../../../../src/components/Playground/util/parseHeaders.ts"],"names":[],"mappings":";;AAAA,SAAgB,YAAY,CAAC,OAAgB;IAC3C,IAAI,CAAC,OAAO,EAAE;QACZ,OAAO,EAAE,CAAA;KACV;IACD,IAAI;QACF,OAAO,IAAI,CAAC,KAAK,CAAC,OAAO,CAAC,CAAA;KAC3B;IAAC,OAAO,CAAC,EAAE;QACV,OAAO,EAAE,CAAA;KACV;AACH,CAAC;AATD,oCASC"}
