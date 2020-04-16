@@ -4,7 +4,6 @@ import {
 } from 'react-router-dom';
 
 import Home from './Home';
-import '../styles/application.scss';
 import Analytics from './Analytics';
 
 const Dashboard: FC = () => {

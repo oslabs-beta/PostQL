@@ -3,7 +3,6 @@ import {
   Switch, Route, useRouteMatch,
 } from 'react-router-dom';
 
-import '../../styles/application.scss';
 import SpecificAnalytics from './SpecificAnalytics';
 import AnalyticsOverview from './AnalyticsOverview';
 
