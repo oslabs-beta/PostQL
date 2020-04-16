@@ -71,7 +71,7 @@ const QueryTable: FC = () => {
               <TableCell align="right">{om.duration / 1000000}</TableCell>
               <TableCell align="right"><Link to={`/analytics/${queryID}/${queryIDs[index]}`}>Resolver Breakdown</Link></TableCell>
             </TableRow>
-          )) : <h2>Nothing to see here!</h2>}
+          )) : <TableRow><TableCell>Nothing to see here!</TableCell></TableRow>}
         </TableBody>
       </Table>
     </TableContainer>
