@@ -29,7 +29,7 @@ if (process.env.NODE_ENV === 'production') {
 
   app.listen(80); // listens on port 80 -> http://localhost/
 } else if (process.env.NODE_ENV !== 'test') {
-  app.listen(PORT, () => {
+  app.listen(80, () => {
     // console.log(`Listening on http://localhost:${PORT}`);
   });
 }
