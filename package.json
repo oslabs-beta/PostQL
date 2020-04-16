@@ -22,6 +22,8 @@
     "file-loader": "^6.0.0",
     "graphql-playground-react": "^1.7.22",
     "jsonwebtoken": "^8.5.1",
+    "moment": "^2.24.0",
+    "mongoose": "^5.9.9",
     "pg": "^8.0.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",

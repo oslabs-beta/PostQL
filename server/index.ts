@@ -5,7 +5,7 @@ import path from 'path';
 import process from 'process';
 import { exec } from 'child_process';
 
-import { modules } from './modules';
+import modules from './modules';
 
 const app = express();
 const PORT = 5000;
