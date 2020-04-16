@@ -16,6 +16,7 @@ interface IndivQueryByUser {
   queryString: String,
   timeStamp: String,
   _id: any, // don't want to import mongodb for ObjectID
+  counter: Number,
 }
 
 const logController: LogController = {
@@ -129,6 +130,7 @@ const logController: LogController = {
             queryString: queryHistory[i].queryString,
             timeStamp: queryHistory[i].timeStamp[queryHistory[i].counter],
             _id: queryHistory[i]._id,
+            counter: queryHistory[i].counter + 1, // counter is 0-indexed
           };
           output.push(indivQuery);
         }

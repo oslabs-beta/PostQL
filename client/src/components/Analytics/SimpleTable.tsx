@@ -40,6 +40,8 @@ const SimpleTable: FC = () => {
     getData();
   }, []);
 
+  console.log(queryData);
+
   const tableRows: any[] = [];
 
   queryData.forEach((q) => {
@@ -49,9 +51,9 @@ const SimpleTable: FC = () => {
           {q.queryString}
         </TableCell>
         <TableCell align="right">{q.queryString.includes('query') ? 'Query' : 'Mutation'}</TableCell>
-        <TableCell align="right">{q.outputMetrics.length}</TableCell>
-        <TableCell align="right">Time last run</TableCell>
-        <TableCell align="right">{q.timeStamp[q.timeStamp.length - 1]}</TableCell>
+        <TableCell align="right">{q.counter}</TableCell>
+        <TableCell align="right">Duration of last run</TableCell>
+        <TableCell align="right">{q.timeStamp}</TableCell>
         <TableCell align="right"><Link to={`${path}/${q._id}`}>More Details</Link></TableCell>
       </TableRow>,
     );
