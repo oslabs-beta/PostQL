@@ -1,8 +1,8 @@
+/* eslint-disable no-underscore-dangle */
 import { NextFunction } from 'express';
 import { v4 as uuidv4 } from 'uuid';
 import moment from 'moment';
 import { queriesByUser } from './mongo';
-
 
 interface LogController {
   findUser(req: Request, res: Response, next: NextFunction): any;
@@ -10,6 +10,12 @@ interface LogController {
   displayLogs(req: Request, res: Response, next: NextFunction): any;
   displayLog(req: Request, res: Response, next: NextFunction): any;
   displayInstance(req: Request, res: Response, next: NextFunction): any;
+}
+
+interface IndivQueryByUser {
+  queryString: String,
+  timeStamp: String,
+  _id: any, // don't want to import mongodb for ObjectID
 }
 
 const logController: LogController = {
@@ -115,7 +121,18 @@ const logController: LogController = {
       }
 
       if (results) {
-        res.locals.logs = results.queryHistory;
+        // parsing data server-side for optimum bandwidth traffic
+        const { queryHistory } = results;
+        const output = [];
+        for (let i = 0; i < queryHistory.length; i += 1) {
+          const indivQuery: IndivQueryByUser = {
+            queryString: queryHistory[i].queryString,
+            timeStamp: queryHistory[i].timeStamp[queryHistory[i].counter],
+            _id: queryHistory[i]._id,
+          };
+          output.push(indivQuery);
+        }
+        res.locals.logs = output;
       } else res.locals.logs = 'No results found';
       // if no results, just move onto next middleware
       return next();
