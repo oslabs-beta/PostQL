@@ -43,7 +43,7 @@ const QueryTable: FC = () => {
                 {row.timestamp}
               </TableCell>
               <TableCell align="right">{row.duration}</TableCell>
-              <TableCell align="right"><Link to={`/analytics/${queryID}/D3`}>D3</Link></TableCell>
+              <TableCell align="right"><Link to={`/analytics/${queryID}/Graph`}>Graph</Link></TableCell>
             </TableRow>
           )))}
         </TableBody>

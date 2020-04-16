@@ -3,7 +3,7 @@ import {
   useRouteMatch, Switch, Route,
 } from 'react-router-dom';
 import SpecificOverview from './SpecificOverview';
-import D3 from './D3';
+import Graph from './Graph';
 
 export interface PropTypes {
   previousUrl: string;
@@ -14,8 +14,8 @@ const SpecificAnalytics: FC<PropTypes> = ({ previousUrl }) => {
   return (
     <div className="specificanalytics">
       <Switch>
-        <Route path={`${path}/D3`}>
-          <D3 previousUrl={path} />
+        <Route path={`${path}/Graph`}>
+          <Graph previousUrl={path} />
         </Route>
         <Route path={path} exact>
           <SpecificOverview previousUrl={previousUrl} />

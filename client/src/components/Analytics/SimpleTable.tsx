@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 import {
   Link, useRouteMatch,
 } from 'react-router-dom';
@@ -27,6 +27,13 @@ const useStyles = makeStyles({
 const SimpleTable: FC = () => {
   const classes = useStyles();
   const { path } = useRouteMatch();
+  // const [query] = useState("");
+  // const getData = () => {
+  //   fetch('/api/logs/display')
+  //     .then((response) => response.json());
+  //     .then((data) => {
+  //         this.useState({});;
+  // };
 
   return (
     <TableContainer component={Paper}>
@@ -60,6 +67,21 @@ const SimpleTable: FC = () => {
   );
 };
 
+
+// const requestOptions = {
+//   method: 'POST',
+//   headers: new Headers({'Content-Type': 'application/json'}),
+//   body: JSON.stringify({username:username,password:password}),
+// //   redirect: 'follow'
+// };
+
+//     fetch('http://localhost:3000/products', requestOptions)
+//     .then((response) =>{
+//         return response.json()
+//     }).then((data) => {
+//         this.setState({...this.state,products:data});
+//     })
+
 export default SimpleTable;
 
 const data = {
@@ -89,18 +111,3 @@ const data = {
     ],
   },
 };
-
-
-const requestOptions = {
-  method: 'GET',
-  headers: new Headers({'Content-Type': 'application/json'}),
-  body: JSON.stringify({username:username,password:password}),
-//   redirect: 'follow'
-};
-
-    fetch('http://localhost:3000/api/logs/display', requestOptions)
-    .then((response) =>{
-        return response.json()
-    }).then((data) => {
-        this.setState({...this.state,products:data});
-    })
