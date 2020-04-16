@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import {
-  Link,
+  Link, useRouteMatch,
 } from 'react-router-dom';
 import Table from '@material-ui/core/Table';
 import { makeStyles } from '@material-ui/core/styles';
@@ -17,6 +17,9 @@ const useStyles = makeStyles({
 
   interface Table {
     query: string;
+    structure: string;
+    timesRun: number;
+    lastTime: number;
     timestamp: number;
     link: string;
   }
@@ -24,25 +27,32 @@ const useStyles = makeStyles({
 
 const SimpleTable: FC = () => {
   const classes = useStyles();
+  const { path } = useRouteMatch();
 
   return (
     <TableContainer component={Paper}>
       <Table className={classes.table} aria-label="simple table">
         <TableHead>
           <TableRow>
-            <TableCell>TimeStamp</TableCell>
-            <TableCell align="right">Total Time duration&nbsp;(ms)</TableCell>
-            <TableCell align="right">D3</TableCell>
+            <TableCell>query</TableCell>
+            <TableCell align="right">Query Structure</TableCell>
+            <TableCell align="right"># of Times Run</TableCell>
+            <TableCell align="right">Total Time of Last Instance&nbsp;(ms)</TableCell>
+            <TableCell align="right">Timestamp of Last Run&nbsp;(XX)</TableCell>
+            <TableCell align="right">More Analytics</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {data.content.body.map(((row) => (
             <TableRow key={row.query}>
               <TableCell component="th" scope="row">
-                {row.timestamp}
+                {row.query}
               </TableCell>
-              <TableCell align="right">{row.duration}</TableCell>
-              <TableCell align="right"><Link to={`/analytics/${row.query}`}>{row.query}</Link></TableCell>
+              <TableCell align="right">{row.structure}</TableCell>
+              <TableCell align="right">{row.timesRun}</TableCell>
+              <TableCell align="right">{row.lastTime}</TableCell>
+              <TableCell align="right">{row.timestamp}</TableCell>
+              <TableCell align="right"><Link to={`${path}/${row.query}`}>{row.query}</Link></TableCell>
             </TableRow>
           )))}
         </TableBody>
@@ -58,19 +68,40 @@ const data = {
     body: [
       {
         query: 'query1',
+        structure: 'xxxxxxxxxxxxx',
+        timesRun: 3,
+        lastTime: 300,
         timestamp: 1000,
-        duration: 700,
-      },
-      {
-        query: 'query1',
-        timestamp: 1100,
-        duration: 800,
       },
       {
         query: 'query2',
-        timestamp: 1200,
-        duartion: 400,
+        structure: 'xxxxxxxxxxxxx',
+        timesRun: 3,
+        lastTime: 300,
+        timestamp: 1000,
+      },
+      {
+        query: 'query3',
+        structure: 'xxxxxxxxxxxxx',
+        timesRun: 3,
+        lastTime: 300,
+        timestamp: 1000,
       },
     ],
   },
 };
+
+
+// const requestOptions = {
+//   method: 'POST',
+//   headers: new Headers({'Content-Type': 'application/json'}),
+//   body: JSON.stringify({username:username,password:password}),
+// //   redirect: 'follow'
+// };
+
+//     fetch('http://localhost:3000/products', requestOptions)
+//     .then((response) =>{
+//         return response.json()
+//     }).then((data) => {
+//         this.setState({...this.state,products:data});
+//     })
