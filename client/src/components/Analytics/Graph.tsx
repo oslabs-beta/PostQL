@@ -41,7 +41,7 @@ const Graph: FC<PropTypes> = ({ previousUrl }) => {
           ['lastName', 68982, 7410, 76392, 5621],
         ]}
         options={{
-          title: 'Query',
+          title: `Query ID:${queryID},   Instance ID: ${instanceID}`,
           chartArea: { width: '50%' },
           isStacked: true,
           series: [{ color: 'transparent' }, {}, { color: 'transparent' }, {}],
