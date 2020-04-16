@@ -22,18 +22,12 @@ const Graph: FC<PropTypes> = ({ previousUrl }) => {
   const traceToGoogleChartsData = (data: any) => {
     const d3Data: (string | number)[][] = [
       ['Query/Resolver', ' ', 'Time in ns'],
-      ['Query', 0, data.extensions.tracing.duration],
+      ['Query', 0, data.outputMetrics.duration],
     ];
     let timeElapsed = 0;
     const cache: any = {};
-
-    for (
-      let i = 0;
-      i < data.extensions.tracing.execution.resolvers.length;
-      i++
-    ) {
-      const resolver: any = data.extensions.tracing.execution.resolvers[i];
-
+    for (let i = 0; i < data.outputMetrics.execution.resolvers.length; i++) {
+      const resolver: any = data.outputMetrics.execution.resolvers[i];
       if (!cache[resolver.fieldName]) {
         cache[resolver.fieldName] = d3Data.length;
         d3Data.push([resolver.fieldName, timeElapsed, resolver.duration]);
@@ -46,10 +40,8 @@ const Graph: FC<PropTypes> = ({ previousUrl }) => {
         }
       }
     }
-
     for (let i = 2; i < d3Data.length; i++) {
       const dataArr = d3Data[i];
-
       const evenData = (data: any) => {
         if (d3Data[0].length !== data.length) {
           data.push(0, 0);
@@ -57,13 +49,16 @@ const Graph: FC<PropTypes> = ({ previousUrl }) => {
           // eslint-disable-next-line no-useless-return
         } else return;
       };
-
       evenData(dataArr);
     }
-
     return d3Data;
   };
-  const googleChartData = traceToGoogleChartsData(instanceData);
+
+  let googleChartData: any = [];
+
+  if (instanceData !== undefined) {
+    googleChartData = traceToGoogleChartsData(instanceData);
+  }
 
   return (
     <>
