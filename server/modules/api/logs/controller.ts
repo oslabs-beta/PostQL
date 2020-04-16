@@ -1,17 +1,20 @@
 import { NextFunction } from 'express';
+import { v4 as uuidv4 } from 'uuid';
 import moment from 'moment';
 import { queriesByUser } from './mongo';
 
+
 interface LogController {
+  findUser(req: Request, res: Response, next: NextFunction): any;
   addLog(req: Request, res: Response, next: NextFunction): any;
-  addLogII(req: Request, res: Response, next: NextFunction): any;
   displayLogs(req: Request, res: Response, next: NextFunction): any;
   displayLog(req: Request, res: Response, next: NextFunction): any;
+  displayInstance(req: Request, res: Response, next: NextFunction): any;
 }
 
 const logController: LogController = {
 
-  addLog(req: Request, res: Response, next: NextFunction) {
+  findUser(req: Request, res: Response, next: NextFunction) {
     const { queryString, outputMetrics } = req.body;
     const { username } = res.locals;
 
@@ -48,7 +51,7 @@ const logController: LogController = {
     });
   },
 
-  addLogII(req: Request, res: Response, next: NextFunction) {
+  addLog(req: Request, res: Response, next: NextFunction) {
     const { queryString, outputMetrics } = req.body;
     const { username } = res.locals;
 
@@ -78,6 +81,7 @@ const logController: LogController = {
           for (let i = 0; i < queryHistory.length; i += 1) {
             if (queryHistory[i].queryString === queryString) {
               // found the existing query, add to this
+              queryHistory[i].queryIDs.push(uuidv4()); // add random uuid
               queryHistory[i].outputMetrics.push(outputMetrics);
               queryHistory[i].timeStamp.push(curTime);
               queryHistory[i].counter += 1;
@@ -89,7 +93,7 @@ const logController: LogController = {
 
         if (!bFound) {
         // create new log
-          queryHistory.push({ queryString, outputMetrics, timeStamp: [curTime] });
+          queryHistory.push({ queryIDs: [uuidv4()], queryString, outputMetrics, timeStamp: [curTime] });
           results.save();
         }
       }
@@ -139,6 +143,46 @@ const logController: LogController = {
             if (queryHistory[i]._id == req.params.queryID) res.locals.log = queryHistory[i];
           }
         } else res.locals.log = []; // no query history
+      }
+      return next();
+    });
+  },
+
+  displayInstance(req: Request, res: Response, next: NextFunction) {
+    const { username } = res.locals;
+
+    queriesByUser.findOne({ username }, (err: Error, results: any) => {
+      if (err) {
+        // some sort of error
+        return next({
+          code: 400,
+          message: 'Error with user retrieval',
+          log: 'logs.addLog: Error with DB when searching for user',
+        });
+      }
+
+      if (results) {
+        const { queryHistory } = results;
+        // only if there are queries
+        if (queryHistory.length) {
+          for (let i = 0; i < queryHistory.length; i += 1) {
+            if (queryHistory[i]._id == req.params.queryID) { // Mongo _id is not a string
+              // found the specific query, now need to dig for instance ID
+              for (let j = 0; j < queryHistory[i].queryIDs.length; j += 1) {
+                if (queryHistory[i].queryIDs[j] === req.params.instanceID) {
+                  // found the instance, give back the relevant info
+                  const instance = {
+                    queryString: queryHistory[i].queryString,
+                    outputMetrics: queryHistory[i].outputMetrics[j],
+                    timeStamp: queryHistory[i].timeStamp[j],
+                  };
+                  res.locals.instance = instance;
+                }
+              }
+              if (!res.locals.instance) res.locals.instance = {}; // no instance found
+            }
+          }
+        } else res.locals.instance = {}; // no specific query exists
       }
       return next();
     });
