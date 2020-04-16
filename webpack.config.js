@@ -21,6 +21,7 @@ module.exports = {
     host: '0.0.0.0',
     port: 80,
     historyApiFallback: true,
+    disableHostCheck: true,
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
