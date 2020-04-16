@@ -1,10 +1,8 @@
 import React, { FC, useState, useEffect } from 'react';
-import {
-  Link, useParams,
-} from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
 import { PropTypes } from './SpecificAnalytics';
-
+import { Chart } from 'react-google-charts';
 
 const Graph: FC<PropTypes> = ({ previousUrl }) => {
   const { queryID, instanceID } = useParams();
