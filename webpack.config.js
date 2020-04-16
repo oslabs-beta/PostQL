@@ -17,9 +17,9 @@ module.exports = {
       '/api': 'http://localhost:5000',
       '/image': 'http://localhost:5000',
     },
-    public: 'localhost:8080',
+    public: 'localhost:80',
     host: '0.0.0.0',
-    port: 8080,
+    port: 80,
     historyApiFallback: true,
   },
   plugins: [
