@@ -3,7 +3,7 @@ import {
   useRouteMatch, Switch, Route,
 } from 'react-router-dom';
 import SpecificOverview from './SpecificOverview';
-import Graph from './D3';
+import Graph from './Graph';
 
 export interface PropTypes {
   previousUrl: string;

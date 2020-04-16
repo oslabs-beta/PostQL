@@ -29,7 +29,6 @@ const SimpleTable: FC = () => {
   const { path } = useRouteMatch();
 
   const [queryData, setQueryData] = useState([]);
-  console.log(queryData);
 
   function getData() {
     fetch('/api/logs/display')

@@ -7,7 +7,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import {
   TableBody, TableCell, TableContainer, TableHead, TableRow, Paper,
 } from '@material-ui/core';
-import '../../styles/application.scss';
 
 const useStyles = makeStyles({
   table: {
@@ -49,18 +48,6 @@ const QueryTable: FC = () => {
     getInstanceData();
   }, []);
 
-  console.log(instanceData);
-
-
-  /*
-<TableRow key={`query${index}`}>
-              <TableCell component="th" scope="row">
-                {row.timestamp}
-              </TableCell>
-              <TableCell align="right">{row.duration}</TableCell>
-              <TableCell align="right"><Link to={`/analytics/${queryID}/D3`}>D3</Link></TableCell>
-            </TableRow>
-  */
 
   const instances: any[] = [];
   const {
