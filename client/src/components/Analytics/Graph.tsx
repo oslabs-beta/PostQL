@@ -3,7 +3,6 @@ import {
   Link,
 } from 'react-router-dom';
 
-import '../../styles/application.scss';
 import SpecificAnalytics, { PropTypes } from './SpecificAnalytics';
 import AnalyticsOverview from './AnalyticsOverview';
 
