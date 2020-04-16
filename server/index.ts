@@ -7,9 +7,12 @@ import { exec } from 'child_process';
 
 import modules from './modules';
 
+const secure = require('express-force-https');
+
 const app = express();
 const PORT = 5000;
 
+app.use(secure);
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
