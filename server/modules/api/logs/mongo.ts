@@ -1,9 +1,9 @@
 /* eslint-disable linebreak-style */
 import mongoose from 'mongoose';
+import path from 'path';
 
-require('dotenv').config();
+require('dotenv').config({ path: path.resolve(__dirname, '../../../../.env') });
 
-console.log(process.env);
 mongoose.connect(process.env.LOGS_DATABASE, { useNewUrlParser: true, useUnifiedTopology: true });
 
 const queryMetricsSchema = new mongoose.Schema({

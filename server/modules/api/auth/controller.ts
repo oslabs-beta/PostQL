@@ -1,8 +1,11 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
+import path from 'path';
+
 import { db } from './db';
 
-require('dotenv').config();
+
+require('dotenv').config({ path: path.resolve(__dirname, '../../../../.env') });
 
 interface AuthController {
   validateFields(req: Request, res: Response, next: any): any;
