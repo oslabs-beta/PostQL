@@ -8,7 +8,7 @@ logsRoute.get('/', (req, res) => res.status(200).json({ message: 'Logs route rea
 
 // authentication is required before any further action
 
-logsRoute.post('/add', authController.validateUser, logController.addLog, (req, res) => {
+logsRoute.post('/add', authController.validateUser, logController.addLog, logController.addLogII, (req, res) => {
   res.status(200).json({ message: 'Log has been successfully added.' });
 });
 

@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 
 require('dotenv').config();
 
-mongoose.connect(process.env.LOGS_DATABASE);
+mongoose.connect(process.env.LOGS_DATABASE, { useNewUrlParser: true, useUnifiedTopology: true });
 
 const queryMetricsSchema = new mongoose.Schema({
   queryString: { type: String, required: true },
@@ -15,7 +15,7 @@ const queryMetricsSchema = new mongoose.Schema({
 const queryMetrics = mongoose.model('QueryMetrics', queryMetricsSchema);
 
 const usersSchema = new mongoose.Schema({
-  userName: { type: String, require: true },
+  username: { type: String, require: true },
   queryHistory: [queryMetricsSchema],
 });
 

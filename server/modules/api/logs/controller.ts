@@ -4,12 +4,13 @@ import { queriesByUser } from './mongo';
 
 interface LogController {
   addLog(req: Request, res: Response, next: NextFunction): any;
+  addLogII(req: Request, res: Response, next: NextFunction): any;
   displayLogs(req: Request, res: Response, next: NextFunction): any;
   displayLog(req: Request, res: Response, next: NextFunction): any;
 }
 
 const logController: LogController = {
-  
+
   addLog(req: Request, res: Response, next: NextFunction) {
     const { queryString, outputMetrics } = req.body;
     const { username } = res.locals;
@@ -33,7 +34,7 @@ const logController: LogController = {
 
       if (!results) {
         // no user yet, add a new user document
-        queriesByUser.create({ username }, (err:Error, results: any) => {
+        queriesByUser.create({ username }, (err: Error, results: any) => {
           if (err) {
             return next({
               code: 400,
@@ -41,9 +42,15 @@ const logController: LogController = {
               log: 'logs.addLog: Error with DB when creating new user.',
             });
           }
+          return next();
         });
-      }
+      } else return next();
     });
+  },
+
+  addLogII(req: Request, res: Response, next: NextFunction) {
+    const { queryString, outputMetrics } = req.body;
+    const { username } = res.locals;
 
     queriesByUser.findOne({ username }, (err: Error, results: any) => {
       if (err) {
@@ -54,7 +61,7 @@ const logController: LogController = {
         });
       }
       if (!results) {
-        // some sort of error
+      // some sort of error
         return next({
           code: 400,
           message: 'Error with user retrieval',
@@ -66,11 +73,10 @@ const logController: LogController = {
         const { queryHistory } = results;
         const curTime = moment().format('MMMM Do YYYY, h:mm:ss a');
         let bFound = false;
-  
+
         if (queryHistory.length) {
           for (let i = 0; i < queryHistory.length; i += 1) {
             if (queryHistory[i].queryString === queryString) {
-
               // found the existing query, add to this
               queryHistory[i].outputMetrics.push(outputMetrics);
               queryHistory[i].timeStamp.push(curTime);
@@ -80,21 +86,21 @@ const logController: LogController = {
             }
           }
         }
-        
+
         if (!bFound) {
-          // create new log
+        // create new log
           queryHistory.push({ queryString, outputMetrics, timeStamp: [curTime] });
           results.save();
         }
       }
+      return next();
     });
-    return next();
   },
 
   displayLogs(req: Request, res: Response, next: NextFunction) {
     const { username } = res.locals;
 
-    queriesByUser.find({ username }, (err: Error, results: any) => {
+    queriesByUser.findOne({ username }, (err: Error, results: any) => {
       if (err) {
         // some sort of error
         return next({
@@ -105,8 +111,8 @@ const logController: LogController = {
       }
 
       if (results) {
-        res.locals.logs = results[0].queryHistory;
-      }
+        res.locals.logs = results.queryHistory;
+      } else res.locals.logs = 'No results found';
       // if no results, just move onto next middleware
       return next();
     });
@@ -115,7 +121,7 @@ const logController: LogController = {
   displayLog(req: Request, res: Response, next: NextFunction) {
     const { username } = res.locals;
 
-    queriesByUser.find({ username }, (err: Error, results: any) => {
+    queriesByUser.findOne({ username }, (err: Error, results: any) => {
       if (err) {
         // some sort of error
         return next({
@@ -126,17 +132,17 @@ const logController: LogController = {
       }
 
       if (results) {
-        const { queryHistory } = results[0];
+        const { queryHistory } = results;
         // only if there are queries
         if (queryHistory.length) {
           for (let i = 0; i < queryHistory.length; i += 1) {
-            if (queryHistory[i]['_id'] == req.params.queryID) res.locals.log = queryHistory[i];
+            if (queryHistory[i]._id == req.params.queryID) res.locals.log = queryHistory[i];
           }
         } else res.locals.log = []; // no query history
       }
       return next();
-    })
-  }
-}
+    });
+  },
+};
 
 export default logController;
