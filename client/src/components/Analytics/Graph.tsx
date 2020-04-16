@@ -19,7 +19,51 @@ const Graph: FC<PropTypes> = ({ previousUrl }) => {
     getInstanceData();
   }, []);
 
-  console.log(instanceData);
+  const traceToGoogleChartsData = (data: any) => {
+    const d3Data: (string | number)[][] = [
+      ['Query/Resolver', ' ', 'Time in ns'],
+      ['Query', 0, data.extensions.tracing.duration],
+    ];
+    let timeElapsed = 0;
+    const cache: any = {};
+
+    for (
+      let i = 0;
+      i < data.extensions.tracing.execution.resolvers.length;
+      i++
+    ) {
+      const resolver: any = data.extensions.tracing.execution.resolvers[i];
+
+      if (!cache[resolver.fieldName]) {
+        cache[resolver.fieldName] = d3Data.length;
+        d3Data.push([resolver.fieldName, timeElapsed, resolver.duration]);
+        timeElapsed += resolver.duration;
+      } else {
+        d3Data[cache[resolver.fieldName]].push(timeElapsed, resolver.duration);
+        if (d3Data[0].length !== d3Data[cache[resolver.fieldName]].length) {
+          d3Data[0].push(' ', 'Time in ns');
+          d3Data[1].push(0, 0);
+        }
+      }
+    }
+
+    for (let i = 2; i < d3Data.length; i++) {
+      const dataArr = d3Data[i];
+
+      const evenData = (data: any) => {
+        if (d3Data[0].length !== data.length) {
+          data.push(0, 0);
+          evenData(data);
+          // eslint-disable-next-line no-useless-return
+        } else return;
+      };
+
+      evenData(dataArr);
+    }
+
+    return d3Data;
+  };
+  const googleChartData = traceToGoogleChartsData(instanceData);
 
   return (
     <>
@@ -30,16 +74,7 @@ const Graph: FC<PropTypes> = ({ previousUrl }) => {
         height={'300px'}
         chartType="BarChart"
         loader={<div>Loading Chart</div>}
-        data={[
-          ['Query/Resolver', ' ', 'Time in ns', ' ', 'Time in ns'],
-          ['Query', 0, 291258, 0, 0],
-          ['posts', 0, 28870, 0, 0],
-          ['title', 28870, 14052, 76392, 14052],
-          ['user', 42922, 9453, 76392, 8432],
-          ['id', 52375, 8431, 76392, 6642],
-          ['firstName', 60806, 8176, 76392, 7920],
-          ['lastName', 68982, 7410, 76392, 5621],
-        ]}
+        data={googleChartData}
         options={{
           title: `Query ID:${queryID},   Instance ID: ${instanceID}`,
           chartArea: { width: '50%' },
