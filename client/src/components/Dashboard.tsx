@@ -17,6 +17,7 @@ const Dashboard: FC = () => {
   return (
     <div className="app">
       <Router>
+        <img src="/image/title.png" />
         <button type="submit" onClick={logout}>Logout</button>
         <Switch>
           <Route path="/" exact>

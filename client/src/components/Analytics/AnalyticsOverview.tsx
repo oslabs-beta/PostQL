@@ -6,7 +6,6 @@ import SimpleTable from './SimpleTable';
 const AnalyticsOverview: FC = () => (
   <>
     <Link to="/">Back</Link>
-    <img src="/image/title.png" />
     <h2 className="analyticstitle">Performance Analytics</h2>
     <SimpleTable />
   </>

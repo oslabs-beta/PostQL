@@ -7,7 +7,6 @@ import { PropTypes } from './SpecificAnalytics';
 const SpecificOverview: FC<PropTypes> = ({ previousUrl }) => (
   <>
     <Link to={previousUrl}>Back</Link>
-    <img src="/image/title.png" />
     <h2 className="specifictitle">Query Performance Analytics</h2>
     <QueryTable />
   </>

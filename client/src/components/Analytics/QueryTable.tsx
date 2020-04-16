@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import {
   Link, useParams,
 } from 'react-router-dom';
@@ -21,10 +21,66 @@ const useStyles = makeStyles({
     link: string;
   }
 
+interface InstanceData {
+  outputMetrics: any;
+  queryIDs: any;
+  timeStamp: any;
+  queryString: any;
+}
+
 
 const QueryTable: FC = () => {
   const classes = useStyles();
   const { queryID } = useParams();
+  const [instanceData, setInstanceData] = useState<InstanceData>({
+    outputMetrics: 'Loading...',
+    queryIDs: 'Loading...',
+    timeStamp: 'Loading...',
+    queryString: 'Loading...',
+  });
+
+  function getInstanceData() {
+    fetch(`/api/logs/display/${queryID}`)
+      .then((res) => res.json())
+      .then((data) => setInstanceData(data));
+  }
+
+  useEffect(() => {
+    getInstanceData();
+  }, []);
+
+  console.log(instanceData);
+
+
+  /*
+<TableRow key={`query${index}`}>
+              <TableCell component="th" scope="row">
+                {row.timestamp}
+              </TableCell>
+              <TableCell align="right">{row.duration}</TableCell>
+              <TableCell align="right"><Link to={`/analytics/${queryID}/D3`}>D3</Link></TableCell>
+            </TableRow>
+  */
+
+  const instances: any[] = [];
+  const {
+    outputMetrics, queryIDs, timeStamp, queryString,
+  } = instanceData;
+
+  if (Array.isArray(outputMetrics)) {
+    outputMetrics.forEach((om: any, index: number) => {
+      instances.push(
+        <TableRow key={om.startTime}>
+          <TableCell component="th" scope="row">
+            {timeStamp[index]}
+          </TableCell>
+          <TableCell align="right">{om.duration / 1000000}</TableCell>
+          <TableCell align="right"><Link to={`/analytics/${queryID}/${queryIDs[index]}`}>Resolver Breakdown</Link></TableCell>
+        </TableRow>,
+      );
+    });
+  }
+
 
   return (
     <TableContainer component={Paper}>
@@ -33,19 +89,11 @@ const QueryTable: FC = () => {
           <TableRow>
             <TableCell>TimeStamp</TableCell>
             <TableCell align="right">Total Time duration&nbsp;(ms)</TableCell>
-            <TableCell align="right">D3</TableCell>
+            <TableCell align="right">Graph</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          { data.content.body.filter((elem) => elem.query === queryID).map(((row, index) => (
-            <TableRow key={`query${index}`}>
-              <TableCell component="th" scope="row">
-                {row.timestamp}
-              </TableCell>
-              <TableCell align="right">{row.duration}</TableCell>
-              <TableCell align="right"><Link to={`/analytics/${queryID}/D3`}>D3</Link></TableCell>
-            </TableRow>
-          )))}
+          {instances}
         </TableBody>
       </Table>
     </TableContainer>
@@ -53,25 +101,3 @@ const QueryTable: FC = () => {
 };
 
 export default QueryTable;
-
-const data = {
-  content: {
-    body: [
-      {
-        query: 'query1',
-        timestamp: 1000,
-        duration: 700,
-      },
-      {
-        query: 'query1',
-        timestamp: 1100,
-        duration: 800,
-      },
-      {
-        query: 'query2',
-        timestamp: 1200,
-        duration: 400,
-      },
-    ],
-  },
-};

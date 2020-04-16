@@ -4,14 +4,12 @@ import {
 } from 'react-router-dom';
 
 import '../../styles/application.scss';
-import SpecificAnalytics, { PropTypes } from './SpecificAnalytics';
-import AnalyticsOverview from './AnalyticsOverview';
+import { PropTypes } from './SpecificAnalytics';
 
 
 const D3: FC<PropTypes> = ({ previousUrl }) => (
   <>
     <Link to={previousUrl}>Back</Link>
-    <img src="/image/title.png" />
     <h2 className="D3title">D3 Chart</h2>
   </>
 );
