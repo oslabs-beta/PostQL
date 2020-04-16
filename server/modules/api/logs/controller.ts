@@ -93,7 +93,7 @@ const logController: LogController = {
 
         if (!bFound) {
         // create new log
-          queryHistory.push({ queryString, outputMetrics, timeStamp: [curTime] });
+          queryHistory.push({ queryIDs: [uuidv4()], queryString, outputMetrics, timeStamp: [curTime] });
           results.save();
         }
       }
