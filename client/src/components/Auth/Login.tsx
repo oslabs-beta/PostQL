@@ -29,6 +29,7 @@ const Login: FC = () => {
 
   return (
     <div className="form">
+      <img className="loginLogo" src="../../image/Group3.png" />
       <h2>Login</h2>
       <label htmlFor="username">Username</label>
       <input type="text" name="username" id="username" value={username} onChange={(e) => setUsername(e.target.value)} />

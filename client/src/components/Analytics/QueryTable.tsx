@@ -26,7 +26,10 @@ interface InstanceData {
   timeStamp: any;
   queryString: any;
 }
+<<<<<<< HEAD
 
+=======
+>>>>>>> dev
 
 const QueryTable: FC = () => {
   const classes = useStyles();
@@ -48,6 +51,7 @@ const QueryTable: FC = () => {
     getInstanceData();
   }, []);
 
+<<<<<<< HEAD
 
   const instances: any[] = [];
   const {
@@ -68,6 +72,11 @@ const QueryTable: FC = () => {
     });
   }
 
+=======
+  const {
+    outputMetrics, queryIDs, timeStamp, queryString,
+  } = instanceData;
+>>>>>>> dev
 
   return (
     <TableContainer component={Paper}>
@@ -80,7 +89,19 @@ const QueryTable: FC = () => {
           </TableRow>
         </TableHead>
         <TableBody>
+<<<<<<< HEAD
           {instances}
+=======
+          { Array.isArray(outputMetrics) && outputMetrics.map((om: any, index: number) => (
+            <TableRow key={om.startTime}>
+              <TableCell component="th" scope="row">
+                {timeStamp[index]}
+              </TableCell>
+              <TableCell align="right">{om.duration / 1000000}</TableCell>
+              <TableCell align="right"><Link to={`/analytics/${queryID}/${queryIDs[index]}`}>Resolver Breakdown</Link></TableCell>
+            </TableRow>
+          ))}
+>>>>>>> dev
         </TableBody>
       </Table>
     </TableContainer>

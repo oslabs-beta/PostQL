@@ -14,7 +14,11 @@ const SpecificAnalytics: FC<PropTypes> = ({ previousUrl }) => {
   return (
     <div className="specificanalytics">
       <Switch>
+<<<<<<< HEAD
         <Route path={`${path}/:instanceID`}>
+=======
+        <Route path={`${path}/Graph`}>
+>>>>>>> dev
           <Graph previousUrl={path} />
         </Route>
         <Route path={path} exact>
