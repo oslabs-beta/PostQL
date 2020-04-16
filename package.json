@@ -4,6 +4,8 @@
   "description": "A lightweight and portable solution for full-stack React applications.",
   "main": "index.js",
   "scripts": {
+    "start": "cross-env NODE_ENV=production concurrently \"nodemon server/index.ts --exec babel-node --extensions \".ts\"\"",
+    "build": "webpack",
     "dev": "cross-env NODE_ENV=development concurrently \"nodemon server/index.ts --exec babel-node --extensions \".ts\"\" \"webpack-dev-server\"",
     "test": "jest ./__tests__ --verbose"
   },
