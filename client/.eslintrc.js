@@ -9,7 +9,8 @@ module.exports = {
     "react-hooks/exhaustive-deps": 1,
     "react/jsx-one-expression-per-line": "off",
     "func-names": "off",
-    "react/jsx-filename-extension": "off"
+    "react/jsx-filename-extension": "off",
+    "react/prefer-stateless-function": "off"
   },
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
