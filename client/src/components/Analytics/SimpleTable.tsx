@@ -52,18 +52,18 @@ const SimpleTable: FC = () => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {queryData.map(((row) => (
+          {queryData.map((row) => (
             <TableRow key={row.queryString}>
               <TableCell component="th" scope="row">
                 {row.queryString}
               </TableCell>
               <TableCell align="right">{row.queryString.includes('query') ? 'Query' : 'Mutation'}</TableCell>
-              <TableCell align="right">{row.outputMetrics.length}</TableCell>
-              <TableCell align="right">Time last run</TableCell>
-              <TableCell align="right">{row.timeStamp[row.timeStampl.length - 1]}</TableCell>
-              <TableCell align="right"><Link to={`${path}/${row.query}`}>{row.query}</Link></TableCell>
+              <TableCell align="right">{row.counter}</TableCell>
+              <TableCell align="right">Duration of last run</TableCell>
+              <TableCell align="right">{row.timeStamp}</TableCell>
+              <TableCell align="right"><Link to={`${path}/${row._id}`}>More Details</Link></TableCell>
             </TableRow>
-          )))}
+          ))}
         </TableBody>
       </Table>
     </TableContainer>
@@ -86,31 +86,3 @@ const SimpleTable: FC = () => {
 //     })
 
 export default SimpleTable;
-
-const data = {
-  content: {
-    body: [
-      {
-        query: 'query1',
-        structure: 'xxxxxxxxxxxxx',
-        timesRun: 3,
-        lastTime: 300,
-        timestamp: 1000,
-      },
-      {
-        query: 'query2',
-        structure: 'xxxxxxxxxxxxx',
-        timesRun: 3,
-        lastTime: 300,
-        timestamp: 1000,
-      },
-      {
-        query: 'query3',
-        structure: 'xxxxxxxxxxxxx',
-        timesRun: 3,
-        lastTime: 300,
-        timestamp: 1000,
-      },
-    ],
-  },
-};

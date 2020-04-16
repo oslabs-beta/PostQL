@@ -48,6 +48,10 @@ const QueryTable: FC = () => {
     getInstanceData();
   }, []);
 
+  const {
+    outputMetrics, queryIDs, timeStamp, queryString,
+  } = instanceData;
+
   return (
     <TableContainer component={Paper}>
       <Table className={classes.table} aria-label="simple table">
@@ -55,19 +59,19 @@ const QueryTable: FC = () => {
           <TableRow>
             <TableCell>TimeStamp</TableCell>
             <TableCell align="right">Total Time duration&nbsp;(ms)</TableCell>
-            <TableCell align="right">D3</TableCell>
+            <TableCell align="right">Graph</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          { data.content.body.filter((elem) => elem.query === queryID).map(((row, index) => (
-            <TableRow key={`query${index}`}>
+          { Array.isArray(outputMetrics) && outputMetrics.map((om: any, index: number) => (
+            <TableRow key={om.startTime}>
               <TableCell component="th" scope="row">
-                {row.timestamp}
+                {timeStamp[index]}
               </TableCell>
-              <TableCell align="right">{row.duration}</TableCell>
-              <TableCell align="right"><Link to={`/analytics/${queryID}/Graph`}>Graph</Link></TableCell>
+              <TableCell align="right">{om.duration / 1000000}</TableCell>
+              <TableCell align="right"><Link to={`/analytics/${queryID}/${queryIDs[index]}`}>Resolver Breakdown</Link></TableCell>
             </TableRow>
-          )))}
+          ))}
         </TableBody>
       </Table>
     </TableContainer>
@@ -75,25 +79,3 @@ const QueryTable: FC = () => {
 };
 
 export default QueryTable;
-
-const data = {
-  content: {
-    body: [
-      {
-        query: 'query1',
-        timestamp: 1000,
-        duration: 700,
-      },
-      {
-        query: 'query1',
-        timestamp: 1100,
-        duration: 800,
-      },
-      {
-        query: 'query2',
-        timestamp: 1200,
-        duration: 400,
-      },
-    ],
-  },
-};
