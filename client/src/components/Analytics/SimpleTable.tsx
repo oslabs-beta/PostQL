@@ -7,7 +7,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import {
   TableBody, TableCell, TableContainer, TableHead, TableRow, Paper,
 } from '@material-ui/core';
-import '../../styles/application.scss';
 
 const useStyles = makeStyles({
   table: {
