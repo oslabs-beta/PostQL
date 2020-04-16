@@ -63,7 +63,7 @@ const QueryTable: FC = () => {
           </TableRow>
         </TableHead>
         <TableBody>
-          { Array.isArray(outputMetrics) && outputMetrics.map((om: any, index: number) => (
+          { Array.isArray(outputMetrics) ? outputMetrics.map((om: any, index: number) => (
             <TableRow key={om.startTime}>
               <TableCell component="th" scope="row">
                 {timeStamp[index]}
@@ -71,7 +71,7 @@ const QueryTable: FC = () => {
               <TableCell align="right">{om.duration / 1000000}</TableCell>
               <TableCell align="right"><Link to={`/analytics/${queryID}/${queryIDs[index]}`}>Resolver Breakdown</Link></TableCell>
             </TableRow>
-          ))}
+          )) : <h2>Nothing to see here!</h2>}
         </TableBody>
       </Table>
     </TableContainer>
