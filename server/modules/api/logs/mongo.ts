@@ -3,10 +3,7 @@ import mongoose from 'mongoose';
 
 require('dotenv').config();
 
-// mongoose.connect(process.env.LOGS_DATABASE);
-mongoose.connect('mongodb+srv://davidzhang8828:postQL@cluster0-c1js7.mongodb.net/test?retryWrites=true&w=majority', () => {
-  console.log(process.env.LOGS_DATABASE);
-});
+mongoose.connect(process.env.LOGS_DATABASE);
 
 const queryMetricsSchema = new mongoose.Schema({
   queryString: { type: String, required: true },
