@@ -29,8 +29,9 @@ const Login: FC = () => {
 
   return (
     <div className="form">
+      <h2>Login</h2>
       <label htmlFor="username">Username</label>
-      <input type="text" name="usernam" id="username" value={username} onChange={(e) => setUsername(e.target.value)} />
+      <input type="text" name="username" id="username" value={username} onChange={(e) => setUsername(e.target.value)} />
       <label htmlFor="password">Password</label>
       <input type="password" name="password" id="password" value={password} onChange={(e) => setPassword(e.target.value)} />
       <button type="submit" onClick={login}>Log in</button>

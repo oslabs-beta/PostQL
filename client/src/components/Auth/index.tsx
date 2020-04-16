@@ -1,3 +1,3 @@
-import Login from './Login';
+import GetAuth from './GetAuth';
 
-export { Login };
+export default GetAuth;

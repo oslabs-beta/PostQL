@@ -1,7 +1,7 @@
 import React, { FC, useState, useEffect } from 'react';
 
 import Dashboard from './Dashboard';
-import { Login } from './Auth';
+import GetAuth from './Auth';
 
 const App: FC = () => {
   const [authed, setAuthed] = useState(null);
@@ -22,7 +22,7 @@ const App: FC = () => {
 
   return (
     authed
-      ? <Dashboard /> : <Login />
+      ? <Dashboard /> : <GetAuth />
   );
 };
 
