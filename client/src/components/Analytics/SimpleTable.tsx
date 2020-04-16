@@ -1,6 +1,6 @@
-import React, { FC } from 'react';
+import React, { FC, useState, useEffect } from 'react';
 import {
-  Link,
+  Link, useRouteMatch,
 } from 'react-router-dom';
 import Table from '@material-ui/core/Table';
 import { makeStyles } from '@material-ui/core/styles';
@@ -16,6 +16,9 @@ const useStyles = makeStyles({
 
   interface Table {
     query: string;
+    structure: string;
+    timesRun: number;
+    lastTime: number;
     timestamp: number;
     link: string;
   }
@@ -23,27 +26,53 @@ const useStyles = makeStyles({
 
 const SimpleTable: FC = () => {
   const classes = useStyles();
+  const { path } = useRouteMatch();
+
+  const [queryData, setQueryData] = useState([]);
+  console.log(queryData);
+
+  function getData() {
+    fetch('/api/logs/display')
+      .then((res) => res.json())
+      .then((responseData) => setQueryData(responseData));
+  }
+
+  useEffect(() => {
+    getData();
+  }, []);
+
+  const tableRows: any[] = [];
+
+  queryData.forEach((q) => {
+    tableRows.push(
+      <TableRow key={q.queryString}>
+        <TableCell component="th" scope="row">
+          {q.queryString}
+        </TableCell>
+        <TableCell align="right">{q.queryString.includes('query') ? 'Query' : 'Mutation'}</TableCell>
+        <TableCell align="right">{q.outputMetrics.length}</TableCell>
+        <TableCell align="right">Time last run</TableCell>
+        <TableCell align="right">{q.timeStamp[q.timeStamp.length - 1]}</TableCell>
+        <TableCell align="right"><Link to={`${path}/${q._id}`}>More Details</Link></TableCell>
+      </TableRow>,
+    );
+  });
 
   return (
     <TableContainer component={Paper}>
       <Table className={classes.table} aria-label="simple table">
         <TableHead>
           <TableRow>
-            <TableCell>TimeStamp</TableCell>
-            <TableCell align="right">Total Time duration&nbsp;(ms)</TableCell>
-            <TableCell align="right">D3</TableCell>
+            <TableCell>Query</TableCell>
+            <TableCell align="right">Query Type</TableCell>
+            <TableCell align="right"># of Times Run</TableCell>
+            <TableCell align="right">Total Time of Last Instance&nbsp;(ms)</TableCell>
+            <TableCell align="right">Timestamp of Last Run&nbsp;(XX)</TableCell>
+            <TableCell align="right">More Analytics</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {data.content.body.map(((row) => (
-            <TableRow key={row.query}>
-              <TableCell component="th" scope="row">
-                {row.timestamp}
-              </TableCell>
-              <TableCell align="right">{row.duration}</TableCell>
-              <TableCell align="right"><Link to={`/analytics/${row.query}`}>{row.query}</Link></TableCell>
-            </TableRow>
-          )))}
+          {tableRows}
         </TableBody>
       </Table>
     </TableContainer>
@@ -51,25 +80,3 @@ const SimpleTable: FC = () => {
 };
 
 export default SimpleTable;
-
-const data = {
-  content: {
-    body: [
-      {
-        query: 'query1',
-        timestamp: 1000,
-        duration: 700,
-      },
-      {
-        query: 'query1',
-        timestamp: 1100,
-        duration: 800,
-      },
-      {
-        query: 'query2',
-        timestamp: 1200,
-        duartion: 400,
-      },
-    ],
-  },
-};
