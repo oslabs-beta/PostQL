@@ -1,0 +1,40 @@
+// some google fonts
+@import url('https://fonts.googleapis.com/css?family=Nunito|Rubik&display=swap');
+
+$nunito-font: 'Nunito', sans-serif;
+$rubik-font: 'Rubik', sans-serif;
+$font-stack: $rubik-font, $nunito-font, Helvetica, sans-serif;
+$primary-color:darken(gray, 25);
+
+body {
+  background-color: rgb(23, 23, 41);
+}
+
+$light-color: gray;
+body {
+  font: 100% $font-stack;
+  color: $primary-color;
+}
+
+.logo {
+  height: 75px;
+  width: 218px;
+}
+
+.analyticstitle{
+  color:white;
+}
+
+button {
+  background-color: rgb(49, 53, 78);
+  color: rgb(254, 251, 251);
+  border-radius: 5px;
+  padding: 0.6rem 1.2rem;
+  width: 100px;
+  font-size: 1rem;
+  cursor: pointer;
+  border: none;
+  }
+
+
+ 
