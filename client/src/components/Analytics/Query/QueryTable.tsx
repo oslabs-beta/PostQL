@@ -7,7 +7,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import {
   TableBody, TableCell, TableContainer, TableHead, TableRow, Paper,
 } from '@material-ui/core';
-import '../../styles/application.scss';
 
 const useStyles = makeStyles({
   table: {
@@ -38,7 +37,7 @@ const QueryTable: FC = () => {
     queryString: 'Loading...',
   });
 
-  function getInstanceData() {
+  function getInstanceData(): void {
     fetch(`/api/logs/display/${queryID}`)
       .then((res) => res.json())
       .then((data) => setInstanceData(data));
@@ -49,7 +48,7 @@ const QueryTable: FC = () => {
   }, []);
 
   const {
-    outputMetrics, queryIDs, timeStamp, queryString,
+    outputMetrics, queryIDs, timeStamp,
   } = instanceData;
 
   return (

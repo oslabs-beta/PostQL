@@ -16,8 +16,33 @@ body {
   color: $primary-color;
 }
 
-.loginLogo{
-  
+.playground {
+  height: 80vh !important;
+}
+
+.split {
+  display: flex;
+  justify-content: space-between;
+}
+
+.container {
+  max-width: 1200px;
+  margin: auto;
+}
+
+.form {
+  label {
+    display: block;
+  }
+}
+
+.slim {
+  margin: auto;
+  width: 400px;
+}
+
+.form {
+  max-width: 400px;
 }
 
 .logo {

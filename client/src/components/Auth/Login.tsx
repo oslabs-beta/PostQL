@@ -29,12 +29,15 @@ const Login: FC = () => {
 
   return (
     <div className="form">
-      <img className="loginLogo" src="../../image/Group3.png" />
       <h2>Login</h2>
-      <label htmlFor="username">Username</label>
-      <input type="text" name="username" id="username" value={username} onChange={(e) => setUsername(e.target.value)} />
-      <label htmlFor="password">Password</label>
-      <input type="password" name="password" id="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+      <label htmlFor="username">Username
+        <input type="text" name="username" id="username" value={username} onChange={(e) => setUsername(e.target.value)} />
+      </label>
+
+      <label htmlFor="password">Password
+        <input type="password" name="password" id="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+      </label>
+
       <button type="submit" onClick={login}>Log in</button>
     </div>
   );
