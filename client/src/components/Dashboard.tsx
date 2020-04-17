@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import {
-  BrowserRouter as Router, Switch, Route,
+  BrowserRouter as Router, Switch, Route, Link,
 } from 'react-router-dom';
 
 import Home from './Home';
@@ -15,9 +15,12 @@ const Dashboard: FC = () => {
   }
 
   return (
-    <div className="app">
+    <div className="container">
       <Router>
-        <button type="submit" onClick={logout}>Logout</button>
+        <div className="split">
+          <Link to="/"><img className="logo" src="/image/title.png" /></Link>
+          <button type="submit" onClick={logout}>Logout</button>
+        </div>
         <Switch>
           <Route path="/" exact>
             <Home />
