@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { Playground, store } from 'graphql-playground-react';
+import { Playground, store } from 'graphql-playground-react-tracking';
 import { Provider } from 'react-redux';
 
 const playgroundSettings = {

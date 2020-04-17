@@ -20,7 +20,7 @@
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "file-loader": "^6.0.0",
-    "graphql-playground-react": "^1.7.22",
+    "graphql-playground-react-tracking": "^1.7.22",
     "jsonwebtoken": "^8.5.1",
     "moment": "^2.24.0",
     "mongoose": "^5.9.9",
