@@ -1,3 +1,4 @@
+import { NextFunction } from 'express';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { db } from './db';
@@ -5,15 +6,15 @@ import { db } from './db';
 require('dotenv').config();
 
 interface AuthController {
-  validateFields(req: Request, res: Response, next: any): any;
-  doesUsernameExist(req: Request, res: Response, next): any;
-  checkLogin(req: Request, res: Response, next: any): any;
-  createUser(req: Request, res: Response, next: any): any;
-  doesEmailExist(req: Request, res: Response, next: any): any;
-  createSession(req: Request, res: Response, next: any): any;
-  validateUser(req: Request, res: Response, next: any): any;
-  logout(req: Request, res: Response, next: any): any;
-  deleteUser(req: Request, res: Response, next: any): any;
+  validateFields(req: Request, res: Response, next: NextFunction): any;
+  doesUsernameExist(req: Request, res: Response, next: NextFunction): any;
+  checkLogin(req: Request, res: Response, next: NextFunction): any;
+  createUser(req: Request, res: Response, next: NextFunction): any;
+  doesEmailExist(req: Request, res: Response, next: NextFunction): any;
+  createSession(req: Request, res: Response, next: NextFunction): any;
+  validateUser(req: Request, res: Response, next: NextFunction): any;
+  logout(req: Request, res: Response, next: NextFunction): any;
+  deleteUser(req: Request, res: Response, next: NextFunction): any;
 }
 
 enum AuthTypes {

@@ -5,6 +5,8 @@ module.exports = {
   "rules": {
     "no-console": 1,
     "func-names": "off",
+    "import/extensions": "off",
+    "import/no-unresolved": "off"
   },
   "parser": "@typescript-eslint/parser",
   "parserOptions": {

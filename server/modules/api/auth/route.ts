@@ -1,6 +1,7 @@
-import express from 'express';
-
+import { Request, Response, NextFunction } from 'express';
 import { controller } from './controller';
+
+const express = require('express');
 
 const router = express.Router();
 

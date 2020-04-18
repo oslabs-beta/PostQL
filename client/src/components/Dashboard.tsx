@@ -18,7 +18,7 @@ const Dashboard: FC = () => {
     <div className="container">
       <Router>
         <div className="split">
-          <Link to="/"><img className="logo" src="/image/title.png" /></Link>
+          <Link to="/"><img className="logo" src="/image/title.png" alt="logo" /></Link>
           <button type="submit" onClick={logout}>Logout</button>
         </div>
         <Switch>

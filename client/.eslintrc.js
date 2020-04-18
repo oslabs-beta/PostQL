@@ -10,7 +10,9 @@ module.exports = {
     "react/jsx-one-expression-per-line": "off",
     "func-names": "off",
     "react/jsx-filename-extension": "off",
-    "react/prefer-stateless-function": "off"
+    "react/prefer-stateless-function": "off",
+    "import/extensions": "off",
+    "import/no-unresolved": "off"
   },
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
