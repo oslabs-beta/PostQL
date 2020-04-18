@@ -1,19 +1,20 @@
 sudo: required
-
 services:
-  - docker
-
+- docker
 before_install:
-  - docker build -t postql/tests -f ./server/Dockerfile.dev ./server
-
+- docker build -t postql/tests -f ./server/Dockerfile.dev ./server
 script:
-  - docker run -e CI=true postql/tests npm run test
-
+- docker run -e CI=true postql/tests npm run test
 after_success:
-  - docker build -t postql/client ./client
-  - docker build -t postql/server ./server
-  - docker build -t postql/nginx ./nginx
-  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
-  - docker push postql/client
-  - docker push postql/server
-  - docker push postql/nginx
+- docker build -t postql/client ./client
+- docker build -t postql/server ./server
+- docker build -t postql/nginx ./nginx
+- echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+- docker push postql/client
+- docker push postql/server
+- docker push postql/nginx
+env:
+  global:
+  - secure: "Wf2srp9WNxdeXQqLRI9N+4g9tUsKp98zv/7m6wwmoxRZ18d1Oe66jG066LUvWACCxVDslRteC/qWPojGpcreR+7tpAYQAGJjdpiPsCYILPR8wasuRsw4+QpBqEDc5QVF/Q82VTM7sdwpHY1n7ulgPWZjcs/slMuMlNE1GWssruSZ5fOxq1SK53AbinZvuy05m0fd0SbXjJ9wKvpPdjx64WyCXGWwOPlW7OAIQw44CMkzrevRymK1MZo9DrOIEE6n0yppv4HqaDi1EGLBM2vXBCVXpZM9Jwo1eHiFiH15OXZaNVASxXrI4La1L91t2FBuojFLpNU5inCCP0ilFktuPvLsxjcvH4rKq4+irrFu0+mCGWM007+rhQpzW+bCAk/nhTqsUC6sEzM0D8uTnLN+bs5Qiv75REl5qqJrDR3r8q+5XHWycDY26d1826mzD0C86epTdtCdagosJmdLr/mefa2Sfk8Ow6CihlCMpNSkiN4VaNWTeKM2as+WVa81dgmoTfzGXhcrtwVuazpJgLZGHFxr+ifW6mtBlW/jzgNO8Bx/Fgjxeowt+eeoguy8CDm2RcW3+KPcjWlet+/1U3VnK/TELjjuRCfkplP+weuU1lY2ghumiKJLRgUtDFa5eNGEC1V4XuicpDPFJ95rgL5ZpCdwsJiCNRjd8epr0g5JMK8="
+  - secure: "C2DJoyZr/abvujg46Fzntp69sH0+dE3MFwdr++/7b99iyXueWtZYUR4FaQljrw+wosYkbin20+Ocpi7HkfupsFHxIx3EBPSgHI3eMc0txa4/yZR/pefcol2LI4SONkm970FE2yKSSxPq01iGS6eD2sN696xq8z6a9c3A/Jfg8K4R7ZgKo1D2IRH7pdKpOWk2f/HGBpc5nssHrGeduPb7B5a11SCaYYUOig/JhBSHUkUr2t6O4I9Nm2N7yA9ujUTMkgBPmZGvbygMooQuuoN2LhgPCo/6fzQYNsRjtII5gcXIZ8We7G/kb6RmQORuVFaLHdD6Wt3n1OgzTQmymUGN7J5NLfxTh6KX/6WX7MzBfarPBxoa0yR3lBmb1rgGgvssG/ZHWbtFd7UBUIgFKTc+PCSF7srDJEQmq8WTbybyIljg0rbcpsOPiHomiKBBivNE5KVuFciwHcvrfpyC+da4G9T4usfr5HjCgnZ/sdqV3PSNGyIU40Gukgm4xDqVxBEDDdEb0ZiOP5brrH/k2XFBtsMrUr89uKA/FJOyWuTBCgmS50b3MXG4A1uQesNRAuiimraJM72i8AphR01yPuDkYGz0NPEdc675g8G2znN4U+LibH3KLB0n5c1NsrEa9VbIacDdY0ZYyhW0Lef+tT6VFOvEaZptcSlJBaVUz6I6HI4="
+  - secure: "IKow6YZ4kYBkBDHzQHQh/8ixrGY8YkPvdFmEdck2ZAh3vIE9W5DLLPAidRHiLpJhcYNkASR/W2GVaVAPHTz5pPpd9ucsTIjkYLNm9ur6KfIrW0MjTMSEMGvwzdUvOK8Z4yk57AVNgIZWZAWLjZAKNT1Ld6CIhE8SZSiDSNTeCKqKP13/JihBhHuPe+0Ksm1d1mFP4QoocG2iWhLuM1rvxyKuQxxwpeOClW5Tx8tSRGgdaZP5RsdgiRNXl5+ORsnHZh1VAKGGZxqmWyyy7zVmaqxJ/LysJ2OzKvf63DBowZjoE06lkC5SBWjfwwxQGnpls1VMZi1DW7TYdhW3stFnzkCiN0eVf7nCPx3wnlk6mQHmARSzuK6tsYk8ckf8CPof3/feGq6xpqdUqqwM/msNTQ2faIjPmY1iJAAi7RDwnwvvnGFx3tCONl5Dnji60Yc+Md6GxT7OBy1WsF7MEhABBXbnQL0Ayt0/+wc0TaVpCCOK3R5NKxsyU5KK4GsTkX/tK5G7V8nG0/d8MJbCjF6Xncvgo9saA6Wc3XmWAFLBRuNXnYtJmKQ43137dklhKZvNv/spUVWBtb61YsgFL2Qe+d1GBzlZwLZqxf6ApfqA7inGSc3Tcw72qnFYU2YxPSPIR9tlawMOo5tse1DIiT2d2plHiDzRXkSGKC2pP/G7ymE="
