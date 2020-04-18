@@ -1,5 +1,5 @@
 const supertest = require('supertest');
-const app = require('..');
+const app = require('../index.ts');
 
 describe('miscellaneous tasks', () => {
   const request = supertest(app);
