@@ -23,7 +23,27 @@
     "jsonwebtoken": "^8.5.1",
     "moment": "^2.24.0",
     "mongoose": "^5.9.9",
+    "nodemon": "^2.0.3",
     "pg": "^8.0.2",
     "uuid": "^7.0.3"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.8.7",
+    "@babel/node": "^7.8.7",
+    "@babel/plugin-transform-runtime": "^7.9.0",
+    "@babel/preset-env": "^7.8.7",
+    "@babel/preset-react": "^7.8.3",
+    "@babel/preset-typescript": "^7.9.0",
+    "babel-eslint": "^10.1.0",
+    "babel-jest": "^25.3.0",
+    "babel-loader": "^8.0.6",
+    "babel-preset-env": "^1.7.0",
+    "jest": "^25.1.0",
+    "node-sass": "^4.13.1",
+    "source-map-loader": "^0.2.4",
+    "supertest": "^4.0.2",
+    "ts-loader": "^6.2.1",
+    "typescript": "^3.8.3"
   }
 }
