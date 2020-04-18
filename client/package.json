@@ -1,10 +1,11 @@
 {
-  "name": "postql",
+  "name": "postql-client",
   "version": "1.0.0",
-  "description": "A GraphQL analytics tool for the modern developer.",
+  "description": "A lightweight and portable solution for full-stack React applications.",
   "main": "index.js",
   "scripts": {
-    "dev": "docker-compose up --build",
+    "dev": "cross-env NODE_ENV=development webpack-dev-server",
+    "build": "webpack",
     "test": "jest ./__tests__ --verbose"
   },
   "keywords": [],

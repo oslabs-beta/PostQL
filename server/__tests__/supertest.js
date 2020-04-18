@@ -1,5 +1,5 @@
 const supertest = require('supertest');
-const app = require('../server');
+const app = require('..');
 
 describe('miscellaneous tasks', () => {
   const request = supertest(app);
