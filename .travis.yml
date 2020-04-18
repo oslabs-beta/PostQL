@@ -1,0 +1,19 @@
+sudo: required
+
+services:
+  - docker
+
+before_install:
+  - docker build -t postql/tests -f ./server/Dockerfile.dev ./server
+
+script:
+  - docker run -e CI=true jheinowitz/tests npm run test
+
+after_success:
+  - docker build -t postql/client ./client
+  - docker build -t postql/server ./server
+  - docker build -t postql/nginx ./nginx
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  - docker push postql/client
+  - docker push postql/server
+  - docker push postql/nginx
