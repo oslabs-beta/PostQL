@@ -3,8 +3,6 @@ import mongoose from 'mongoose';
 
 require('dotenv').config();
 
-console.log(process.env);
-
 mongoose.connect(process.env.LOGS_DATABASE, { useNewUrlParser: true, useUnifiedTopology: true });
 
 const queryMetricsSchema = new mongoose.Schema({
