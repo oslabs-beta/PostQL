@@ -14,5 +14,4 @@ interface Request extends Body {
     outputMetrics: any; };
   params: { queryID: any; instanceID: any };
   cookies: { auth: any };
-
 }
