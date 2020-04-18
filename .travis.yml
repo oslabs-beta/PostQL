@@ -4,7 +4,7 @@ services:
 before_install:
 - docker build -t postql/tests -f ./server/Dockerfile.dev ./server
 script:
-- docker run -e CI=true -e USER_DATABASE -e LOGS_DATABASE="$LOGS_URI" -e JWT_SECRET  postql/tests
+- docker run -e CI=true -e USER_DATABASE -e LOGS_DATABASE -e JWT_SECRET  postql/tests
   npm run test
 after_success:
 - docker build -t postql/client ./client
