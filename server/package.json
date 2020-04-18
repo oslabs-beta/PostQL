@@ -6,7 +6,7 @@
   "scripts": {
     "start": "cross-env NODE_ENV=production nodemon ./index.ts --exec babel-node --extensions \".ts\"",
     "dev": "cross-env NODE_ENV=development nodemon ./index.ts --exec babel-node --extensions \".ts\"",
-    "test": "jest ./__tests__ --verbose"
+    "test": "jest ./__tests__ --verbose --forceExit --detectOpenHandles"
   },
   "keywords": [],
   "author": "David Zhang, Mario D'Andreas, Jason Heinowitz, Lisa Han, Joshua Pagan",

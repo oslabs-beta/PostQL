@@ -296,10 +296,8 @@ describe('can register successfully', () => {
 });
 
 describe('can logout successfully', () => {
-  let requestAgent;
+  const requestAgent = supertest.agent(app);
   beforeEach(() => {
-    requestAgent = supertest.agent(app);
-
     requestAgent
       .post('/api/auth/login')
       .send({
@@ -308,6 +306,12 @@ describe('can logout successfully', () => {
         type: 'login',
       })
       .set('Content-Type', 'application/json')
+      .set('Accept', 'application/json');
+  });
+
+  afterEach(() => {
+    requestAgent
+      .post('/api/auth/logout')
       .set('Accept', 'application/json');
   });
 
