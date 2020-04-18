@@ -4,7 +4,7 @@ const app = require('../index.ts');
 describe('miscellaneous tasks', () => {
   const request = supertest(app);
 
-  xit('successfully pings /api/auth route', (done) => {
+  it('successfully pings /api/auth route', (done) => {
     request
       .get('/api/auth')
       .expect('Content-Type', /json/)
