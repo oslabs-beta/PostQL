@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 
 require('dotenv').config();
 
-console.log(process.env.LOGS_DATABASE === undefined ? 'undefined' : process.env.LOGS_DATABASE.slice(1, process.env.LOGS_DATABASE.length));
+console.log(process.env);
 
 mongoose.connect(process.env.LOGS_DATABASE, { useNewUrlParser: true, useUnifiedTopology: true });
 
