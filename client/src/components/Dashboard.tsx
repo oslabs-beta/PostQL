@@ -5,6 +5,7 @@ import {
 
 import Home from './Home';
 import Analytics from './Analytics';
+import PlaygroundHeader from './Headers/PlaygroundHeader';
 
 const Dashboard: FC = () => {
   function logout() {
@@ -18,6 +19,7 @@ const Dashboard: FC = () => {
     <div className="container">
       <Router>
         <div className="split">
+          <PlaygroundHeader/>
           <Link to="/"><img className="logo" src="/image/title.png" /></Link>
           <button type="submit" onClick={logout}>Logout</button>
         </div>
@@ -33,5 +35,6 @@ const Dashboard: FC = () => {
     </div>
   );
 };
+
 
 export default Dashboard;
