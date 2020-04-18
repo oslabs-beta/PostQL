@@ -73,14 +73,7 @@ const Graph: FC<PropTypes> = ({ previousUrl }) => {
           height={'300px'}
           chartType="BarChart"
           loader={<div>Loading Chart</div>}
-          data={[
-            ['Query/Resolver', ' ', 'Time in ns'],
-            ['Query', 0, 3838321],
-            ['post', 0, 356972],
-            ['id', 356972, 79810],
-            ['title', 436782, 15926],
-            ['body', 452708, 12026],
-          ]}
+          data={googleChartData}
           options={{
             title: 'Query',
             chartArea: { width: '50%' },
