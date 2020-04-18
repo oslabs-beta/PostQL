@@ -8,9 +8,9 @@ const logsRoute = express.Router();
 
 logsRoute.get('/', (req, res) => res.status(200).json({ message: 'Logs route reached. Acheviement unlocked.' }));
 
-logsRoute.get('/test', (req, res) => res.status(200).json({ message: 'Logs route reached. Acheviement unlocked.' }));
-// authentication is required before any further action
+logsRoute.get('/test', (req, res) => res.status(200).json({ message: 'NEW ROUTE TEST.' }));
 
+// authentication is required before any further action
 logsRoute.post('/add', authController.validateUser, logController.findUser, logController.addLog, (req, res) => {
   res.status(200).json({ message: 'Log has been successfully added.' });
 });
