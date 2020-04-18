@@ -1,7 +1,7 @@
 const webpack = require('webpack');
 
 module.exports = {
-  entry: ['./client/inc/polyfills.js', './client/src/index.tsx'],
+  entry: ['./inc/polyfills.js', './src/index.tsx'],
   output: {
     path: __dirname,
     filename: './build/bundle.js',
@@ -13,14 +13,11 @@ module.exports = {
   },
   devtool: 'source-map',
   devServer: {
-    proxy: {
-      '/api': 'http://localhost:5000',
-      '/image': 'http://localhost:5000',
-    },
     public: 'localhost:8080',
     host: '0.0.0.0',
     port: 8080,
     historyApiFallback: true,
+    disableHostCheck: true
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),

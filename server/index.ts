@@ -8,13 +8,13 @@ import { exec } from 'child_process';
 import modules from './modules';
 
 const app = express();
-const PORT = 5000;
+const PORT = 80;
 
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.use('/image', express.static(path.join(__dirname, '../client/src/image')));
+app.use('/image', express.static(path.join(__dirname, './images')));
 app.use('/api', modules.api);
 
 // serve bundle.js in prod for every url
@@ -23,7 +23,7 @@ if (process.env.NODE_ENV === 'production') {
   app.use('/build', express.static(path.join(__dirname, '../build')));
   // app.use('/emails/build', express.static(path.join(__dirname, '../build')));
   // serve index.html on the route '/'
-  app.get('/', (req, res) => {
+  app.get('/*', (req, res) => {
     res.sendFile(path.join(__dirname, '../index.html'));
   });
 

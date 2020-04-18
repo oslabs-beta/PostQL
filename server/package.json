@@ -4,14 +4,14 @@
   "description": "A lightweight and portable solution for full-stack React applications.",
   "main": "index.js",
   "scripts": {
-    "dev": "cross-env NODE_ENV=development concurrently \"nodemon server/index.ts --exec babel-node --extensions \".ts\"\" \"webpack-dev-server\"",
+    "start": "cross-env NODE_ENV=production nodemon ./index.ts --exec babel-node --extensions \".ts\"",
+    "dev": "cross-env NODE_ENV=development nodemon ./index.ts --exec babel-node --extensions \".ts\"",
     "test": "jest ./__tests__ --verbose"
   },
   "keywords": [],
   "author": "David Zhang, Mario D'Andreas, Jason Heinowitz, Lisa Han, Joshua Pagan",
   "license": "MIT",
   "dependencies": {
-    "@material-ui/core": "^4.9.10",
     "bcrypt": "^4.0.1",
     "body-parser": "^1.19.0",
     "concurrently": "^5.1.0",
@@ -20,16 +20,10 @@
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "file-loader": "^6.0.0",
-    "graphql-playground-react-tracking": "^1.7.22",
     "jsonwebtoken": "^8.5.1",
     "moment": "^2.24.0",
     "mongoose": "^5.9.9",
     "pg": "^8.0.2",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
-    "react-redux": "^7.2.0",
-    "react-router-dom": "^5.1.2",
-    "redux": "^4.0.5",
     "uuid": "^7.0.3"
   },
   "devDependencies": {
