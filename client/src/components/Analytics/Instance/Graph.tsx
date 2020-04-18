@@ -1,7 +1,6 @@
 import React, { FC, useEffect, useState } from 'react';
-import {
-  Link, useParams,
-} from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
+import { Chart } from 'react-google-charts';
 
 interface PropTypes {
   previousUrl: string;
@@ -27,7 +26,9 @@ const Graph: FC<PropTypes> = ({ previousUrl }) => {
     <div>
       <div className="split">
         <h2 className="Graphtitle">Graphs</h2>
-        <Link to={`${previousUrl}/${queryID}`}><button type="button">Back</button></Link>
+        <Link to={`${previousUrl}/${queryID}`}>
+          <button type="button">Back</button>
+        </Link>
       </div>
     </div>
   );
