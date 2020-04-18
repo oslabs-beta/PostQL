@@ -4,10 +4,10 @@
 $nunito-font: 'Nunito', sans-serif;
 $rubik-font: 'Rubik', sans-serif;
 $font-stack: $rubik-font, $nunito-font, Helvetica, sans-serif;
-$primary-color:darken(gray, 25);
+$primary-color:#6D0C52;
 
 body {
-  background-color: rgb(23, 23, 41);
+  background-color:#0D212D;
 }
 
 $light-color: gray;
@@ -36,9 +36,18 @@ body {
   }
 }
 
+.getAuth {
+  background-image: url("/image/Frame 3.png");
+  background-repeat: repeat; 
+  width: 1500px;
+  height: 1000px;
+}
+
 .slim {
   margin: auto;
   width: 400px;
+  color: #0D212D;
+  background-color: #253B48;
 }
 
 .form {
@@ -50,8 +59,23 @@ body {
   width: 218px;
 }
 
-.analyticstitle{
+.headerLogo {
+  height: 41px;
+  width: 61px;
+}
+
+.analyticstitle {
   color:white;
+}
+
+.logout {
+  color: rgba(255, 255, 255, 0.6);
+  background-color:#172B3A;
+}
+
+.analytics {
+  margin-left: 20px;
+  color: #FFF;
 }
 
 button {

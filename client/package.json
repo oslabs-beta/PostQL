@@ -13,10 +13,11 @@
   "license": "MIT",
   "dependencies": {
     "@material-ui/core": "^4.9.10",
+    "@material-ui/icons": "^4.9.1",
     "core-js": "^3.6.4",
     "cross-env": "^7.0.2",
-    "graphql-playground-react-tracking": "^1.7.22",
     "file-loader": "6.0.0",
+    "graphql-playground-react-tracking": "^1.7.22",
     "moment": "^2.24.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
