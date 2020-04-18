@@ -51,3 +51,9 @@ app.use((err, req, res, next) => {
 });
 
 module.exports = app;
+
+if (process.env.NODE_ENV === 'development') {
+  process.on('exit', () => {
+    exec('docker-compose down');
+  })
+}
