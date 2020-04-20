@@ -10,6 +10,11 @@ import modules from './modules';
 const app = express();
 const PORT = 80;
 
+if (process.env.NODE_ENV === 'production') {
+  const secure = require('express-force-https');
+  app.use(secure);
+}
+
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -17,22 +22,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use('/image', express.static(path.join(__dirname, './images')));
 app.use('/api', modules.api);
 
-// serve bundle.js in prod for every url
-if (process.env.NODE_ENV === 'production') {
-  // statically serve everything in the build folder on the route '/build'
-  app.use('/build', express.static(path.join(__dirname, '../build')));
-  // app.use('/emails/build', express.static(path.join(__dirname, '../build')));
-  // serve index.html on the route '/'
-  app.get('/*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../index.html'));
-  });
-
-  app.listen(80); // listens on port 80 -> http://localhost/
-} else if (process.env.NODE_ENV !== 'test') {
-  app.listen(PORT, () => {
-    // console.log(`Listening on http://localhost:${PORT}`);
-  });
-}
+app.listen(5000); // listens on port 80 -> http://localhost/
 
 // catch all
 app.use('*', (req, res, next) => {
