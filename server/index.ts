@@ -8,7 +8,6 @@ import { exec } from 'child_process';
 import modules from './modules';
 
 const app = express();
-const PORT = 80;
 
 if (process.env.NODE_ENV === 'production') {
   const secure = require('express-force-https');
