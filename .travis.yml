@@ -21,7 +21,7 @@ env:
   - secure: IVrlaQBvbXjyE9NO/AtQeQBcLuW0C/3aoBBs/qtLQDw/fB/Vuqc8k/Ic7c0kTmxSjNOLrR1vUoIhE/X9oEyrPQo1XjdkaehBszVChYm9jJXCYrECEkRijsAfOIztksjZK3bBLKsv2I8MuldKkgllkkZjyM4VIPHRCBQK2uRFy3vS3ZRewUxtIVQOw72HdUUl2tQXB+BcuDEW47Knosz1/d7cSsLs5j31xNH54hhI4Moiv9qtgYpO4yWIOSgH0seJxm7unioQe0T8sSH+HT862O71GwMl3ccOCEO8e2/Pfcg/qyZ+ffnn7x3aV7s5rTH9uQZVkyisviJ7ZHWw9/CBBNeAggOBAFpdjZwsuVgkn4A2GW4MahYGttfonAdNbWDFc9+eOqlknagmRHNJOo/kM8o55ovosbLpCb34iV+2Ew/bnDjerKv2JyUQgF6tvfWf3+WyyQf6QUFI93iQIz6fmnNa9lTdBWGoy5aDV6iLIU1LNyV8K8Xs7t1F8jH+AckCPD6/pw4B6hkzP5yvIdgz/qjogB2bj89GsmFGiQ3LEbc8CrYDcVmdQNsqzxMLEvtP0bRIwM52dyQtu4gau7UAuAS3GPsgWU/HA1iT29xLrQauqmio2MF7RGsuPMnRpoa9gGrk3G49ifmS5isJGr2m/ClTpepDPKVUlTzR1Qdm8x0=
   branches: 
   only:
-  - dev
+  - master
 deploy:
   edge: true
   provider: elasticbeanstalk
@@ -30,6 +30,6 @@ deploy:
   env: Postql-env
   bucket_name: elasticbeanstalk-us-east-1-461955714824
   on:
-    branch: dev
+    branch: master
   access_key_id: "$AWS_ACCESS_KEY"
   secret_access_key: "$AWS_SECRET_KEY"
