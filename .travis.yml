@@ -27,7 +27,7 @@ deploy:
   provider: elasticbeanstalk
   region: us-east-1
   app: postql
-  env: Postql-env
+  env: Postql-env-1
   bucket_name: elasticbeanstalk-us-east-1-461955714824
   on:
     branch: master
