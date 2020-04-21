@@ -9,11 +9,6 @@ import modules from './modules';
 
 const app = express();
 
-if (process.env.NODE_ENV === 'production') {
-  const secure = require('express-force-https');
-  app.use(secure);
-}
-
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
