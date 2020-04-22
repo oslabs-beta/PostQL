@@ -60,7 +60,7 @@ const logController: LogController = {
           }
         });
       }
-      return next();
+      setTimeout(() => next(), 3000);
     });
   },
 
@@ -84,15 +84,6 @@ const logController: LogController = {
           log: 'logs.addLog: Error with DB when searching for queries by user',
         });
       }
-      if (!results) {
-      // some sort of error
-        return next({
-          code: 400,
-          message: 'Error with user retrieval',
-          log: 'logs.addLog: Error with DB when searching for user',
-        });
-      }
-
       if (results) {
         const { queryHistory } = results;
         // issue with default moment is that it is in UTC, need to adjust for EST
@@ -114,7 +105,9 @@ const logController: LogController = {
         }
         if (!bFound) {
         // create new log
-          queryHistory.push({ queryIDs: [uuidv4()], queryString, outputMetrics: [outputMetrics], timeStamp: [curTime] });
+          queryHistory.push({
+            queryIDs: [uuidv4()], queryString, outputMetrics: [outputMetrics], timeStamp: [curTime], counter: 0,
+          });
           results.save();
         }
       }
@@ -275,7 +268,6 @@ const logController: LogController = {
             'queryHistory': { '_id': queryID }
           }
         }, (err: Error, res: any) => {
-          console.log('res',res)
           if (err) {
             return next({
               code: 400,
