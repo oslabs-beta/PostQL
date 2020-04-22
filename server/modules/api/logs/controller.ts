@@ -5,7 +5,7 @@ import moment from 'moment';
 import { queryMetrics, queriesByUser } from './mongo';
 
 interface LogController {
-  findUser(req: Request, res: Response, next: NextFunction): any;
+  createUser(req: Request, res: Response, next: NextFunction): any;
   addLog(req: Request, res: Response, next: NextFunction): any;
   displayLogs(req: Request, res: Response, next: NextFunction): any;
   displayLog(req: Request, res: Response, next: NextFunction): any;
@@ -27,16 +27,15 @@ interface Instance {
   outputMetrics: string;
 }
 
-
 const logController: LogController = {
-  findUser(req: Request, res: Response, next: NextFunction) {
+  createUser(req: Request, res: Response, next: NextFunction) {
     const { username } = res.locals;
 
     if (!username) {
       return next({
         code: 400,
         message: 'Invalid params.',
-        log: 'logs.findUser: Need username.',
+        log: 'logs.createUser: Need username.',
       });
     }
 
@@ -45,7 +44,7 @@ const logController: LogController = {
         return next({
           code: 400,
           message: 'Error with MongoDB',
-          log: 'logs.findUser: Error with DB when searching for username.',
+          log: 'logs.createUser: Error with DB when searching for username.',
         });
       }
 
@@ -56,7 +55,7 @@ const logController: LogController = {
             return next({
               code: 400,
               message: 'Error with MongoDB',
-              log: 'logs.findUser: Error with DB when creating new user.',
+              log: 'logs.createUser: Error with DB when creating new user.',
             });
           }
         });

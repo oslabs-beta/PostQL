@@ -8,10 +8,8 @@ const logsRoute = express.Router();
 
 logsRoute.get('/', (req, res) => res.status(200).json({ message: 'Logs route reached. Acheviement unlocked.' }));
 
-logsRoute.get('/testadd', (req, res) => res.status(200).json({ message: 'NEW ROUTE TEST.' }));
-
 // authentication is required before any further action
-logsRoute.post('/add', authController.validateUser, logController.findUser, logController.addLog, (req, res) => {
+logsRoute.post('/add', authController.validateUser, logController.createUser, logController.addLog, (req, res) => {
   res.status(200).json({ message: 'Log has been successfully added.' });
 });
 
@@ -28,9 +26,10 @@ logsRoute.get('/display/:queryID/:instanceID', authController.validateUser, logC
 });
 
 logsRoute.delete('/:queryID', authController.validateUser, logController.deleteLog, (req, res) => {
-  res.status(200).json({ message: 'Wait what?' });
+  res.status(200).json({ message: 'Query has been deleted.' });
 });
 
+// TO DO: Add the possibility of deleting instances
 // logsRoute.delete('/:queryID/:instanceID', authController.validateUser, logController.deleteInstance, (req, res) => {
 //   res.status(200).json({ message: 'Instance has been deleted.' });
 // });
