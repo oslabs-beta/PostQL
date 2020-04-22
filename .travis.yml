@@ -1,19 +1,35 @@
 sudo: required
-
 services:
-  - docker
-
+- docker
 before_install:
-  - docker build -t postql/tests -f ./server/Dockerfile.dev ./server
-
+- docker build -t postql/tests -f ./server/Dockerfile.dev ./server
 script:
-  - docker run -e CI=true jheinowitz/tests npm run test
-
+- docker run -e CI=true -e USER_DATABASE -e LOGS_DATABASE -e JWT_SECRET  postql/tests
+  npm run test
 after_success:
-  - docker build -t postql/client ./client
-  - docker build -t postql/server ./server
-  - docker build -t postql/nginx ./nginx
-  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
-  - docker push postql/client
-  - docker push postql/server
-  - docker push postql/nginx
+- docker build -t postql/client ./client
+- docker build -t postql/server ./server
+- docker build -t postql/nginx ./nginx
+- echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+- docker push postql/client
+- docker push postql/server
+- docker push postql/nginx
+env:
+  global:
+  - secure: aWhn7hCNFnrqeWR5MUfFtENr2V13D4mVK9PRjlrse7n52L6MjjYU7zSl6SInDVyDBHizszqJZNwyJeTe2Gy+MWBi2YWEMvZz23L3YaDFETFztYy+1Cqi8xJuCU7FnmBpNCS0FwBgii7Ug7wlcBRNZQ8OhunirEDGdSzyevMZ8GrNwhJCfcr+kbl7p8A55r+XuU9pzlmHIWtNso+uEMfWpgfLO2hH6VQSCvCQgUb03Igu9PVo80Cqt4Y876Vnzw/xGu9DovtU7gPeD1eNSkH/8HuuinpwocO09dBQuHzwgl4DSJgtgHYsoCuN0RL4ISd1rTlrhqhilLBRd2eL4e9tlJZqhlo8Zz6mw7o78dtCs6ocd/aabtxju1zYlrBamrh2TAw6p9fLyqYNK3gnUfcpZlBhMxWYXaP4JdnU2IoSHudd7oO2BUp3eepk984cp1g8e9+Gh2ZYweDxF1uyeqL8jMFDYDHbYcWakL/6rL6H+VZhOSX18F21WFnGTKUll0TTw/kevEeCpN2MSp4vXXsHji9TlAtTp2V3bW+NaAlBIoxm6OwLVEam35jxgf3xUadAKNdc5qYRbDZQa0jHwOkqj2usF44FR4Ic6LbV1I6mAtaoht+iaUFgzIOkrj9C/65OYi1QbxjzKLOQNNHSc6l0hWt2MV2lrLWV3pSzvVpnrLs=
+  - secure: ca+1F0lazf/s2CT2HafsHHfH+IrRG7kQy4nN5ILSOnnsHDiChxkDeNh2fHeJJIn1E1loAeTKcSIA55A+NbqHW5l4IINA1uqcNixf358aWb7enYCPLE8dELV7fcN86EE3WoIFEvdD4VBieR/OelrC/0O//ThJXBDT9II91DTJtHfRA3MsHMurqU1zwb1CSlcD1mamazs4hYYieU0/jmBROvvSK6DfTfLYl192Jq/6GQyTa5o3jdVXA+y7pwtxf34m96+EFyzHpnEzwv/thDlOluWQBbEEKSl3xTOt6vitqrdJXDd3HdgN3vjQNTTb5aSviOCWJTGsOuJC7i65eo0dKu8+bbkE2BTZzEQnHJkTRTvxBNneuKplmQFVWfLq//aa3MECQZuk5+CY3BHE0PsL3yVZe61Ggrn6MJa+ttaA118HY9ni7/9lN1GlE3Eu8OQ7m/kkwU2HbGCmKs7/JCEjtsI+kglHwGRztL5AKtbtGo6BXOlh8joD3VWKTHG4krgQfwX9JhIZ8crCMVeJiDRFlOcw60DXFRQhddDsSjejTQxoIl8C91WaJEl03Lu9tkSPsBhCiRuU6uZqlIrBOujc4opukZnizFnxF2S5Em4na8QWVhRoclpRLYQ1v28LI5Hy+gt8bWfBN37Zq8SwE66qaVxxQkbO15n8HcGyMA+tu6M=
+  - secure: IVrlaQBvbXjyE9NO/AtQeQBcLuW0C/3aoBBs/qtLQDw/fB/Vuqc8k/Ic7c0kTmxSjNOLrR1vUoIhE/X9oEyrPQo1XjdkaehBszVChYm9jJXCYrECEkRijsAfOIztksjZK3bBLKsv2I8MuldKkgllkkZjyM4VIPHRCBQK2uRFy3vS3ZRewUxtIVQOw72HdUUl2tQXB+BcuDEW47Knosz1/d7cSsLs5j31xNH54hhI4Moiv9qtgYpO4yWIOSgH0seJxm7unioQe0T8sSH+HT862O71GwMl3ccOCEO8e2/Pfcg/qyZ+ffnn7x3aV7s5rTH9uQZVkyisviJ7ZHWw9/CBBNeAggOBAFpdjZwsuVgkn4A2GW4MahYGttfonAdNbWDFc9+eOqlknagmRHNJOo/kM8o55ovosbLpCb34iV+2Ew/bnDjerKv2JyUQgF6tvfWf3+WyyQf6QUFI93iQIz6fmnNa9lTdBWGoy5aDV6iLIU1LNyV8K8Xs7t1F8jH+AckCPD6/pw4B6hkzP5yvIdgz/qjogB2bj89GsmFGiQ3LEbc8CrYDcVmdQNsqzxMLEvtP0bRIwM52dyQtu4gau7UAuAS3GPsgWU/HA1iT29xLrQauqmio2MF7RGsuPMnRpoa9gGrk3G49ifmS5isJGr2m/ClTpepDPKVUlTzR1Qdm8x0=
+branches: 
+  only:
+  - master
+deploy:
+  edge: true
+  provider: elasticbeanstalk
+  region: us-east-1
+  app: postql
+  env: postql-prod
+  bucket_name: elasticbeanstalk-us-east-1-461955714824
+  on:
+    branch: master
+  access_key_id: "$AWS_ACCESS_KEY"
+  secret_access_key: "$AWS_SECRET_KEY"
