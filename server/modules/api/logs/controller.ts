@@ -50,7 +50,7 @@ const logController: LogController = {
 
       if (!results) {
         // no user yet, add a new user document
-        queriesByUser.create({ username }, (createErr: Error, createRes: any) => {
+        queriesByUser.create({ username }, (createErr: Error) => {
           if (createErr) {
             return next({
               code: 400,
@@ -108,14 +108,14 @@ const logController: LogController = {
               queryHistory[i].timeStamp.push(curTime);
               queryHistory[i].counter += 1;
               bFound = true;
-              results.update();
+              results.save();
             }
           }
         }
         if (!bFound) {
         // create new log
-          queryHistory.push({ queryIDs: [uuidv4()], queryString, outputMetrics, timeStamp: [curTime] });
-          results.update();
+          queryHistory.push({ queryIDs: [uuidv4()], queryString, outputMetrics: [outputMetrics], timeStamp: [curTime] });
+          results.save();
         }
       }
     });
