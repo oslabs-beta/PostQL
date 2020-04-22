@@ -249,8 +249,9 @@ const logController: LogController = {
 
   deleteLog(req: Request, res: Response, next: NextFunction) {
     const { queryID } = req.params;
+    const { username } = res.locals;
 
-    if (!queryID) {
+    if (!queryID || !username) {
       return next({
         code: 400,
         message: 'Invalid params',
@@ -258,21 +259,65 @@ const logController: LogController = {
       });
     }
 
-    queryMetrics.findByIdAndDelete(queryID, (err: Error, res: any) => {
-      console.log('we got here')
+    queriesByUser.findOne({ username }, (err: Error, results: any) => {
       if (err) {
-        console.log(err);
+        // some sort of error
         return next({
           code: 400,
-          message: 'Error with query deletion',
-          log: 'logs.findByIdAndDelete: Error with DB when searching for specific query',
+          message: 'Error with user retrieval',
+          log: 'logs.deleteInstance: Error with DB when searching for user',
         });
       }
-      if (res) {
-        console.log('hi', res);
+
+      if (results) {
+        const { queryHistory } = results;
+        let qID: any;
+
+        // only if there are queries
+        if (queryHistory.length) {
+          for (let i = 0; i < queryHistory.length; i += 1) {
+            if (queryHistory[i]._id == queryID) { // dif types
+              qID = queryHistory[i]._id;
+              break;
+            }
+          }
+
+          // queriesByUser.pull(qID);
+      //     queriesByUser.findOneAndDelete({ _id: results._id }, { "$pull": { "queryHistory": qID } }, (err: Error, res: any) => {
+      //       if (err) {
+      //         console.log('err', err);
+      //         return next({
+      //           code: 400,
+      //           message: 'Error with query deletion',
+      //           log: 'logs.findByIdAndDelete: Error with DB when searching for specific query',
+      //         });
+      //       }
+      //       if (res) {
+      //         console.log('hi', res);
+      //       }
+      //       console.log('the del query ran');
+      //     });
+      //   }
+      // }
+
+      queryMetrics.findOneAndDelete({ _id: qID }, (err: Error, res: any) => {
+            if (err) {
+              console.log('err', err);
+              return next({
+                code: 400,
+                message: 'Error with query deletion',
+                log: 'logs.findByIdAndDelete: Error with DB when searching for specific query',
+              });
+            }
+            if (res) {
+              console.log('hi', res);
+            }
+            console.log('the del query ran');
+          });
+        }
       }
-      return next();
     });
+    return next();
   },
 
   // TO DO: Add the possibility of deleting instances
