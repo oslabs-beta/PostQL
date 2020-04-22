@@ -53,7 +53,7 @@ const logout: FC = () => {
     method: 'POST',
   })
     .then(() => window.location.reload());
-}
+};
 
 const ButtonAppBar: FC = () => {
   const classes = useStyles();
@@ -63,9 +63,9 @@ const ButtonAppBar: FC = () => {
       <ThemeProvider theme={theme}>
         <AppBar position="static">
           <Toolbar>
-            <img className="headerLogo" src="../../image/Group3.png"></img>
-            <Link to='/analytics' className = "analytics">Analytics</Link>
-            <Typography className = {classes.title}></Typography>
+            <img className="headerLogo" src="../../image/Group3.png" />
+            <Link to="/analytics" className="analytics">Analytics</Link>
+            <Typography className={classes.title} />
             <button className="logout" type="submit" onClick={logout}>Logout</button>
           </Toolbar>
         </AppBar>
