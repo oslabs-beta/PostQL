@@ -2,7 +2,7 @@
 import { NextFunction } from 'express';
 import { v4 as uuidv4 } from 'uuid';
 import moment from 'moment';
-import { queryMetrics, queriesByUser } from './mongo';
+import { queriesByUser } from './mongo';
 
 interface LogController {
   createUser(req: Request, res: Response, next: NextFunction): any;
@@ -50,7 +50,7 @@ const logController: LogController = {
 
       if (!results) {
         // no user yet, add a new user document
-        queriesByUser.create({ username }, (createErr: Error, createRes: any) => {
+        queriesByUser.create({ username }, (createErr: Error) => {
           if (createErr) {
             return next({
               code: 400,
@@ -60,7 +60,7 @@ const logController: LogController = {
           }
         });
       }
-      return next();
+      setTimeout(() => next(), 3000);
     });
   },
 
@@ -84,15 +84,6 @@ const logController: LogController = {
           log: 'logs.addLog: Error with DB when searching for queries by user',
         });
       }
-      if (!results) {
-      // some sort of error
-        return next({
-          code: 400,
-          message: 'Error with user retrieval',
-          log: 'logs.addLog: Error with DB when searching for user',
-        });
-      }
-
       if (results) {
         const { queryHistory } = results;
         // issue with default moment is that it is in UTC, need to adjust for EST
@@ -108,14 +99,16 @@ const logController: LogController = {
               queryHistory[i].timeStamp.push(curTime);
               queryHistory[i].counter += 1;
               bFound = true;
-              results.update();
+              results.save();
             }
           }
         }
         if (!bFound) {
         // create new log
-          queryHistory.push({ queryIDs: [uuidv4()], queryString, outputMetrics, timeStamp: [curTime] });
-          results.update();
+          queryHistory.push({
+            queryIDs: [uuidv4()], queryString, outputMetrics: [outputMetrics], timeStamp: [curTime], counter: 0,
+          });
+          results.save();
         }
       }
     });
@@ -249,30 +242,44 @@ const logController: LogController = {
 
   deleteLog(req: Request, res: Response, next: NextFunction) {
     const { queryID } = req.params;
+    const { username } = res.locals;
 
-    if (!queryID) {
+    if (!queryID || !username) {
       return next({
         code: 400,
         message: 'Invalid params',
-        log: 'logs.displayInstance: Did not receive username or queryID.',
+        log: 'logs.deleteLog: Did not receive username or queryID.',
       });
     }
 
-    queryMetrics.findByIdAndDelete(queryID, (err: Error, res: any) => {
-      console.log('we got here')
+    queriesByUser.findOne({ username }, (err: Error, results: any) => {
       if (err) {
-        console.log(err);
+        // some sort of error
         return next({
           code: 400,
-          message: 'Error with query deletion',
-          log: 'logs.findByIdAndDelete: Error with DB when searching for specific query',
+          message: 'Error with user retrieval',
+          log: 'logs.deleteLog: Error with DB when searching for user',
         });
       }
-      if (res) {
-        console.log('hi', res);
+
+      if (results) {
+        queriesByUser.findByIdAndUpdate(results._id, {
+          '$pull': {
+            'queryHistory': { '_id': queryID }
+          }
+        }, (err: Error, res: any) => {
+          if (err) {
+            return next({
+              code: 400,
+              message: 'Error with query deletion.',
+              log: 'logs.deleteLog: Error with DB when trying to delete query.',
+            });
+          }
+        });
       }
-      return next();
     });
+
+    return next();
   },
 
   // TO DO: Add the possibility of deleting instances
