@@ -47,15 +47,6 @@ const Register: FC = () => {
         <TextField type="password" id="password" label="Password" variant="outlined" value={password} onChange={(e) => setPassword(e.target.value)} />
         <TextField type="password" id="confirm" label=" Confirm Password" variant="outlined" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
       </form>
-      {/* <label htmlFor="username">Username</label>
-      <input type="text" name="usernam" id="username" value={username} onChange={(e) => setUsername(e.target.value)} />
-      <label htmlFor="email">Email</label>
-      <input type="text" name="email" id="email" value={email} onChange={(e) => setEmail(e.target.value)} />
-      <label htmlFor="password">Password</label>
-      <input type="password" name="password" id="password" value={password} onChange={(e) => setPassword(e.target.value)} />
-      <label htmlFor="confirm">Confirm Password</label>
-      <input type="password" name="confirm" id="confirm" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} /> */}
-      <br />
       <button type="submit" onClick={register}>Register</button>
     </div>
   );
