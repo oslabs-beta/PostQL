@@ -34,25 +34,51 @@ body {
   label {
     display: block;
   }
+  justify-content: center;
+}
+
+
+.loginBody {
+  width: 100vw;
+  padding-top:100px;
+  background-image: url("/image/Frame 5.png");
+  background-repeat: repeat; 
 }
 
 .getAuth {
-  background-image: url("/image/Frame 5.png");
-  background-repeat: repeat; 
-  width: 1500px;
-  height: 1000px;
-}
-
-.slim {
+  display: flex;
+  justify-content: center;
   margin: auto;
-  width: 400px;
+  width: 370px;
   color: #0D212D;
   background-color: #253B48;
+}
+
+.loginLogo {
+  justify-content: center;
+}
+
+.padded-card {
+  padding:30px;
 }
 
 .form {
   max-width: 400px;
 }
+
+.form-padded {
+  padding: 0px;
+}
+
+// input[type=text] {
+//   width: 100% !important;
+//   margin-bottom: 12px;
+// }
+
+// input[type=password] {
+//   width: 100% !important;
+//   margin-bottom: 12px;
+// }
 
 .logo {
   height: 75px;

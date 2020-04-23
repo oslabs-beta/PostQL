@@ -64,6 +64,7 @@ const ButtonAppBar: FC = () => {
         <AppBar position="static">
           <Toolbar>
             <img className="headerLogo" src="../../image/Group3.png" />
+            <Link to="/" className="analytics">Playground</Link>
             <Link to="/analytics" className="analytics">Analytics</Link>
             <Typography className={classes.title} />
             <button className="logout" type="submit" onClick={logout}>Logout</button>

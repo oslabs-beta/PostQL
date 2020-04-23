@@ -42,7 +42,6 @@ const QueryData: FC = () => {
     <div>
       <div className="split">
         <h2 className="analyticstitle">Performance Analytics</h2>
-        <Link to="/"><button type="button">Playground</button></Link>
       </div>
       <TableContainer component={Paper}>
         <Table className={classes.table} aria-label="simple table">
