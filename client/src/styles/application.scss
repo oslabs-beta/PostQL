@@ -6,6 +6,14 @@ $rubik-font: 'Rubik', sans-serif;
 $font-stack: $rubik-font, $nunito-font, Helvetica, sans-serif;
 $primary-color:#6D0C52;
 
+* {
+  box-sizing: border-box;
+}
+
+element {
+  overflow-x: hidden;
+}
+
 body {
   background-color:#0D212D;
 }
@@ -59,19 +67,17 @@ body {
 }
 
 .padded-card {
-  padding-left:50px;
-  padding-right:50px;
+  padding-left:70px;
+  padding-right:70px;
   padding-top:20px;
   padding-bottom:30px;
 }
 
 .form {
-  max-width: 400px;
+  width: 100%;
+  margin: 0 0;
 }
 
-.form-padded {
-  padding: 0px;
-}
 
 .logo {
   height: 75px;
@@ -85,6 +91,15 @@ body {
 
 .analyticstitle {
   color:white;
+}
+
+.MuiTextField-root {
+  width:100%;
+  margin-bottom: 10px;
+}
+
+.MuiFormControl-root {
+  margin-bottom: 10px !important;
 }
 
 .logout {
@@ -102,13 +117,12 @@ button {
   background-color: rgb(49, 53, 78);
   color: rgb(254, 251, 251);
   border-radius: 5px;
-  padding: 1.0rem 1.2rem;
-  width: 252px;
+  padding: 1.2rem 1.2rem;
+  width: 100%;
   font-size: 1rem;
   cursor: pointer;
   border: none;
   margin-top: 10px;
-  margin-left: 8px;
   }
 
   .MuiAppBar-colorPrimary {

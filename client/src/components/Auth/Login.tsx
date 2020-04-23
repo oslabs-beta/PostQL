@@ -42,10 +42,8 @@ const Login: FC = () => {
   return (
     <div className="form">
       <h2>Login</h2>
-      <form className={`${classes.root} form-padded`} noValidate autoComplete="off">
-        <TextField id="username" label="Username" variant="outlined" value={username} onChange={(e) => setUsername(e.target.value)} />
-        <TextField type="password" id="password" label="Password" variant="outlined" value={password} onChange={(e) => setPassword(e.target.value)} />
-      </form>
+      <TextField className="textfield" id="username" label="Username" variant="outlined" value={username} onChange={(e) => setUsername(e.target.value)} />
+      <TextField className="textfield" type="password" id="password" label="Password" variant="outlined" value={password} onChange={(e) => setPassword(e.target.value)} />
       <button type="submit" onClick={login}>Log in</button>
     </div>
   );

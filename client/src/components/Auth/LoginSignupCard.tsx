@@ -28,11 +28,9 @@ const SimpleCard: FC = () => {
 
   return (
     <Card className={`${classes.root} padded-card`}>
-      <CardContent>
-        <img className="loginLogo" src="../../image/title.png" />
-        <Login />
-        <Register />
-      </CardContent>
+      <img className="loginLogo" src="../../image/title.png" />
+      <Login />
+      <Register />
     </Card>
   );
 };

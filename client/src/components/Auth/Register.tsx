@@ -41,12 +41,10 @@ const Register: FC = () => {
   return (
     <div className="form">
       <h2>Register</h2>
-      <form className={`${classes.root} form-padded`} noValidate autoComplete="off">
-        <TextField id="username" label="Username" variant="outlined" value={username} onChange={(e) => setUsername(e.target.value)} />
-        <TextField id="email" label="Email" variant="outlined" value={email} onChange={(e) => setEmail(e.target.value)} />
-        <TextField type="password" id="password" label="Password" variant="outlined" value={password} onChange={(e) => setPassword(e.target.value)} />
-        <TextField type="password" id="confirm" label=" Confirm Password" variant="outlined" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
-      </form>
+      <TextField id="username" label="Username" variant="outlined" value={username} onChange={(e) => setUsername(e.target.value)} />
+      <TextField id="email" label="Email" variant="outlined" value={email} onChange={(e) => setEmail(e.target.value)} />
+      <TextField type="password" id="password" label="Password" variant="outlined" value={password} onChange={(e) => setPassword(e.target.value)} />
+      <TextField type="password" id="confirm" label=" Confirm Password" variant="outlined" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
       <button type="submit" onClick={register}>Register</button>
     </div>
   );
