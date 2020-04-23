@@ -48,7 +48,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const logout: FC = () => {
+const logout = (): void => {
   fetch('/api/auth/logout', {
     method: 'POST',
   })

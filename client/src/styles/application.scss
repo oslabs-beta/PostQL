@@ -40,7 +40,7 @@ body {
 
 .loginBody {
   width: 100vw;
-  padding-top:100px;
+  padding-top:50px;
   background-image: url("/image/Frame 5.png");
   background-repeat: repeat; 
 }
@@ -73,16 +73,6 @@ body {
   padding: 0px;
 }
 
-// input[type=text] {
-//   width: 100% !important;
-//   margin-bottom: 12px;
-// }
-
-// input[type=password] {
-//   width: 100% !important;
-//   margin-bottom: 12px;
-// }
-
 .logo {
   height: 75px;
   width: 218px;
@@ -113,11 +103,12 @@ button {
   color: rgb(254, 251, 251);
   border-radius: 5px;
   padding: 1.0rem 1.2rem;
-  width: 260px;
+  width: 250px;
   font-size: 1rem;
   cursor: pointer;
   border: none;
   margin-top: 10px;
+  margin-left: 8px;
   }
 
   .MuiAppBar-colorPrimary {
