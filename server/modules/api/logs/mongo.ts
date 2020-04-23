@@ -3,8 +3,7 @@ import mongoose from 'mongoose';
 
 require('dotenv').config();
 
-// need to manually break up URI thanks to TravisCI
-mongoose.connect(`${process.env.LOGS_DATABASE}?retryWrites=true&w=majority`, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false });
+mongoose.connect(process.env.LOGS_DATABASE, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false });
 
 const queryMetricsSchema = new mongoose.Schema({
   queryIDs: { type: Array, required: true },
