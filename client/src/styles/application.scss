@@ -49,7 +49,7 @@ body {
   display: flex;
   justify-content: center;
   margin: auto;
-  width: 370px;
+  width: 400px;
   color: #0D212D;
   background-color: #253B48;
 }
@@ -59,7 +59,10 @@ body {
 }
 
 .padded-card {
-  padding:30px;
+  padding-left:50px;
+  padding-right:50px;
+  padding-top:20px;
+  padding-bottom:30px;
 }
 
 .form {
