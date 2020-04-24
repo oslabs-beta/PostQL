@@ -1,8 +1,20 @@
 import React, { FC, useState } from 'react';
+import { makeStyles } from '@material-ui/core/styles';
+import TextField from '@material-ui/core/TextField';
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    '& > *': {
+      margin: theme.spacing(1),
+      width: '25ch',
+    },
+  },
+}));
 
 const Login: FC = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const classes = useStyles();
 
   function login(): void {
     fetch('/api/auth/login', {
@@ -30,15 +42,9 @@ const Login: FC = () => {
   return (
     <div className="form">
       <h2>Login</h2>
-      <label htmlFor="username">Username
-        <input type="text" name="username" id="username" value={username} onChange={(e) => setUsername(e.target.value)} />
-      </label>
-
-      <label htmlFor="password">Password
-        <input type="password" name="password" id="password" value={password} onChange={(e) => setPassword(e.target.value)} />
-      </label>
-
-      <button type="submit" onClick={login}>Log in</button>
+      <TextField className="textfield" id="username" label="Username" variant="outlined" value={username} onChange={(e) => setUsername(e.target.value)} />
+      <TextField className="textfield" type="password" id="password" label="Password" variant="outlined" value={password} onChange={(e) => setPassword(e.target.value)} />
+      <button className="loginButton" type="submit" onClick={login}>Log in</button>
     </div>
   );
 };
