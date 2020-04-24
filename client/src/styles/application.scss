@@ -118,16 +118,22 @@ button {
   color: rgb(254, 251, 251);
   border-radius: 5px;
   padding: 1.2rem 1.2rem;
-  width: 100%;
   font-size: 1rem;
   cursor: pointer;
   border: none;
-  margin-top: 10px;
   }
+
+.loginButton {
+  width: 100%;
+  margin-top: 10px;
+}
 
   .MuiAppBar-colorPrimary {
     color: #fff;
     background-color: #F012B2;
 }
 
+.playground {
+  height: 1600px;
+}
  

@@ -44,7 +44,7 @@ const Login: FC = () => {
       <h2>Login</h2>
       <TextField className="textfield" id="username" label="Username" variant="outlined" value={username} onChange={(e) => setUsername(e.target.value)} />
       <TextField className="textfield" type="password" id="password" label="Password" variant="outlined" value={password} onChange={(e) => setPassword(e.target.value)} />
-      <button type="submit" onClick={login}>Log in</button>
+      <button className="loginButton" type="submit" onClick={login}>Log in</button>
     </div>
   );
 };

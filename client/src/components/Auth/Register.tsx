@@ -45,7 +45,7 @@ const Register: FC = () => {
       <TextField id="email" label="Email" variant="outlined" value={email} onChange={(e) => setEmail(e.target.value)} />
       <TextField type="password" id="password" label="Password" variant="outlined" value={password} onChange={(e) => setPassword(e.target.value)} />
       <TextField type="password" id="confirm" label=" Confirm Password" variant="outlined" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
-      <button type="submit" onClick={register}>Register</button>
+      <button className="loginButton" type="submit" onClick={register}>Register</button>
     </div>
   );
 };

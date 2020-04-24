@@ -37,6 +37,7 @@ const playgroundSettings = {
 const PlaygroundDisplay: FC = () => (
   <Provider store={store}>
     <Playground
+      className="playground"
       endpoint="https://rickandmortyapi.com/graphql"
       subscriptionEndpoint="https://rickandmortyapi.com/graphql"
         // config=""
