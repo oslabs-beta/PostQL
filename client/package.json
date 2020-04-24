@@ -10,9 +10,10 @@
   },
   "keywords": [],
   "author": "David Zhang, Mario D'Andreas, Jason Heinowitz, Lisa Han, Joshua Pagan",
-  "license": "MI",
+  "license": "MIT",
   "dependencies": {
     "@material-ui/core": "^4.9.10",
+    "@material-ui/icons": "^4.9.1",
     "core-js": "^3.6.4",
     "cross-env": "^7.0.2",
     "file-loader": "6.0.0",

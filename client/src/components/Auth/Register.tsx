@@ -1,10 +1,22 @@
 import React, { FC, useState } from 'react';
+import { makeStyles } from '@material-ui/core/styles';
+import TextField from '@material-ui/core/TextField';
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    '& > *': {
+      margin: theme.spacing(1),
+      width: '25ch',
+    },
+  },
+}));
 
 const Register: FC = () => {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const classes = useStyles();
 
   function register(): void {
     fetch('/api/auth/register', {
@@ -29,15 +41,11 @@ const Register: FC = () => {
   return (
     <div className="form">
       <h2>Register</h2>
-      <label htmlFor="username">Username</label>
-      <input type="text" name="usernam" id="username" value={username} onChange={(e) => setUsername(e.target.value)} />
-      <label htmlFor="email">Email</label>
-      <input type="text" name="email" id="email" value={email} onChange={(e) => setEmail(e.target.value)} />
-      <label htmlFor="password">Password</label>
-      <input type="password" name="password" id="password" value={password} onChange={(e) => setPassword(e.target.value)} />
-      <label htmlFor="confirm">Confirm Password</label>
-      <input type="password" name="confirm" id="confirm" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
-      <button type="submit" onClick={register}>Register</button>
+      <TextField id="username" label="Username" variant="outlined" value={username} onChange={(e) => setUsername(e.target.value)} />
+      <TextField id="email" label="Email" variant="outlined" value={email} onChange={(e) => setEmail(e.target.value)} />
+      <TextField type="password" id="password" label="Password" variant="outlined" value={password} onChange={(e) => setPassword(e.target.value)} />
+      <TextField type="password" id="confirm" label=" Confirm Password" variant="outlined" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
+      <button className="loginButton" type="submit" onClick={register}>Register</button>
     </div>
   );
 };

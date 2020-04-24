@@ -65,12 +65,9 @@ const Graph: FC<PropTypes> = ({ previousUrl }) => {
     <div>
       <div className="split">
         <h2 className="Graphtitle">Graphs</h2>
-        <Link to={`${previousUrl}/${queryID}`}>
-          <button type="button">Back</button>
-        </Link>
         <Chart
-          width={'500px'}
-          height={'300px'}
+          width="500px"
+          height="300px"
           chartType="BarChart"
           loader={<div>Loading Chart</div>}
           data={googleChartData}
