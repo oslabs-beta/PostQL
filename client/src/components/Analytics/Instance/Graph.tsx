@@ -64,9 +64,9 @@ const Graph: FC<PropTypes> = ({ previousUrl }) => {
   return (
     <div>
       <div className="split">
-        <h2 className="Graphtitle">Graphs</h2>
+        <h2 className="Graphtitle">Gant Chart:</h2>
         <Chart
-          width="500px"
+          width="1000px"
           height="300px"
           chartType="BarChart"
           loader={<div>Loading Chart</div>}
@@ -76,6 +76,18 @@ const Graph: FC<PropTypes> = ({ previousUrl }) => {
             chartArea: { width: '50%' },
             isStacked: true,
             series: [
+              { color: 'transparent' },
+              {},
+              { color: 'transparent' },
+              {},
+              { color: 'transparent' },
+              {},
+              { color: 'transparent' },
+              {},
+              { color: 'transparent' },
+              {},
+              { color: 'transparent' },
+              {},
               { color: 'transparent' },
               {},
               { color: 'transparent' },
