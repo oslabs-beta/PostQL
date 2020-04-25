@@ -26,8 +26,8 @@ deploy:
   edge: true
   provider: elasticbeanstalk
   region: us-east-1
-  app: postql
-  env: postql-prod
+  app: PostQL
+  env: prod
   bucket_name: elasticbeanstalk-us-east-1-461955714824
   on:
     branch: master
