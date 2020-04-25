@@ -21,27 +21,12 @@ const playgroundSettings = {
   'tracing.tracingSupported': true,
 };
 
-// const EditorColours = {
-//   property: 'purple',
-//   comment: 'green',
-//   punctuation: 'red',
-//   keyword: 'blue',
-//   def: 'orange',
-//   number: 'purple',
-//   string: 'blue',
-//   variable: 'white',
-//   editorBackground: 'grey',
-//   resultBackground: 'lightgrey'
-// }
-
 const PlaygroundDisplay: FC = () => (
   <Provider store={store}>
     <Playground
       className="playground"
-      endpoint="https://rickandmortyapi.com/graphql"
-      subscriptionEndpoint="https://rickandmortyapi.com/graphql"
-        // config=""
-        // schema=""
+      endpoint="https://gql.postql.io/graphql"
+      subscriptionEndpoint="https://gql.postql.io/graphql"
       settings={playgroundSettings}
     />
   </Provider>
