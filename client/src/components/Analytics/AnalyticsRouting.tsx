@@ -18,7 +18,7 @@ const AnalyticsRouting: FC = () => {
 
         <Route path={`${path}/:queryID`}>
           <Query previousUrl={path} />
-        </Route>
+        </Route> 
 
 
         <Route path={path} exact>
