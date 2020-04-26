@@ -13,12 +13,14 @@ interface TestingController {
   fetchURL(req: Request, res: Response, next: NextFunction): any;
 }
 
+//gets the input URL from the playground page
 const testingController: TestingController = {
   fetchURL(req: Request, res: Response, next: NextFunction) {
     res.locals.url = req.body.url;
     console.log('reaching testingController.fetch', req.body.url);
     return next();
   },
+  //gets schema data by making a fetch request to the input URL from the playground page
   async getData(req: Request, res: Response, next: NextFunction) {
     console.log(`${res.locals.url}`);
 
