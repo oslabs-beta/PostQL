@@ -1,10 +1,10 @@
 import { 
-    Login,
+    LogIn,
     LoginActionTypes,
     GET_LOGIN
 } from "./types";
 
-const initialState: Login = {
+const initialState: LogIn = {
     username: '',
     password: ''
 }
@@ -12,7 +12,7 @@ const initialState: Login = {
 export function loginReducer(
     state = initialState,
     action: LoginActionTypes
-): Login {
+): LogIn {
     switch (action.type) {
         case GET_LOGIN:
             return {

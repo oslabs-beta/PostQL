@@ -8,7 +8,7 @@ import { registerReducer } from "./register/reducers";
 
 const rootReducer = combineReducers({
   url: urlReducer,
-  login: loginReducer,
+  log: loginReducer,
   register: registerReducer
 });
 

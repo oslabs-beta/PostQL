@@ -1,8 +1,8 @@
-import { Login, GET_LOGIN } from "./types";
+import { LogIn, GET_LOGIN } from "./types";
 
-export function getLogin (login: Login) {
+export function getLogin (log: LogIn) {
     return {
         type: GET_LOGIN,
-        payload: login
+        payload: log
     }
 }

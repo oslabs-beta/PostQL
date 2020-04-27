@@ -8,10 +8,10 @@ import App from './components';
 
 const store = configureStore();
 
-const App = () => (
+const MainApp = () => (
     <Provider store = {store}>
         <App/>
     </Provider>
 );
 
-render(<App />, document.getElementById('root'));
+render(<MainApp />, document.getElementById('root'));

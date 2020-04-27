@@ -13,7 +13,19 @@ import {
 // import  from '@material-ui/core/IconButton';
 import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
+import { connect } from 'react-redux';
+import { AppState } from "../../store";
+import { getURL } from '../../store/url/actions';
+import { URL } from '../../store/url/types';
 
+const mapStateToProps = (state: AppState) => ({
+  url: state.url.url
+});
+
+interface PlaygroundHeaderProps {
+  getURL: typeof getURL;
+  url: string;
+}
 
 const theme = createMuiTheme({
   palette: {
@@ -58,9 +70,9 @@ const logout = (): void => {
     .then(() => window.location.reload());
 };
 
-const ButtonAppBar: FC = () => {
+const HeaderBar: FC<PlaygroundHeaderProps>= (props : any) => {
   const classes = useStyles();
-  const [url, setUrl] = useState('');
+  // const [url, setUrl] = useState('');
   const history = useHistory();
 
   function automate(): void {
@@ -70,7 +82,7 @@ const ButtonAppBar: FC = () => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        url,
+        url: props.url,
       }),
     })
       .then((res) => {
@@ -90,7 +102,7 @@ const ButtonAppBar: FC = () => {
             <img className="headerLogo" src="../../image/Group3.png" />
             <Link to="/" className="analytics">Playground</Link>
             <Link to="/analytics" className="analytics">Analytics</Link>
-            <TextField className="textfield2" id="url" label="Place url here" variant="filled" value={url} onChange={(e) => setUrl(e.target.value)} />
+            <TextField className="textfield2" id="url" label="Place url here" variant="filled" value={props.url} onChange={(e) => props.getURL({url: e.target.value})} />
             <button className="headerRight" type="submit" onClick={automate}>Automated Testing</button>
             <Typography className={classes.title} />
             <button className="headerRight" type="submit" onClick={logout}>Logout</button>
@@ -101,4 +113,7 @@ const ButtonAppBar: FC = () => {
   );
 };
 
-export default ButtonAppBar;
+export default connect(
+  mapStateToProps,
+  { getURL }
+)(HeaderBar);

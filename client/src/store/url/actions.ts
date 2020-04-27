@@ -1,4 +1,4 @@
-import { URL, GET_URL } from "./types";
+import { GET_URL, URL } from "./types";
 
 export function getURL(url: URL) {
     return {

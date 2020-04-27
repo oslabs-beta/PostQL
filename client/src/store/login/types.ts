@@ -1,4 +1,4 @@
-export interface Login {
+export interface LogIn {
     username: string;
     password: string;
 }
@@ -7,7 +7,7 @@ export const GET_LOGIN = "GET_LOGIN";
 
 interface GetLoginAction {
     type: typeof GET_LOGIN;
-    payload: Login;
+    payload: LogIn;
 }
 
 export type LoginActionTypes = GetLoginAction;

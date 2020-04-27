@@ -15,7 +15,8 @@ export function authReducer(
     switch (action.type) {
         case CHECK_AUTH:
             return {
-
+                ...state,
+                authed: true
         };
         default:
             return state;
