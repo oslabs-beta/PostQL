@@ -67,7 +67,14 @@ const logController: LogController = {
   addLog(req: Request, res: Response, next: NextFunction) {
     const { queryString, outputMetrics } = req.body;
     const { username } = res.locals;
+    let queryData: string = queryString;
 
+    // many queries will come in this format with a comment at the beginning:
+
+    if (queryString.substring(0, 35) === '# Write your query or mutation here') {
+      queryData = queryString.slice(35);
+      console.log(queryData);
+    }
     if (!username || !queryString || !outputMetrics) {
       return next({
         code: 400,
@@ -92,7 +99,7 @@ const logController: LogController = {
 
         if (queryHistory.length) {
           for (let i = 0; i < queryHistory.length; i += 1) {
-            if (queryHistory[i].queryString === queryString) {
+            if (queryHistory[i].queryString === queryData) {
               // found the existing query, add to this
               queryHistory[i].queryIDs.push(uuidv4()); // add random uuid
               queryHistory[i].outputMetrics.push(outputMetrics);
@@ -103,10 +110,11 @@ const logController: LogController = {
             }
           }
         }
+
         if (!bFound) {
         // create new log
           queryHistory.push({
-            queryIDs: [uuidv4()], queryString, outputMetrics: [outputMetrics], timeStamp: [curTime], counter: 0,
+            queryIDs: [uuidv4()], queryString: queryData, outputMetrics: [outputMetrics], timeStamp: [curTime], counter: 0,
           });
           results.save();
         }
