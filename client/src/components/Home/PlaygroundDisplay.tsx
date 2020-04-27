@@ -49,10 +49,8 @@ const PlaygroundDisplay: FC = () => (
   <Provider store={store}>
     <Playground
       className="playground"
-      endpoint="https://rickandmortyapi.com/graphql"
-      subscriptionEndpoint="https://rickandmortyapi.com/graphql"
-        // config=""
-        // schema=""
+      endpoint="https://gql.postql.io/graphql"
+      subscriptionEndpoint="https://gql.postql.io/graphql"
       settings={playgroundSettings}
     />
     {/* <MyConnectedComponent /> */}
