@@ -18,6 +18,7 @@ interface RegisterProps {
   email: string;
   password: string;
   confirmPassword: string;
+  thunkRegister: any;
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -29,11 +30,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const thunkRegister = (
+  username: string,
+  email: string,
+  password: string,
+  confirmPassword: string,
+): 
+
 const Register: FC<RegisterProps> = (props: any) => {
-  // const [username, setUsername] = useState('');
-  // const [email, setEmail] = useState('');
-  // const [password, setPassword] = useState('');
-  // const [confirmPassword, setConfirmPassword] = useState('');
   const classes = useStyles();
 
   function register(): void {
@@ -71,5 +75,5 @@ const Register: FC<RegisterProps> = (props: any) => {
 
 export default connect(
   mapStateToProps,
-  { getRegister }
+  { getRegister, thunkRegister }
 )(Register);
