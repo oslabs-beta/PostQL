@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import { Playground, store } from 'graphql-playground-react-tracking';
-import { Provider, ReactReduxContext } from 'react-redux';
+import { Provider } from 'react-redux';
 
 const playgroundSettings = {
   'editor.cursorShape': 'line',
@@ -21,30 +21,6 @@ const playgroundSettings = {
   'tracing.tracingSupported': true,
 };
 
-// const EditorColours = {
-//   property: 'purple',
-//   comment: 'green',
-//   punctuation: 'red',
-//   keyword: 'blue',
-//   def: 'orange',
-//   number: 'purple',
-//   string: 'blue',
-//   variable: 'white',
-//   editorBackground: 'grey',
-//   resultBackground: 'lightgrey'
-// }
-
-// in your connected component
-// const MyConnectedComponent: FC = () => (
-//   <ReactReduxContext.Consumer>
-//     {({ store }) => {
-//       console.log('STORE', store.getState());
-//       // do something useful with the store, like passing it to a child
-//       // component where it can be used in lifecycle methods
-//     }}
-//   </ReactReduxContext.Consumer>
-// );
-
 const PlaygroundDisplay: FC = () => (
   <Provider store={store}>
     <Playground
@@ -53,7 +29,6 @@ const PlaygroundDisplay: FC = () => (
       subscriptionEndpoint="https://gql.postql.io/graphql"
       settings={playgroundSettings}
     />
-    {/* <MyConnectedComponent /> */}
   </Provider>
 );
 export default PlaygroundDisplay;

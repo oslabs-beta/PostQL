@@ -45,6 +45,7 @@ body {
   justify-content: center;
 }
 
+
 .loginBody {
   width: 100vw;
   padding-top:50px;
@@ -101,23 +102,10 @@ body {
   margin-bottom: 10px !important;
 }
 
-.textfield2 .MuiInputBase-input {
-  color: white !important;
-}
-
-.textfield2 .MuiFormLabel-root {
-  color: white !important;
-}
-
-.textfield2 .MuiOutlinedInput-notchedOutline {
-  border-color: white !important;
-}
-
-.headerRight {
+.logout {
   color: rgba(255, 255, 255, 0.6);
   background-color:#172B3A;
   width: 100px;
-  margin-left: 10px;
 }
 
 .analytics {
@@ -133,24 +121,19 @@ button {
   font-size: 1rem;
   cursor: pointer;
   border: none;
-}
+  }
 
 .loginButton {
   width: 100%;
   margin-top: 10px;
 }
 
-.MuiAppBar-colorPrimary {
-  color: #fff;
-  background-color: #F012B2;
+  .MuiAppBar-colorPrimary {
+    color: #fff;
+    background-color: #F012B2;
 }
 
 .playground {
   height: 1600px;
-}
-
-//button for automatedTesting
-.automate {
-  height: 56px;
 }
  

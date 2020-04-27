@@ -5,7 +5,6 @@ import {
 
 import Home from './Home';
 import Analytics from './Analytics';
-import AutomatedTesting from './AutomatedTesting';
 import PlaygroundHeader from './Headers/PlaygroundHeader';
 
 const Dashboard: FC = () => {
@@ -22,9 +21,6 @@ const Dashboard: FC = () => {
           </Route>
           <Route path="/analytics">
             <Analytics />
-          </Route>
-          <Route path="/automatedTesting">
-            <AutomatedTesting />
           </Route>
         </Switch>
       </Router>
