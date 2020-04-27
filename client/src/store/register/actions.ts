@@ -1,6 +1,6 @@
 import { Register, GET_REGISTER } from "./types";
 
-export function getLogin (register: Register) {
+export function getRegister (register: Register) {
     return {
         type: GET_REGISTER,
         payload: register

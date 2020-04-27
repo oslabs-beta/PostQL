@@ -9,7 +9,7 @@ import { registerReducer } from "./register/reducers";
 const rootReducer = combineReducers({
   url: urlReducer,
   log: loginReducer,
-  register: registerReducer
+  reg: registerReducer
 });
 
 export type AppState = ReturnType<typeof rootReducer>;
