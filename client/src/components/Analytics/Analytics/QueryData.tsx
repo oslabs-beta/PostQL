@@ -7,6 +7,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import {
   TableBody, TableCell, TableContainer, TableHead, TableRow, Paper,
 } from '@material-ui/core';
+import { connect } from 'react-redux';
 
 const useStyles = makeStyles({
   table: {
@@ -23,6 +24,12 @@ interface Table {
   link: string;
 }
 
+// const mapStateToProps = (state) => ({
+//   URL: state.selectedWorkspace;
+// });
+
+// const mapDispatchToProps = (dispatch) => ({
+// });
 
 const QueryData: FC = () => {
   const classes = useStyles();
@@ -76,3 +83,4 @@ const QueryData: FC = () => {
 };
 
 export default QueryData;
+// export default connect(mapState, mapDispatch, null, { context: MyContext }) (QueryData);
