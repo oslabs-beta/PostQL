@@ -20,7 +20,6 @@ const AnalyticsRouting: FC = () => {
           <Query previousUrl={path} />
         </Route>
 
-
         <Route path={path} exact>
           <Analytics />
         </Route>

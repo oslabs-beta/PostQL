@@ -1,6 +1,7 @@
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 import {
   Link,
+  useHistory,
 } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import {
@@ -11,6 +12,8 @@ import {
 // import  from '@material-ui/core/Button';
 // import  from '@material-ui/core/IconButton';
 import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import TextField from '@material-ui/core/TextField';
+
 
 const theme = createMuiTheme({
   palette: {
@@ -57,6 +60,27 @@ const logout = (): void => {
 
 const ButtonAppBar: FC = () => {
   const classes = useStyles();
+  const [url, setUrl] = useState('');
+  const history = useHistory();
+
+  function automate(): void {
+    fetch('/api/testing/automate', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        url,
+      }),
+    })
+      .then((res) => {
+        if (res.status === 200) history.push('/automatedTesting');
+        return res.json();
+      })
+      .then((data) => {
+        console.log(data);
+      });
+  }
 
   return (
     <div className={classes.root}>
@@ -66,8 +90,10 @@ const ButtonAppBar: FC = () => {
             <img className="headerLogo" src="../../image/Group3.png" />
             <Link to="/" className="analytics">Playground</Link>
             <Link to="/analytics" className="analytics">Analytics</Link>
+            <TextField className="textfield2" id="url" label="Place url here" variant="filled" value={url} onChange={(e) => setUrl(e.target.value)} />
+            <button className="headerRight" type="submit" onClick={automate}>Automated Testing</button>
             <Typography className={classes.title} />
-            <button className="logout" type="submit" onClick={logout}>Logout</button>
+            <button className="headerRight" type="submit" onClick={logout}>Logout</button>
           </Toolbar>
         </AppBar>
       </ThemeProvider>
