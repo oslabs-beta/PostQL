@@ -98,16 +98,50 @@ describe('displayLogs middleware', () => {
     locals: {
     }
   } as Response;
+  
+  it('sends valid logs data for user', async () => {
+    logController.displayLogs(req, res, next);
+    expect(next).toHaveBeenCalledTimes(1);
+  });
+
+  // TO DO: To test further, need a way to access res.locals object
 
   it('gives back an error with bad paramters', async () => {
-    logController.displayLogs(req, badres, next);
+    logController.displayLogs(req, badres, function next(err: Error) {
+      expect(err).toBeTruthy();
+      expect(err.code).toBe(400);
+      expect(err.message).toBe('Invalid params');
+      expect(err.log).toBe('logs.displayLogs: Did not receive username.');
+    });
+  });
+});
+
+describe('displayLogs middleware', () => {
+
+  const req = {
+    params: {
+      queryID: '1',
+    }
+  } as Request;
+
+  const res = {
+    locals: {
+      username: 'testdbuser',
+    }
+  } as Response;
+
+  const badreq = {
+  } as Response;
+
+  it('gives back an error with bad paramters', async () => {
+    logController.displayLogs(badreq, res, next);
     expect(next).toHaveBeenCalledTimes(1);
   });
 
   // TO DO: To test further, need a way to access res.locals object
 
   it('sends valid logs data for user', async () => {
-    logController.displayLogs(req, res, function next(err: Error) {
+    logController.displayLogs(badreq, res, function next(err: Error) {
       expect(err).toBeTruthy();
       expect(err.code).toBe(400);
       expect(err.message).toBe('Invalid params');
