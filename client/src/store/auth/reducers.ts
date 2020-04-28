@@ -16,7 +16,7 @@ export function authReducer(
         case CHECK_AUTH:
             return {
                 ...state,
-                authed: true
+                authed: action.payload.authed
         };
         default:
             return state;

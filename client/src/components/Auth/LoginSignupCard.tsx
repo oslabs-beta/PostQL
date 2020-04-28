@@ -25,7 +25,6 @@ const useStyles = makeStyles({
 
 const SimpleCard: FC = () => {
   const classes = useStyles();
-
   return (
     <Card className={`${classes.root} padded-card`}>
       <img className="loginLogo" src="../../image/title.png" />

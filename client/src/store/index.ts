@@ -5,11 +5,14 @@ import { createStore, combineReducers, applyMiddleware } from "redux";
 import { urlReducer } from "./url/reducers";
 import { loginReducer } from "./login/reducers";
 import { registerReducer } from "./register/reducers";
+import { authReducer } from "./auth/reducers";
+import thunk from 'redux-thunk';
 
 const rootReducer = combineReducers({
   url: urlReducer,
   log: loginReducer,
-  reg: registerReducer
+  reg: registerReducer,
+  authent: authReducer
 });
 
 export type AppState = ReturnType<typeof rootReducer>;
@@ -19,7 +22,7 @@ export default function configureStore() {
 //   const middleWareEnhancer = applyMiddleware(...middlewares);
 
   const store = createStore(
-    rootReducer,
+    rootReducer, applyMiddleware(thunk)
     // composeWithDevTools(middleWareEnhancer)
   );
 

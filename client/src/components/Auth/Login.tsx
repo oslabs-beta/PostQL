@@ -39,9 +39,10 @@ const Login: FC<LoginProps> = (props: any) => {
         }
       })
       .then((data) => {
-        console.log(data.message);
+        console.log(data);
       });
   }
+
 
   return (
     <div className="form">
