@@ -22,12 +22,16 @@ describe('QueriesByUser Model Test', () => {
     });
 });
 
+  const queryIDs = ['1', '2'];
+  const outputMetrics = ['om1', 'om2'];
+  const timeStamp = ['time1', 'time2'];
+
   const qmData = {
-    queryIDs: ['1', '2'],
+    queryIDs,
     queryString: 'qString',
-    outputMetrics: ['om1', 'om2'],
-    timeStamp: ['time1', 'time2'],
-    counter: 0,
+    outputMetrics,
+    timeStamp,
+    counter: queryIDs.length - 1,
   };
 
   const qbuData = {
@@ -35,8 +39,9 @@ describe('QueriesByUser Model Test', () => {
     queryHistory: qmData,
   };
 
+  // only need to test addition currently
   it('create & save user successfully', async () => {
-    const validData = new queriesByUser(qmData);
+    const validData = new queriesByUser(qbuData);
     const savedData = await validData.save();
     // Object Id should be defined when successfully saved to MongoDB.
     expect(savedData._id).toBeDefined();
@@ -47,4 +52,25 @@ describe('QueriesByUser Model Test', () => {
     expect(savedData.queryHistory.timeStamp).toBe(validData.timeStamp);
     expect(savedData.queryHistory.counter).toBe(validData.counter);
   });
+
+  const badqbuData = {
+    queryHistory: ['blah'],
+  };
+
+  // test failed validation
+  it('error with invalid schema parameters', async () => {
+    const nonValidData = new queriesByUser(badqbuData);
+    let err;
+
+    try {
+      const savedData = await nonValidData.save();
+      let error = savedData;
+    } catch (error) {
+        err = error
+    }
+
+    expect(err).toBeInstanceOf(mongoose.Error.ValidationError)
+    expect(err.errors.username).toBeDefined();
+  });
+
 });

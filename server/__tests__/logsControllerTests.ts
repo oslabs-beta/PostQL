@@ -1,6 +1,11 @@
 import supertest from 'supertest';
 import mongoose from 'mongoose';
-import { queriesByUser } from ('../modules/api/logs/mongo');
+import { Request, Response, NextFunction } from 'express';
+
+import { queriesByUser, queryMetrics } from '../modules/api/logs/mongo';
+import logController from '../modules/api/logs/controller';
+
+require('dotenv').config();
 
 // logic test for Travis CI
 describe('basic', () => {
@@ -9,56 +14,119 @@ describe('basic', () => {
   });
 });
 
-// beforeAll(async () => {
-//   const url = `mongodb://127.0.0.1/${databaseName}`
-//   await mongoose.connect(url, { useNewUrlParser: true })
-// })
+const queryIDs = ['1', '2'];
+const outputMetrics = ['om1', 'om2'];
+const timeStamp = ['time1', 'time2'];
+const queryString = 'qString';
+const counter = queryIDs.length - 1;
+const username =  'testdbuser';
 
-// describe('unit tests for all logs middleware', () => {
-//   const mockRequest = (data: any) => data;
+const qmData = {
+  queryIDs,
+  queryString,
+  outputMetrics,
+  timeStamp,
+  counter,
+};
 
-//   const mockResponse = (locals: any) => {
-//     const res = {locals};
-//     res.status = jest.fn().mockReturnValue(res);
-//     res.json = jest.fn().mockReturnValue(res);
-//     return res;
-//   };
+const qbuData = {
+  username,
+  queryHistory: qmData,
+};
 
-  // TO DO: to test create, we need to delete users from DB
-  // which will be an upcoming stretch feature
-  // it('creates an user', (done) => {
-  //   const req = mockRequest({});
-  //   const res = mockResponse(username: 'testingonly');
+const next:NextFunction = jest.fn();
 
-  //   await createUser(req, res, next);
-  //   expect(next).toHaveBeenCalled();
-  // });
+beforeAll(async () => {
+  await mongoose.connect(`${process.env.LOGS_DATABASE}?retryWrites=true&w=majority`, { useNewUrlParser: true, useCreateIndex: true }, (err) => {
+    if (err) {
+      console.error(err);
+      process.exit(1);
+    }
+    async function saveData () {
+      const validData = new queriesByUser(qbuData);
+      const savedData = await validData.save();
+    }
+    saveData();
+  });
+});
 
-  // describe('unit tests for all logs middleware', () => {
-  //   it('adds a new log', () => {
-  //     const req = mockRequest({ queryString: 'testQuery', outputMetrics: 'testMetrics'});
-  //     const res = mockResponse(username: 'testingonly');
+describe('addlog middleware', () => {
+  const req = {
+    body: {
+      queryString: 'qString1',
+      outputMetrics: 'output1',
+    }
+  } as Request;
 
-  //     await addLog(req, res, next);
-  //     expect(next).toHaveBeenCalled();
-  //   });
-  // });
-  
-  // it('displays all logs by set user', () => {
-  //   expect(displayLogs()).toBe();
-  // });
+  const res = {
+    locals: {
+      username: 'user1',
+    }
+  } as Response;
 
-  // it('displays a specific log', () => {
-  //   expect(displayLog()).toBe();
-  // });
+  it('adds a new log with valid parameters', async () => {
+    logController.addLog(req, res, next);
+    expect(next).toHaveBeenCalledTimes(1);
+  });
 
-  // it('displays a specific instance', () => {
-  //   expect(displayInstance()).toBe();
-  // });
+  const badRes = {
+    locals: {
+    }
+  } as Response;
 
-  // it('deletes an entire log', () => {
-  //   expect(deleteLog()).toBe();
-  // });
+  it('gives back an error with bad paramters', async () => {
+    logController.addLog(req, badRes, function next(err: Error) {
+      expect(err).toBeTruthy();
+      expect(err.code).toBe(400);
+      expect(err.message).toBe('Invalid params');
+      expect(err.log).toBe('logs.addLog: Did not receive all needed params.');
+    });
+  });
+});
+
+describe('displayLogs middleware', () => {
+
+  const req = {} as Request;
+
+  const res = {
+    locals: {
+      username: 'testdbuser',
+    }
+  } as Response;
+
+  const badres = {
+    locals: {
+    }
+  } as Response;
+
+  it('gives back an error with bad paramters', async () => {
+    logController.displayLogs(req, badres, next);
+    expect(next).toHaveBeenCalledTimes(1);
+  });
+
+  // TO DO: To test further, need a way to access res.locals object
+
+  it('sends valid logs data for user', async () => {
+    logController.displayLogs(req, res, function next(err: Error) {
+      expect(err).toBeTruthy();
+      expect(err.code).toBe(400);
+      expect(err.message).toBe('Invalid params');
+      expect(err.log).toBe('logs.displayLogs: Did not receive username.');
+    });
+  });
+});
+
+// it('displays a specific log', () => {
+//   expect(displayLog()).toBe();
+// });
+
+// it('displays a specific instance', () => {
+//   expect(displayInstance()).toBe();
+// });
+
+// it('deletes an entire log', () => {
+//   expect(deleteLog()).toBe();
+// });
 
 // });
 
@@ -66,4 +134,4 @@ describe('basic', () => {
 // use supertest to send reqs, and get back responses
 
 // endpoint tests
-// use selenium to test frontend and backend compatibility
+// use selenium to test frontend and backend
