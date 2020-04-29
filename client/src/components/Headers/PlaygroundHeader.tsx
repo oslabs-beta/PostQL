@@ -14,18 +14,18 @@ import {
 import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import { connect } from 'react-redux';
-import { AppState } from "../../store";
+import { Action } from 'redux';
+import { ThunkAction } from 'redux-thunk';
+import { AppState } from '../../store';
 import { getURL } from '../../store/url/actions';
 import { checkAuth } from '../../store/auth/actions';
 import { URL } from '../../store/url/types';
-import { Action } from 'redux';
-import { ThunkAction } from 'redux-thunk';
 import Dashboard from '../Dashboard';
 import GetAuth from '../Auth';
 
 const mapStateToProps = (state: AppState) => ({
   url: state.url.url,
-  authed: state.authent.authed
+  authed: state.authent.authed,
 });
 
 interface PlaygroundHeaderProps {
@@ -69,13 +69,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const thunkLogout = (): ThunkAction<void, AppState, null, Action<string>> => async dispatch => {
+const thunkLogout = (): ThunkAction<void, AppState, null, Action<string>> => async (dispatch) => {
   fetch('/api/auth/logout', {
     method: 'POST',
   })
     // .then(()=> window.location.reload())
-    .then(() => dispatch(checkAuth({authed:false})));
-}
+    .then(() => dispatch(checkAuth({ authed: false })));
+};
 
 // const logout = (): void => {
 //   fetch('/api/auth/logout', {
@@ -84,8 +84,7 @@ const thunkLogout = (): ThunkAction<void, AppState, null, Action<string>> => asy
 //     .then(() => window.location.reload());
 // };
 
-const HeaderBar: FC<PlaygroundHeaderProps>= (props : any) => {
-  
+const HeaderBar: FC<PlaygroundHeaderProps> = (props: any) => {
   const classes = useStyles();
   // const [url, setUrl] = useState('');
   const history = useHistory();
@@ -116,10 +115,8 @@ const HeaderBar: FC<PlaygroundHeaderProps>= (props : any) => {
             <img className="headerLogo" src="../../image/Group3.png" />
             <Link to="/" className="analytics">Playground</Link>
             <Link to="/analytics" className="analytics">Analytics</Link>
-            <TextField className="textfield2" id="url" label="Place url here" variant="filled" value={props.url} onChange={(e) => props.getURL({url: e.target.value})} />
-            <button className="headerRight" type="submit" onClick={automate}>Automated Testing</button>
             <Typography className={classes.title} />
-            <button className="headerRight" type="submit" onClick={(e)=> props.thunkLogout(props.authed)}>Logout</button>
+            <button className="headerRight" type="submit" onClick={(e) => props.thunkLogout(props.authed)}>Logout</button>
           </Toolbar>
         </AppBar>
       </ThemeProvider>
@@ -129,5 +126,5 @@ const HeaderBar: FC<PlaygroundHeaderProps>= (props : any) => {
 
 export default connect(
   mapStateToProps,
-  { getURL, thunkLogout }
+  { getURL, thunkLogout },
 )(HeaderBar);
