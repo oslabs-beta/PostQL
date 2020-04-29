@@ -3,7 +3,7 @@
 
 PostQL is a web application that specializes in providing metrics for your GraphQL endpoint and then utilizing that data further to provide detailed, historic analytical data. We help you implement structured automatic testing on your GraphQL endpoint as well as giving you all the data you need to make your application more performant.
 
-Try it live on our website: https://postql.io.com
+Try it live on our website: https://postql.io
 
 ## How to use:
 
