@@ -17,7 +17,7 @@ const queryMetricsSchema = new mongoose.Schema({
 const queryMetrics = mongoose.model('QueryMetrics', queryMetricsSchema);
 
 const usersSchema = new mongoose.Schema({
-  username: { type: String, require: true },
+  username: { type: String, required: true },
   queryHistory: [queryMetricsSchema],
 });
 

@@ -29,7 +29,7 @@ const useStyles = makeStyles({
   },
 });
 
-const thunkAnals = (props: PropertyKey): ThunkAction<void, AppState, null, Action<string>> => async (dispatch) => {
+const thunkAnals = (props: any): ThunkAction<void, AppState, null, Action<string>> => async (dispatch) => {
   // if (props.queryData === []){
   fetch('/api/logs/display')
     .then((response) => response.json())
@@ -37,7 +37,6 @@ const thunkAnals = (props: PropertyKey): ThunkAction<void, AppState, null, Actio
     .then((data) => dispatch(setQueryData({ queryData: data })));
   // }
 };
-
 
 interface Table {
   query: string;
@@ -66,7 +65,7 @@ const QueryData: FC<AnalsProps> = (props: any) => {
     props.thunkAnals();
   }, []);
 
-  console.log('QUERYDATA', props.queryData.queryString);
+  console.log('QUERYDATA', props.queryData);
 
   return (
     <div>
@@ -100,7 +99,7 @@ const QueryData: FC<AnalsProps> = (props: any) => {
                 </TableCell>
                 <TableCell align="right">{row.queryString.includes('query') ? 'Query' : 'Mutation'}</TableCell>
                 <TableCell align="right">{row.counter}</TableCell>
-                <TableCell align="right">{row.duration}</TableCell>
+                <TableCell align="right">{ row.duration / 1000000 }</TableCell>
                 <TableCell align="right">{row.timeStamp}</TableCell>
                 <TableCell align="right"><Link to={`${path}/${row._id}`}>More Details</Link></TableCell>
               </TableRow>
