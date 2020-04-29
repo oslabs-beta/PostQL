@@ -13,13 +13,12 @@ const AnalyticsRouting: FC = () => {
     <div>
       <Switch>
         <Route path={`${path}/:queryID/:instanceID`}>
-          <Instance previousUrl={path} />
+          <Instance />
         </Route>
 
         <Route path={`${path}/:queryID`}>
-          <Query previousUrl={path} />
+          <Query/>
         </Route>
-
 
         <Route path={path} exact>
           <Analytics />
@@ -31,3 +30,14 @@ const AnalyticsRouting: FC = () => {
 };
 
 export default AnalyticsRouting;
+
+
+{/* <Instance previousUrl={path} />
+</Route>
+
+<Route path={`${path}/:queryID`}>
+  <Query previousUrl={path} />
+</Route>
+
+<Route path={path} exact>
+  <Analytics /> */}

@@ -1,23 +1,61 @@
 import React, { FC, useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { Chart } from 'react-google-charts';
+import { connect } from 'react-redux';
+import { AppState } from "../../../store";
+import { setGraph } from '../../../store/instance/actions';
+import { Action } from 'redux';
+import { ThunkAction } from 'redux-thunk';
+import Table from '@material-ui/core/Table';
+import { makeStyles } from '@material-ui/core/styles';
+import {
+  TableBody, TableCell, TableContainer, TableHead, TableRow, Paper,
+} from '@material-ui/core';
 
-interface PropTypes {
-  previousUrl: string;
+const mapStateToProps = (state: AppState) => ({
+  graphData: state.graph.graphData
+});
+
+interface GraphProps {
+  setGraph: typeof setGraph;
+  graphData: any;
+  thunkGraph: any;
 }
 
-const Graph: FC<PropTypes> = ({ previousUrl }) => {
-  const { queryID, instanceID } = useParams();
-  const [instanceData, setInstanceData] = useState();
+// interface PropTypes {
+//   previousUrl: string;
+// }
 
-  function getInstanceData(): void {
-    fetch(`/api/logs/display/${queryID}/${instanceID}`)
+const thunkGraph = (queryID: string, instanceID: string): ThunkAction<void, AppState, null, Action<string>> => async dispatch => {
+  fetch(`/api/logs/display/${queryID}/${instanceID}`)
       .then((res) => res.json())
-      .then((data) => setInstanceData(data));
+      .then((data) => {
+        console.log('THUNK', data)
+        return dispatch(setGraph({graphData: data}))
+      });
   }
 
+const useStyles = makeStyles({
+  table: {
+    minWidth: 650,
+  },
+});
+
+const Graph: FC< GraphProps> = (props:any) => {
+  const classes = useStyles();
+  const { queryID, instanceID } = useParams();
+  // const [googleChartData, setGoogleChartData] = useState([]);
+
+//useEffect is triggered when any normal lifecycle methods (componentDidLoad, componentDidUpdate(in this case here), componentWillUnmount), then use Effect get triggered
   useEffect(() => {
-    getInstanceData();
+    //first time useEffect is run from componentDidLoad and console log will be undefined
+    console.log('useeffect',props.graphData);
+    if (props.graphData !== undefined) {   
+    //2nd time useEffect is run is from componentDidUpdate and props.graphData is defined
+      // setGoogleChartData(traceToGoogleChartsData(props.graphData));
+    } else {
+      props.thunkGraph(queryID, instanceID);
+    }
   }, []);
 
   const traceToGoogleChartsData = (data: any) => {
@@ -55,30 +93,38 @@ const Graph: FC<PropTypes> = ({ previousUrl }) => {
     return d3Data;
   };
 
-  let googleChartData: any = [];
-
-  if (instanceData !== undefined) {
-    googleChartData = traceToGoogleChartsData(instanceData);
-  }
+  // if (props.instanceData !== undefined) {
+  //   googleChartData = traceToGoogleChartsData(props.instanceData);
+  // }
 
   return (
+    !props.graphData ? <div></div> :
     <div>
       <div className="split">
-        <h2 className="Graphtitle">Graphs</h2>
-        <Link to={`${previousUrl}/${queryID}`}>
-          <button type="button">Back</button>
-        </Link>
+        <h2 className="Graphtitle">Gant Chart:</h2>
         <Chart
-          width={'500px'}
-          height={'300px'}
+          width="1000px"
+          height="300px"
           chartType="BarChart"
           loader={<div>Loading Chart</div>}
-          data={googleChartData}
+          data={traceToGoogleChartsData(props.graphData)}
           options={{
             title: 'Query',
             chartArea: { width: '50%' },
             isStacked: true,
             series: [
+              { color: 'transparent' },
+              {},
+              { color: 'transparent' },
+              {},
+              { color: 'transparent' },
+              {},
+              { color: 'transparent' },
+              {},
+              { color: 'transparent' },
+              {},
+              { color: 'transparent' },
+              {},
               { color: 'transparent' },
               {},
               { color: 'transparent' },
@@ -95,9 +141,36 @@ const Graph: FC<PropTypes> = ({ previousUrl }) => {
           // For tests
           rootProps={{ 'data-testid': '3' }}
         />
+<TableContainer component={Paper}>
+      <Table className={classes.table} aria-label="simple table">
+        <TableHead>
+          <TableRow>
+            <TableCell>Query</TableCell>
+            <TableCell align="right">TimeStamp</TableCell>
+            <TableCell align="right">Total Time duration&nbsp;(ms)</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {/* { Array.isArray(props.instanceData[queryID].outputMetrics) && props.instanceData[queryID].outputMetrics.map((om: any, index: number) => ( */}
+            <TableRow key={props.graphData[outputMetrics][startTime]}>
+              <TableCell component="th" scope="row">
+                {props.instanceData[queryID].timeStamp[index]}
+              </TableCell>
+              <TableCell align="right">{props.instanceData[queryID].timeStamp[index]}</TableCell>
+              <TableCell align="right"><{om.duration / 1000000}></TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
+
       </div>
     </div>
   );
 };
 
-export default Graph;
+export default connect(
+  mapStateToProps,
+  { setGraph, thunkGraph }
+)(Graph);
+

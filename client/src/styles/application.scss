@@ -4,10 +4,18 @@
 $nunito-font: 'Nunito', sans-serif;
 $rubik-font: 'Rubik', sans-serif;
 $font-stack: $rubik-font, $nunito-font, Helvetica, sans-serif;
-$primary-color:darken(gray, 25);
+$primary-color:#6D0C52;
+
+* {
+  box-sizing: border-box;
+}
+
+element {
+  overflow-x: hidden;
+}
 
 body {
-  background-color: rgb(23, 23, 41);
+  background-color:#0D212D;
 }
 
 $light-color: gray;
@@ -34,40 +42,115 @@ body {
   label {
     display: block;
   }
+  justify-content: center;
 }
 
-.slim {
+.loginBody {
+  width: 100vw;
+  padding-top:50px;
+  background-image: url("/image/Frame 5.png");
+  background-repeat: repeat; 
+}
+
+.getAuth {
+  display: flex;
+  justify-content: center;
   margin: auto;
   width: 400px;
+  color: #0D212D;
+  background-color: #253B48;
+}
+
+.loginLogo {
+  justify-content: center;
+}
+
+.padded-card {
+  padding-left:70px;
+  padding-right:70px;
+  padding-top:20px;
+  padding-bottom:30px;
 }
 
 .form {
-  max-width: 400px;
+  width: 100%;
+  margin: 0 0;
 }
+
 
 .logo {
   height: 75px;
   width: 218px;
 }
 
-.analyticstitle{
+.headerLogo {
+  height: 41px;
+  width: 61px;
+}
+
+.analyticstitle {
   color:white;
+}
+
+.MuiTextField-root {
+  width:100%;
+  margin-bottom: 10px;
+}
+
+.MuiFormControl-root {
+  margin-bottom: 10px !important;
+}
+
+.textfield2 .MuiInputBase-input {
+  color: white !important;
+}
+
+.textfield2 .MuiFormLabel-root {
+  color: white !important;
+}
+
+.textfield2 .MuiOutlinedInput-notchedOutline {
+  border-color: white !important;
+}
+
+.headerRight {
+  color: rgba(255, 255, 255, 0.6);
+  background-color:#172B3A;
+  width: 100px;
+  margin-left: 10px;
+}
+
+.analytics {
+  margin-left: 20px;
+  color: #FFF;
 }
 
 button {
   background-color: rgb(49, 53, 78);
   color: rgb(254, 251, 251);
   border-radius: 5px;
-  padding: 0.6rem 1.2rem;
-  width: 100px;
+  padding: 1.2rem 1.2rem;
   font-size: 1rem;
   cursor: pointer;
   border: none;
-  }
-
-  .MuiAppBar-colorPrimary {
-    color: #fff;
-    background-color: #F012B2;
 }
 
+.loginButton {
+  width: 100%;
+  margin-top: 10px;
+}
+
+.MuiAppBar-colorPrimary {
+  color: #fff;
+  background-color: #F012B2;
+}
+
+.playground {
+  height: 1600px;
+}
+
+//button for automatedTesting
+.automate {
+  height: 56px;
+}
  

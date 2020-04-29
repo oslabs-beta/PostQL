@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import { Playground, store } from 'graphql-playground-react-tracking';
-import { Provider } from 'react-redux';
+import { Provider, ReactReduxContext } from 'react-redux';
 
 const playgroundSettings = {
   'editor.cursorShape': 'line',
@@ -34,15 +34,26 @@ const playgroundSettings = {
 //   resultBackground: 'lightgrey'
 // }
 
+// in your connected component
+// const MyConnectedComponent: FC = () => (
+//   <ReactReduxContext.Consumer>
+//     {({ store }) => {
+//       console.log('STORE', store.getState());
+//       // do something useful with the store, like passing it to a child
+//       // component where it can be used in lifecycle methods
+//     }}
+//   </ReactReduxContext.Consumer>
+// );
+
 const PlaygroundDisplay: FC = () => (
   <Provider store={store}>
     <Playground
-      endpoint="https://rickandmortyapi.com/graphql"
-      subscriptionEndpoint="https://rickandmortyapi.com/graphql"
-        // config=""
-        // schema=""
+      className="playground"
+      endpoint="https://gql.postql.io/graphql"
+      subscriptionEndpoint="https://gql.postql.io/graphql"
       settings={playgroundSettings}
     />
+    {/* <MyConnectedComponent /> */}
   </Provider>
 );
 export default PlaygroundDisplay;

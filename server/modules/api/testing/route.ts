@@ -13,4 +13,8 @@ logsRoute.get('/getAllTypes', authController.validateUser, testingController.fin
   res.status(200).json({ message: 'Types and schema has all been found.' });
 });
 
+logsRoute.post('/automate', testingController.fetchURL, testingController.getData, testingController.findAllTypes, (req, res) => {
+  res.status(200).json({ message: 'Types and schema has all been found.' });
+});
+
 export default logsRoute;
