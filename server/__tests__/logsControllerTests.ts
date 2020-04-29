@@ -1,8 +1,7 @@
-import supertest from 'supertest';
 import mongoose from 'mongoose';
 import { Request, Response, NextFunction } from 'express';
 
-import { queriesByUser, queryMetrics } from '../modules/api/logs/mongo';
+import { queriesByUser } from '../modules/api/logs/mongo';
 import logController from '../modules/api/logs/controller';
 
 require('dotenv').config();
@@ -14,6 +13,7 @@ describe('basic', () => {
   });
 });
 
+// UNIT TESTS
 const queryIDs = ['1', '2'];
 const outputMetrics = ['om1', 'om2'];
 const timeStamp = ['time1', 'time2'];
@@ -116,32 +116,36 @@ describe('displayLogs middleware', () => {
   });
 });
 
+// for displaylogs and displaylog
+const req = {
+  params: {
+    queryID: '1',
+  }
+} as Request;
+
+const res = {
+  locals: {
+    username: 'testdbuser',
+  }
+} as Response;
+
+const badreq = {
+  params: {}
+} as Response;
+
+const badres = {
+  locals: {}
+} as Response;
+
 describe('displayLogs middleware', () => {
-
-  const req = {
-    params: {
-      queryID: '1',
-    }
-  } as Request;
-
-  const res = {
-    locals: {
-      username: 'testdbuser',
-    }
-  } as Response;
-
-  const badreq = {
-  } as Response;
-
-  it('gives back an error with bad paramters', async () => {
-    logController.displayLogs(badreq, res, next);
+  it('sends valid logs data for user', async () => {
+    logController.displayLogs(req, res, next);
     expect(next).toHaveBeenCalledTimes(1);
   });
-
   // TO DO: To test further, need a way to access res.locals object
 
-  it('sends valid logs data for user', async () => {
-    logController.displayLogs(badreq, res, function next(err: Error) {
+  it('gives back an error with bad paramters', async () => {
+    logController.displayLogs(req, badres, function next(err: Error) {
       expect(err).toBeTruthy();
       expect(err.code).toBe(400);
       expect(err.message).toBe('Invalid params');
@@ -150,22 +154,62 @@ describe('displayLogs middleware', () => {
   });
 });
 
-// it('displays a specific log', () => {
-//   expect(displayLog()).toBe();
-// });
+describe('displayLog middleware', () => {
+  it('sends valid log data', async () => {
+    logController.displayLog(req, res, next);
+    expect(next).toHaveBeenCalledTimes(1);
+  });
+  // TO DO: To test further, need a way to access res.locals object
 
-// it('displays a specific instance', () => {
-//   expect(displayInstance()).toBe();
-// });
+  it('gives back an error with bad paramters', async () => {
+    logController.displayLog(badreq, res, function next(err: Error) {
+      expect(err).toBeTruthy();
+      expect(err.code).toBe(400);
+      expect(err.message).toBe('Invalid params');
+      expect(err.log).toBe('logs.displayLog: Did not receive username or queryID.');
+    });
+  });
+});
 
-// it('deletes an entire log', () => {
-//   expect(deleteLog()).toBe();
-// });
+describe('displayInstance middleware', () => {
 
-// });
+  const req = {
+    params: {
+      queryID: '1',
+      instanceID: '1a',
+    }
+  } as Request;
+  
+  it('sends valid instance data', async () => {
+    logController.displayInstance(req, res, next);
+    expect(next).toHaveBeenCalledTimes(1);
+  });
+  // TO DO: To test further, need a way to access res.locals object
 
-// integration tests
-// use supertest to send reqs, and get back responses
+  it('gives back an error with bad paramters', async () => {
+    logController.displayInstance(badreq, res, function next(err: Error) {
+      expect(err).toBeTruthy();
+      expect(err.code).toBe(400);
+      expect(err.message).toBe('Invalid params');
+      expect(err.log).toBe('logs.displayInstance: Did not receive username or queryID.');
+    });
+  });
+});
 
-// endpoint tests
-// use selenium to test frontend and backend
+describe('displayInstance middleware', () => {
+  
+  it('deletes specific log', async () => {
+    logController.deleteLog(req, res, next);
+    expect(next).toHaveBeenCalledTimes(2); // don't have specific qID
+  });
+  // TO DO: To test further, need a way to access res.locals object
+
+  it('gives back an error with bad paramters', async () => {
+    logController.deleteLog(badreq, res, function next(err: Error) {
+      expect(err).toBeTruthy();
+      expect(err.code).toBe(400);
+      expect(err.message).toBe('Invalid params');
+      expect(err.log).toBe('logs.deleteLog: Did not receive username or queryID.');
+    });
+  });
+});
