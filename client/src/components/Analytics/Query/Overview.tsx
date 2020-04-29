@@ -3,11 +3,11 @@ import { Link } from 'react-router-dom';
 
 import QueryTable from './QueryTable';
 
-interface PropTypes {
-  previousUrl: string;
-}
+// interface PropTypes {
+//   previousUrl: string;
+// }
 
-const Overview: FC<PropTypes> = ({ previousUrl }) => (
+const Overview: FC = () => (
   <div>
     <div className="split">
       <h2 className="analyticstitle">Query Analytics</h2>

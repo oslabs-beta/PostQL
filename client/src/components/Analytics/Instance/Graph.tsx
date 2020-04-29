@@ -1,23 +1,49 @@
 import React, { FC, useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { Chart } from 'react-google-charts';
+import { connect } from 'react-redux';
+import { AppState } from "../../../store";
+import { setGraph } from '../../../store/instance/actions';
+import { Action } from 'redux';
+import { ThunkAction } from 'redux-thunk';
 
-interface PropTypes {
-  previousUrl: string;
+const mapStateToProps = (state: AppState) => ({
+  graphData: state.graph.graphData
+});
+
+interface GraphProps {
+  setGraph: typeof setGraph;
+  graphData: any;
+  thunkGraph: any;
 }
 
-const Graph: FC<PropTypes> = ({ previousUrl }) => {
-  const { queryID, instanceID } = useParams();
-  const [instanceData, setInstanceData] = useState();
+// interface PropTypes {
+//   previousUrl: string;
+// }
 
-  function getInstanceData(): void {
-    fetch(`/api/logs/display/${queryID}/${instanceID}`)
+const thunkGraph = (queryID: string, instanceID: string): ThunkAction<void, AppState, null, Action<string>> => async dispatch => {
+  fetch(`/api/logs/display/${queryID}/${instanceID}`)
       .then((res) => res.json())
-      .then((data) => setInstanceData(data));
+      .then((data) => {
+        console.log('THUNK', data)
+        return dispatch(setGraph({graphData: data}))
+      });
   }
 
+const Graph: FC< GraphProps> = (props:any) => {
+  const { queryID, instanceID } = useParams();
+  // const [googleChartData, setGoogleChartData] = useState([]);
+
+//useEffect is triggered when any normal lifecycle methods (componentDidLoad, componentDidUpdate(in this case here), componentWillUnmount), then use Effect get triggered
   useEffect(() => {
-    getInstanceData();
+    //first time useEffect is run from componentDidLoad and console log will be undefined
+    console.log('useeffect',props.graphData);
+    if (props.graphData !== undefined) {   
+    //2nd time useEffect is run is from componentDidUpdate and props.graphData is defined
+      // setGoogleChartData(traceToGoogleChartsData(props.graphData));
+    } else {
+      props.thunkGraph(queryID, instanceID);
+    }
   }, []);
 
   const traceToGoogleChartsData = (data: any) => {
@@ -55,13 +81,12 @@ const Graph: FC<PropTypes> = ({ previousUrl }) => {
     return d3Data;
   };
 
-  let googleChartData: any = [];
-
-  if (instanceData !== undefined) {
-    googleChartData = traceToGoogleChartsData(instanceData);
-  }
+  // if (props.instanceData !== undefined) {
+  //   googleChartData = traceToGoogleChartsData(props.instanceData);
+  // }
 
   return (
+    !props.graphData ? <div></div> :
     <div>
       <div className="split">
         <h2 className="Graphtitle">Gant Chart:</h2>
@@ -70,7 +95,7 @@ const Graph: FC<PropTypes> = ({ previousUrl }) => {
           height="300px"
           chartType="BarChart"
           loader={<div>Loading Chart</div>}
-          data={googleChartData}
+          data={traceToGoogleChartsData(props.graphData)}
           options={{
             title: 'Query',
             chartArea: { width: '50%' },
@@ -109,4 +134,8 @@ const Graph: FC<PropTypes> = ({ previousUrl }) => {
   );
 };
 
-export default Graph;
+export default connect(
+  mapStateToProps,
+  { setGraph, thunkGraph }
+)(Graph);
+

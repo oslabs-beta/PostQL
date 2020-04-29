@@ -13,7 +13,25 @@ import {
 // import  from '@material-ui/core/IconButton';
 import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
+import { connect } from 'react-redux';
+import { AppState } from "../../store";
+import { getURL } from '../../store/url/actions';
+import { checkAuth } from '../../store/auth/actions';
+import { URL } from '../../store/url/types';
+import { Action } from 'redux';
+import { ThunkAction } from 'redux-thunk';
+import Dashboard from '../Dashboard';
+import GetAuth from '../Auth';
 
+const mapStateToProps = (state: AppState) => ({
+  url: state.url.url,
+  authed: state.authent.authed
+});
+
+interface PlaygroundHeaderProps {
+  getURL: typeof getURL;
+  url: string;
+}
 
 const theme = createMuiTheme({
   palette: {
@@ -51,16 +69,25 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const logout = (): void => {
+const thunkLogout = (): ThunkAction<void, AppState, null, Action<string>> => async dispatch => {
   fetch('/api/auth/logout', {
     method: 'POST',
   })
-    .then(() => window.location.reload());
-};
+    // .then(()=> window.location.reload())
+    .then(() => dispatch(checkAuth({authed:false})));
+}
 
-const ButtonAppBar: FC = () => {
+// const logout = (): void => {
+//   fetch('/api/auth/logout', {
+//     method: 'POST',
+//   })
+//     .then(() => window.location.reload());
+// };
+
+const HeaderBar: FC<PlaygroundHeaderProps>= (props : any) => {
+  
   const classes = useStyles();
-  const [url, setUrl] = useState('');
+  // const [url, setUrl] = useState('');
   const history = useHistory();
 
   function automate(): void {
@@ -70,7 +97,7 @@ const ButtonAppBar: FC = () => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        url,
+        url: props.url,
       }),
     })
       .then((res) => {
@@ -81,7 +108,6 @@ const ButtonAppBar: FC = () => {
         console.log(data);
       });
   }
-
   return (
     <div className={classes.root}>
       <ThemeProvider theme={theme}>
@@ -90,10 +116,10 @@ const ButtonAppBar: FC = () => {
             <img className="headerLogo" src="../../image/Group3.png" />
             <Link to="/" className="analytics">Playground</Link>
             <Link to="/analytics" className="analytics">Analytics</Link>
-            <TextField className="textfield2" id="url" label="Place url here" variant="filled" value={url} onChange={(e) => setUrl(e.target.value)} />
+            <TextField className="textfield2" id="url" label="Place url here" variant="filled" value={props.url} onChange={(e) => props.getURL({url: e.target.value})} />
             <button className="headerRight" type="submit" onClick={automate}>Automated Testing</button>
             <Typography className={classes.title} />
-            <button className="headerRight" type="submit" onClick={logout}>Logout</button>
+            <button className="headerRight" type="submit" onClick={(e)=> props.thunkLogout(props.authed)}>Logout</button>
           </Toolbar>
         </AppBar>
       </ThemeProvider>
@@ -101,4 +127,7 @@ const ButtonAppBar: FC = () => {
   );
 };
 
-export default ButtonAppBar;
+export default connect(
+  mapStateToProps,
+  { getURL, thunkLogout }
+)(HeaderBar);

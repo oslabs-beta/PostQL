@@ -8,12 +8,37 @@ import {
   TableBody, TableCell, TableContainer, TableHead, TableRow, Paper,
 } from '@material-ui/core';
 import { connect } from 'react-redux';
+import { AppState } from "../../../store";
+import { setQueryData } from '../../../store/analytics/actions';
+import { Action } from 'redux';
+import { ThunkAction } from 'redux-thunk';
+
+const mapStateToProps = (state: AppState) => ({
+  queryData: state.analy.queryData
+});
+
+interface AnalsProps {
+  setQueryData: typeof setQueryData;
+  queryData: any;
+  thunkAnals: any;
+}
 
 const useStyles = makeStyles({
   table: {
     minWidth: 650,
   },
 });
+
+const thunkAnals = (props:any): ThunkAction<void, AppState, null, Action<string>> => async dispatch => {
+  // if (props.queryData === []){
+  fetch('/api/logs/display')
+    .then((response) => response.json())
+    // .then((response) => console.log(response))
+    .then((data) => { 
+      return dispatch(setQueryData({queryData: data}))
+    });
+  // }
+}
 
 interface Table {
   query: string;
@@ -24,34 +49,21 @@ interface Table {
   link: string;
 }
 
-// const mapStateToProps = (state) => ({
-//   URL: state.selectedWorkspace;
-// });
-
-// const mapDispatchToProps = (dispatch) => ({
-// });
-
-const QueryData: FC = () => {
+const QueryData: FC<AnalsProps> = (props: any) => {
   const classes = useStyles();
   const { path } = useRouteMatch();
-  const [queryData, setQueryData] = useState([]);
-  const getData = () => {
-    fetch('/api/logs/display')
-      .then((response) => response.json())
-      .then((data) => setQueryData(data));
-  };
-  // Create State for Text Input
-  const [searchTerm, setSearchTerm] = useState('');
-  const handleChange = (event: any) => {
-    setSearchTerm(event.target.value);
-  };
-  // results evaluates either to full queryData array or filtered array based on searchTerm value
-  const results = !searchTerm ? queryData : queryData.filter((obj: any) => (
-    obj.queryString.toLowerCase().includes(searchTerm.toLowerCase())));
-    console.log(results[0]);
+  // const [queryData, setQueryData] = useState([]);
+  // const getData = () => {
+  //   fetch('/api/logs/display')
+  //     .then((response) => response.json())
+  //     .then((data) => setQueryData(data));
+  // };
+
   useEffect(() => {
-    getData();
+    props.thunkAnals();
   }, []);
+
+  console.log('QUERYDATA',props.queryData);
 
   return (
     <div>
@@ -78,7 +90,7 @@ const QueryData: FC = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {results.map((row: any) => (
+            {props.queryData.map((row: any) => (
               <TableRow key={row.queryString}>
                 <TableCell component="th" scope="row">
                   {row.queryString}
@@ -97,5 +109,7 @@ const QueryData: FC = () => {
   );
 };
 
-export default QueryData;
-// export default connect(mapState, mapDispatch, null, { context: MyContext }) (QueryData);
+export default connect(
+  mapStateToProps,
+  { setQueryData, thunkAnals }
+)(QueryData);
