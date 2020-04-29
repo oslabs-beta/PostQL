@@ -41,6 +41,8 @@ const useStyles = makeStyles({
   },
 });
 
+//adding eslint;
+
 const Graph: FC< GraphProps> = (props: any) => {
   const classes = useStyles();
   const { queryID, instanceID } = useParams();
