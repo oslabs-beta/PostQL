@@ -39,3 +39,7 @@ npm install
 
 - Make sure Docker is running.
 - Plug in your own ENV variables for a MongoDB and PostgreSQL DBs.
+
+## Credits
+
+[@jason-heinowitz](https://github.com/jason-heinowitz), [@hjjinnie](https://github.com/hjjinnie), [@davidzhang8828](https://github.com/davidzhang8828), [@mariodandrea](https://github.com/mariodandrea), [@paganjoshua](https://github.com/paganjoshua)
