@@ -2,8 +2,6 @@ import React, { FC, useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { Chart } from 'react-google-charts';
 import { connect } from 'react-redux';
-import { AppState } from "../../../store";
-import { setGraph } from '../../../store/instance/actions';
 import { Action } from 'redux';
 import { ThunkAction } from 'redux-thunk';
 import Table from '@material-ui/core/Table';
@@ -11,9 +9,11 @@ import { makeStyles } from '@material-ui/core/styles';
 import {
   TableBody, TableCell, TableContainer, TableHead, TableRow, Paper,
 } from '@material-ui/core';
+import { setGraph } from '../../../store/instance/actions';
+import { AppState } from '../../../store';
 
 const mapStateToProps = (state: AppState) => ({
-  graphData: state.graph.graphData
+  graphData: state.graph.graphData,
 });
 
 interface GraphProps {
@@ -26,14 +26,14 @@ interface GraphProps {
 //   previousUrl: string;
 // }
 
-const thunkGraph = (queryID: string, instanceID: string): ThunkAction<void, AppState, null, Action<string>> => async dispatch => {
+const thunkGraph = (queryID: string, instanceID: string): ThunkAction<void, AppState, null, Action<string>> => async (dispatch) => {
   fetch(`/api/logs/display/${queryID}/${instanceID}`)
-      .then((res) => res.json())
-      .then((data) => {
-        console.log('THUNK', data)
-        return dispatch(setGraph({graphData: data}))
-      });
-  }
+    .then((res) => res.json())
+    .then((data) => {
+      console.log('THUNK', data);
+      return dispatch(setGraph({ graphData: data }));
+    });
+};
 
 const useStyles = makeStyles({
   table: {
@@ -41,17 +41,18 @@ const useStyles = makeStyles({
   },
 });
 
-const Graph: FC< GraphProps> = (props:any) => {
+const Graph: FC< GraphProps> = (props: any) => {
   const classes = useStyles();
   const { queryID, instanceID } = useParams();
+  // const { outputMetrics } = props.graphData
   // const [googleChartData, setGoogleChartData] = useState([]);
 
-//useEffect is triggered when any normal lifecycle methods (componentDidLoad, componentDidUpdate(in this case here), componentWillUnmount), then use Effect get triggered
+  // useEffect is triggered when any normal lifecycle methods (componentDidLoad, componentDidUpdate(in this case here), componentWillUnmount), then use Effect get triggered
   useEffect(() => {
-    //first time useEffect is run from componentDidLoad and console log will be undefined
-    console.log('useeffect',props.graphData);
-    if (props.graphData !== undefined) {   
-    //2nd time useEffect is run is from componentDidUpdate and props.graphData is defined
+    // first time useEffect is run from componentDidLoad and console log will be undefined
+    console.log('useeffect', props.graphData);
+    if (props.graphData !== undefined) {
+    // 2nd time useEffect is run is from componentDidUpdate and props.graphData is defined
       // setGoogleChartData(traceToGoogleChartsData(props.graphData));
     } else {
       props.thunkGraph(queryID, instanceID);
@@ -98,79 +99,86 @@ const Graph: FC< GraphProps> = (props:any) => {
   // }
 
   return (
-    !props.graphData ? <div></div> :
-    <div>
-      <div className="split">
-        <h2 className="Graphtitle">Gant Chart:</h2>
-        <Chart
-          width="1000px"
-          height="300px"
-          chartType="BarChart"
-          loader={<div>Loading Chart</div>}
-          data={traceToGoogleChartsData(props.graphData)}
-          options={{
-            title: 'Query',
-            chartArea: { width: '50%' },
-            isStacked: true,
-            series: [
-              { color: 'transparent' },
-              {},
-              { color: 'transparent' },
-              {},
-              { color: 'transparent' },
-              {},
-              { color: 'transparent' },
-              {},
-              { color: 'transparent' },
-              {},
-              { color: 'transparent' },
-              {},
-              { color: 'transparent' },
-              {},
-              { color: 'transparent' },
-              {},
-            ],
-            hAxis: {
-              title: 'Time in Nanoseconds',
-              minValue: 0,
-            },
-            vAxis: {
-              title: 'Query/Resolver',
-            },
-          }}
+    !props.graphData ? <div />
+      : (
+        <div>
+          <div className="split">
+            <h2 className="Graphtitle">Gant Chart:</h2>
+            <Chart
+              width="1000px"
+              height="300px"
+              chartType="BarChart"
+              loader={<div>Loading Chart</div>}
+              data={traceToGoogleChartsData(props.graphData)}
+              options={{
+                title: 'Query',
+                chartArea: { width: '50%' },
+                isStacked: true,
+                series: [
+                  { color: 'transparent' },
+                  {},
+                  { color: 'transparent' },
+                  {},
+                  { color: 'transparent' },
+                  {},
+                  { color: 'transparent' },
+                  {},
+                  { color: 'transparent' },
+                  {},
+                  { color: 'transparent' },
+                  {},
+                  { color: 'transparent' },
+                  {},
+                  { color: 'transparent' },
+                  {},
+                ],
+                hAxis: {
+                  title: 'Time in Nanoseconds',
+                  minValue: 0,
+                },
+                vAxis: {
+                  title: 'Query/Resolver',
+                },
+              }}
           // For tests
-          rootProps={{ 'data-testid': '3' }}
-        />
-<TableContainer component={Paper}>
-      <Table className={classes.table} aria-label="simple table">
-        <TableHead>
-          <TableRow>
-            <TableCell>Query</TableCell>
-            <TableCell align="right">TimeStamp</TableCell>
-            <TableCell align="right">Total Time duration&nbsp;(ms)</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {/* { Array.isArray(props.instanceData[queryID].outputMetrics) && props.instanceData[queryID].outputMetrics.map((om: any, index: number) => ( */}
-            <TableRow key={props.graphData[outputMetrics][startTime]}>
-              <TableCell component="th" scope="row">
-                {props.instanceData[queryID].timeStamp[index]}
-              </TableCell>
-              <TableCell align="right">{props.instanceData[queryID].timeStamp[index]}</TableCell>
-              <TableCell align="right"><{om.duration / 1000000}></TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+              rootProps={{ 'data-testid': '3' }}
+            />
+            <br />
+            <br />
+            <div>
+              <div className="split">
+                <h2 className="analyticstitle">Query Instance Analytics</h2>
+              </div>
+              <TableContainer component={Paper}>
+                <Table className={classes.table} aria-label="simple table">
+                  <TableHead>
+                    <TableRow>
+                      <TableCell>Query</TableCell>
+                      <TableCell align="right">TimeStamp</TableCell>
+                      <TableCell align="right">Total Time duration&nbsp;(ms)</TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {/* { Array.isArray(props.instanceData[queryID].outputMetrics) && props.instanceData[queryID].outputMetrics.map((om: any, index: number) => ( */}
+                    <TableRow key={props.graphData.outputMetrics.startTime}>
+                      <TableCell component="th" scope="row">
+                        {props.graphData.queryString}
+                      </TableCell>
+                      <TableCell align="right">{props.graphData.timeStamp}</TableCell>
+                      <TableCell align="right">{props.graphData.outputMetrics.duration / 1000000}</TableCell>
+                    </TableRow>
+                  </TableBody>
+                </Table>
+              </TableContainer>
+            </div>
+          </div>
+        </div>
 
-      </div>
-    </div>
+      )
   );
 };
 
 export default connect(
   mapStateToProps,
-  { setGraph, thunkGraph }
+  { setGraph, thunkGraph },
 )(Graph);
-
