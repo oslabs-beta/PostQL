@@ -3,7 +3,7 @@
 
 PostQL is a web application that specializes in providing metrics for your GraphQL endpoint and then utilizing that data further to provide detailed, historic analytical data. We help you implement structured automatic testing on your GraphQL endpoint as well as giving you all the data you need to make your application more performant.
 
-Try it live on our website: https://postql.io.com
+Try it live on our website: https://postql.io
 
 ## How to use:
 
@@ -39,3 +39,7 @@ npm install
 
 - Make sure Docker is running.
 - Plug in your own ENV variables for a MongoDB and PostgreSQL DBs.
+
+## Credits
+
+[@jason-heinowitz](https://github.com/jason-heinowitz), [@hjjinnie](https://github.com/hjjinnie), [@davidzhang8828](https://github.com/davidzhang8828), [@mariodandrea](https://github.com/mariodandrea), [@paganjoshua](https://github.com/paganjoshua)
