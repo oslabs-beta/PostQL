@@ -41,6 +41,8 @@ const useStyles = makeStyles({
   },
 });
 
+// adding eslint;
+
 const Graph: FC< GraphProps> = (props: any) => {
   const classes = useStyles();
   const { queryID, instanceID } = useParams();
@@ -103,7 +105,7 @@ const Graph: FC< GraphProps> = (props: any) => {
       : (
         <div>
           <div className="split">
-            <h2 className="Graphtitle">Gant Chart:</h2>
+            <h2 className="Graphtitle">Gantt Chart:</h2>
             <Chart
               width="1000px"
               height="300px"

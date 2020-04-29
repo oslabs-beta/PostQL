@@ -83,7 +83,7 @@ const QueryData: FC<AnalsProps> = (props: any) => {
               <TableCell align="right">Query Type</TableCell>
               <TableCell align="right">Times Run</TableCell>
               <TableCell align="right">Total Time of Last Instance&nbsp;(ms)</TableCell>
-              <TableCell align="right">Timestamp of Last Run&nbsp;(XX)</TableCell>
+              <TableCell align="right">Time Stamp of Last Run&nbsp;</TableCell>
               <TableCell align="right">More Analytics</TableCell>
             </TableRow>
           </TableHead>
