@@ -6,6 +6,11 @@ import { AppState } from "../../../store";
 import { setGraph } from '../../../store/instance/actions';
 import { Action } from 'redux';
 import { ThunkAction } from 'redux-thunk';
+import Table from '@material-ui/core/Table';
+import { makeStyles } from '@material-ui/core/styles';
+import {
+  TableBody, TableCell, TableContainer, TableHead, TableRow, Paper,
+} from '@material-ui/core';
 
 const mapStateToProps = (state: AppState) => ({
   graphData: state.graph.graphData
@@ -30,7 +35,14 @@ const thunkGraph = (queryID: string, instanceID: string): ThunkAction<void, AppS
       });
   }
 
+const useStyles = makeStyles({
+  table: {
+    minWidth: 650,
+  },
+});
+
 const Graph: FC< GraphProps> = (props:any) => {
+  const classes = useStyles();
   const { queryID, instanceID } = useParams();
   // const [googleChartData, setGoogleChartData] = useState([]);
 
@@ -129,6 +141,29 @@ const Graph: FC< GraphProps> = (props:any) => {
           // For tests
           rootProps={{ 'data-testid': '3' }}
         />
+<TableContainer component={Paper}>
+      <Table className={classes.table} aria-label="simple table">
+        <TableHead>
+          <TableRow>
+            <TableCell>Query</TableCell>
+            <TableCell align="right">TimeStamp</TableCell>
+            <TableCell align="right">Total Time duration&nbsp;(ms)</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {/* { Array.isArray(props.instanceData[queryID].outputMetrics) && props.instanceData[queryID].outputMetrics.map((om: any, index: number) => ( */}
+            <TableRow key={props.graphData[outputMetrics][startTime]}>
+              <TableCell component="th" scope="row">
+                {props.instanceData[queryID].timeStamp[index]}
+              </TableCell>
+              <TableCell align="right">{props.instanceData[queryID].timeStamp[index]}</TableCell>
+              <TableCell align="right"><{om.duration / 1000000}></TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
+
       </div>
     </div>
   );
