@@ -2,8 +2,6 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { db } from './db';
 
-require('dotenv').config();
-
 interface AuthController {
   validateFields(req: Request, res: Response, next: any): any;
   doesUsernameExist(req: Request, res: Response, next): any;
