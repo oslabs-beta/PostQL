@@ -5,21 +5,16 @@ import {
 
 import Home from './Home';
 import Analytics from './Analytics';
+import AutomatedTesting from './AutomatedTesting';
+import PlaygroundHeader from './Headers/PlaygroundHeader';
 
 const Dashboard: FC = () => {
-  function logout() {
-    fetch('/api/auth/logout', {
-      method: 'POST',
-    })
-      .then(() => window.location.reload());
-  }
-
+  
   return (
     <div className="container">
       <Router>
         <div className="split">
-          <Link to="/"><img className="logo" src="/image/title.png" /></Link>
-          <button type="submit" onClick={logout}>Logout</button>
+          <PlaygroundHeader />
         </div>
         <Switch>
           <Route path="/" exact>
@@ -28,10 +23,14 @@ const Dashboard: FC = () => {
           <Route path="/analytics">
             <Analytics />
           </Route>
+          <Route path="/automatedTesting">
+            <AutomatedTesting />
+          </Route>
         </Switch>
       </Router>
     </div>
   );
 };
+
 
 export default Dashboard;

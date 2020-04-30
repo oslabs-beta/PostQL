@@ -10,9 +10,11 @@
   },
   "keywords": [],
   "author": "David Zhang, Mario D'Andreas, Jason Heinowitz, Lisa Han, Joshua Pagan",
-  "license": "MI",
+  "license": "MIT",
   "dependencies": {
     "@material-ui/core": "^4.9.10",
+    "@material-ui/icons": "^4.9.1",
+    "axios": "^0.19.2",
     "core-js": "^3.6.4",
     "cross-env": "^7.0.2",
     "file-loader": "6.0.0",
@@ -24,6 +26,7 @@
     "react-redux": "^7.2.0",
     "react-router-dom": "^5.1.2",
     "redux": "^4.0.5",
+    "redux-thunk": "^2.3.0",
     "regenerator-runtime": "^0.13.5",
     "webpack": "^4.42.1",
     "webpack-cli": "^3.3.11"

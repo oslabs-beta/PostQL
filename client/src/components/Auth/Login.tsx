@@ -1,8 +1,24 @@
 import React, { FC, useState } from 'react';
+import TextField from '@material-ui/core/TextField';
+import { connect } from 'react-redux';
+import { AppState } from "../../store";
+import { getLogin } from '../../store/login/actions';
+import { LogIn } from '../../store/login/types';
 
-const Login: FC = () => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+const mapStateToProps = (state: AppState) => ({
+  username: state.log.username,
+  password: state.log.password,
+});
+
+interface LoginProps {
+  getLogin: typeof getLogin;
+  username: string;
+  password: string;
+}
+
+const Login: FC<LoginProps> = (props: any) => {
+  // const [username, setUsername] = useState('');
+  // const [password, setPassword] = useState('');
 
   function login(): void {
     fetch('/api/auth/login', {
@@ -11,8 +27,8 @@ const Login: FC = () => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        username,
-        password,
+        username: props.username,
+        password: props.password,
         type: 'login',
       }),
     })
@@ -23,24 +39,22 @@ const Login: FC = () => {
         }
       })
       .then((data) => {
-        console.log(data.message);
+        console.log(data);
       });
   }
+
 
   return (
     <div className="form">
       <h2>Login</h2>
-      <label htmlFor="username">Username
-        <input type="text" name="username" id="username" value={username} onChange={(e) => setUsername(e.target.value)} />
-      </label>
-
-      <label htmlFor="password">Password
-        <input type="password" name="password" id="password" value={password} onChange={(e) => setPassword(e.target.value)} />
-      </label>
-
-      <button type="submit" onClick={login}>Log in</button>
+      <TextField className="textfield" id="username" label="Username" variant="outlined" value={props.username} onChange={(e) => props.getLogin({username: e.target.value})} />
+      <TextField className="textfield" type="password" id="password" label="Password" variant="outlined" value={props.password} onChange={(e) => props.getLogin({password: e.target.value})} />
+      <button className="loginButton" type="submit" onClick={login}>Log in</button>
     </div>
   );
 };
 
-export default Login;
+export default connect(
+  mapStateToProps,
+  { getLogin }
+)(Login);
