@@ -76,7 +76,10 @@ const logController: LogController = {
 
     // parse out what type of query this is
     // take out everything before the first '{'
-    const start = queryData.indexOf('{');
+    let start = queryData.indexOf(' {');
+    if (start === -1) {
+      start = queryData.indexOf('{');
+    }
     const queryType = queryData.slice(0, start);
     queryData = queryData.slice(start);
     
