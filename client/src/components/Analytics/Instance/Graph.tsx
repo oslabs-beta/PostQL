@@ -108,7 +108,7 @@ const Graph: FC< GraphProps> = (props: any) => {
       : (
         <div>
           <div className="split">
-            <h2 className="Graphtitle">Gantt Chart:</h2>
+            <h2 className="Graphtitle">Gantt Chart</h2>
             <Chart
               width="1000px"
               height="300px"
@@ -159,7 +159,7 @@ const Graph: FC< GraphProps> = (props: any) => {
                   <TableHead>
                     <TableRow>
                       <TableCell>Query</TableCell>
-                      <TableCell align="right">TimeStamp</TableCell>
+                      <TableCell align="right">Time Stamp</TableCell>
                       <TableCell align="right">Total Time duration&nbsp;(ms)</TableCell>
                     </TableRow>
                   </TableHead>
