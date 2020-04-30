@@ -50,12 +50,16 @@ interface Table {
 const QueryData: FC<AnalsProps> = (props: any) => {
   const classes = useStyles();
   const { path } = useRouteMatch();
-  // const [queryData, setQueryData] = useState([]);
-  // const getData = () => {
-  //   fetch('/api/logs/display')
-  //     .then((response) => response.json())
-  //     .then((data) => setQueryData(data));
-  // };
+  // Query Search Filtering
+  const [searchTerm, setSearchTerm] = useState('');
+  const handleChange = (e: any): void => {
+    setSearchTerm(e.target.value);
+  };
+  const results = !searchTerm
+    ? props.queryData 
+    : props.queryData.filter((data: any) => 
+      data.queryString.toLowerCase().includes(searchTerm.toLowerCase())
+    );
 
   useEffect(() => {
     props.thunkAnals();
@@ -72,16 +76,23 @@ const QueryData: FC<AnalsProps> = (props: any) => {
         <Table className={classes.table} aria-label="simple table">
           <TableHead>
             <TableRow>
-              <TableCell>Query</TableCell>
+              <TableCell align="left">
+                <input
+                  type="text"
+                  placeholder="Search Query"
+                  value={searchTerm}
+                  onChange={handleChange}
+                />
+              </TableCell>
               <TableCell align="right">Query Type</TableCell>
-              <TableCell align="right"># of Times Run</TableCell>
+              <TableCell align="right">Times Run</TableCell>
               <TableCell align="right">Total Time of Last Instance&nbsp;(ms)</TableCell>
               <TableCell align="right">Time Stamp of Last Run&nbsp;</TableCell>
               <TableCell align="right">More Analytics</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {props.queryData.map((row: any) => (
+            {results.map((row: any) => (
               <TableRow key={row.queryString}>
                 <TableCell component="th" scope="row">
                   {row.queryString}
