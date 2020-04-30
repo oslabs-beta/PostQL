@@ -159,7 +159,7 @@ const Graph: FC< GraphProps> = (props: any) => {
                   <TableHead>
                     <TableRow>
                       <TableCell>Query</TableCell>
-                      <TableCell align="right">TimeStamp</TableCell>
+                      <TableCell align="right">Time Stamp</TableCell>
                       <TableCell align="right">Total Time duration&nbsp;(ms)</TableCell>
                     </TableRow>
                   </TableHead>
