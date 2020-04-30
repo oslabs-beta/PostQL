@@ -11,7 +11,7 @@ Try it live on our website: https://postql.io
 
 For any valid query written, Playground will display detailed resolver data on the specific timings of each relevant subquery. These metrics are then logged for future use. 
 
-*note for metrics to appear, your GraphQL implemention will need to have Apollo tracing enabled.*
+*Note: for metrics to appear, your GraphQL implemention will need to have Apollo tracing enabled.*
 
 2. Click on the `Analytics` tab on the top. This screen will show you all previous queries you've run organized by the last runtime. The searchbar gives you a quick way to navigate thorugh your queries.
 
@@ -42,4 +42,4 @@ npm install
 
 ## Credits
 
-[@jason-heinowitz](https://github.com/jason-heinowitz), [@hjjinnie](https://github.com/hjjinnie), [@davidzhang8828](https://github.com/davidzhang8828), [@mariodandrea](https://github.com/mariodandrea), [@paganjoshua](https://github.com/paganjoshua)
+Jason H. [@jason-heinowitz](https://github.com/jason-heinowitz), Lisa H.[@hjjinnie](https://github.com/hjjinnie), David Z. [@davidzhang8828](https://github.com/davidzhang8828), Mario D.[@mariodandrea](https://github.com/mariodandrea), Joshua P.[@paganjoshua](https://github.com/paganjoshua)
