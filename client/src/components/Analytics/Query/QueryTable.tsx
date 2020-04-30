@@ -8,13 +8,13 @@ import {
   TableBody, TableCell, TableContainer, TableHead, TableRow, Paper,
 } from '@material-ui/core';
 import { connect } from 'react-redux';
-import { AppState } from "../../../store";
-import { setInstance } from '../../../store/query/actions';
 import { Action } from 'redux';
 import { ThunkAction } from 'redux-thunk';
+import { AppState } from '../../../store';
+import { setInstance } from '../../../store/query/actions';
 
 const mapStateToProps = (state: AppState) => ({
-  instanceData: state.query.instanceData
+  instanceData: state.query.instanceData,
 });
 
 interface QueryProps {
@@ -43,25 +43,23 @@ interface InstanceData {
 }
 
 const thunkQuery = (queryID: string): ThunkAction<void, AppState, null, Action<string>> => async (dispatch, getState) => {
-const { query } = getState();
-//if key queryID already exists, do nothing
-if (query.instanceData[queryID]){
-  return;
-}else{
-//if not, add key value to object
-  fetch(`/api/logs/display/${queryID}`)
-    .then((res) => res.json())
-    .then((data) => {
-      return dispatch(setInstance({instanceData: {[queryID]:data}}))
-    });
-}
-}
+  const { query } = getState();
+  // if key queryID already exists, do nothing
+  if (query.instanceData[queryID]) {
+
+  } else {
+    // if not, add key value to object
+    fetch(`/api/logs/display/${queryID}`)
+      .then((res) => res.json())
+      .then((data) => dispatch(setInstance({ instanceData: { [queryID]: data } })));
+  }
+};
 // return dispatch(setInstance({...state, instanceData: data}))
-  
+
 //   fetch('/api/logs/display')
 //     .then((response) => response.json())
 //     // .then((response) => console.log(response))
-//     .then((data) => { 
+//     .then((data) => {
 //       return dispatch(setQueryData({queryData: data}))
 //     })
 //     .then(() => console.log('QUERYDATA',props.queryData));
@@ -70,6 +68,26 @@ if (query.instanceData[queryID]){
 const QueryTable: FC<QueryProps> = (props: any) => {
   const classes = useStyles();
   const { queryID } = useParams();
+  const [compare, setCompare] = useState<{[key: string]: boolean}>({});
+  const [inp, setInp] = useState<boolean[]>([]);
+  console.log(compare);
+
+  const inputs: boolean[] = [...inp];
+
+  function addtoCompare(instanceId: string, index: number): void {
+    const temp: {[key: string]: boolean} = { ...compare };
+    if (compare[instanceId]) {
+      inputs[index] = false;
+      delete temp[instanceId];
+      setCompare(temp);
+      setInp(inputs);
+    } else if (Object.keys(compare).length < 2) {
+      inputs[index] = true;
+      temp[instanceId] = true;
+      setCompare(temp);
+      setInp(inputs);
+    }
+  }
   // const [instanceData, setInstanceData] = useState<InstanceData>({
   //   outputMetrics: 'Loading...',
   //   queryIDs: 'Loading...',
@@ -87,43 +105,61 @@ const QueryTable: FC<QueryProps> = (props: any) => {
     props.thunkQuery(queryID);
   }, []);
 
+  function canAdd(): boolean {
+    if (Object.keys(compare).length === 2) {
+      console.log('You cannot add more than 2 instances to compare!');
+      return false;
+    }
+    return true;
+  }
 
-  
+
   // const {
   //   outputMetrics, queryIDs, timeStamp,
   // } = props.instanceData[queryID];
 
   return (
-    !props.instanceData[queryID] ? (<div></div>) :
-    (
-    <TableContainer component={Paper}>
-      <Table className={classes.table} aria-label="simple table">
-        <TableHead>
-          <TableRow>
-            <TableCell>TimeStamp</TableCell>
-            <TableCell align="right">Total Time duration&nbsp;(ms)</TableCell>
-            <TableCell align="right">Graph</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          { Array.isArray(props.instanceData[queryID].outputMetrics) && props.instanceData[queryID].outputMetrics.map((om: any, index: number) => (
-            <TableRow key={om.startTime}>
-              <TableCell component="th" scope="row">
-                {props.instanceData[queryID].timeStamp[index]}
-              </TableCell>
-              <TableCell align="right">{om.duration / 1000000}</TableCell>
-              <TableCell align="right"><Link to={`/analytics/${queryID}/${props.instanceData[queryID].queryIDs[index]}`}>Resolver Breakdown</Link></TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
-    )
+    !props.instanceData[queryID] ? (<div />)
+      : (
+        <TableContainer component={Paper}>
+          <Table className={classes.table} aria-label="simple table">
+            <TableHead>
+              <TableRow>
+                <TableCell>Compare</TableCell>
+                <TableCell>TimeStamp</TableCell>
+                <TableCell align="right">Total Time duration&nbsp;(ms)</TableCell>
+                <TableCell align="right">Graph</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              { Array.isArray(props.instanceData[queryID].outputMetrics) && props.instanceData[queryID].outputMetrics.map((om: any, index: number) => {
+                if (inp.length === 0) inputs[index] = false;
+                return (
+                  <TableRow key={om.startTime}>
+                    <TableCell><input
+                      type="checkbox"
+                      checked={inp.length > 0 ? inp[index] : inputs[index]}
+                      onChange={(): void => {
+                        addtoCompare(props.instanceData[queryID].queryIDs[index], index);
+                      }}
+                    />
+                    </TableCell>
+                    <TableCell component="th" scope="row">
+                      {props.instanceData[queryID].timeStamp[index]}
+                    </TableCell>
+                    <TableCell align="right">{om.duration / 1000000}</TableCell>
+                    <TableCell align="right"><Link to={`/analytics/${queryID}/${props.instanceData[queryID].queryIDs[index]}`}>Resolver Breakdown</Link></TableCell>
+                  </TableRow>
+                );
+              })}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      )
   );
 };
 
 export default connect(
   mapStateToProps,
-  { setInstance, thunkQuery }
+  { setInstance, thunkQuery },
 )(QueryTable);
-
