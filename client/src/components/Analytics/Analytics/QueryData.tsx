@@ -90,7 +90,7 @@ const QueryData: FC<AnalsProps> = (props: any) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {results.map((row: any) => (
+            {Array.isArray(results) ? results.map((row: any) => (
               <TableRow key={row.queryString}>
                 <TableCell component="th" scope="row">
                   {row.queryString}
@@ -101,7 +101,7 @@ const QueryData: FC<AnalsProps> = (props: any) => {
                 <TableCell align="right">{row.timeStamp}</TableCell>
                 <TableCell align="right"><Link to={`${path}/${row._id}`}>More Details</Link></TableCell>
               </TableRow>
-            ))}
+            )) : <TableRow><TableCell>No queries yet!</TableCell></TableRow>}
           </TableBody>
         </Table>
       </TableContainer>
