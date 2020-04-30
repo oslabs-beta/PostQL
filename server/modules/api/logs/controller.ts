@@ -16,6 +16,7 @@ interface LogController {
 
 interface IndivQueryByUser {
   queryString: string;
+  queryType: string;
   timeStamp: string;
   _id: any; // don't want to import mongodb for ObjectID
   counter: number;
@@ -70,12 +71,17 @@ const logController: LogController = {
     const { username } = res.locals;
     let queryData: string = queryString;
 
-    // many queries will come in this format with a comment at the beginning:
-
+    // parse the initial comment that starts
     if (queryString.substring(0, 35) === '# Write your query or mutation here') {
       queryData = queryString.slice(35);
       console.log(queryData);
     }
+
+    // parse out what type of query this is
+    // take out everything before the first '{'
+    queryData = queryData.slice(queryData.indexOf('{'));
+    const queryType = queryData.slice(0, queryData.indexOf('{'));
+
     if (!username || !queryString || !outputMetrics) {
       return next({
         code: 400,
@@ -115,7 +121,7 @@ const logController: LogController = {
         if (!bFound) {
         // create new log
           queryHistory.push({
-            queryIDs: [uuidv4()], queryString: queryData, outputMetrics: [outputMetrics], timeStamp: [curTime], counter: 0,
+            queryIDs: [uuidv4()], queryString: queryData, queryType, outputMetrics: [outputMetrics], timeStamp: [curTime], counter: 0,
           });
           results.save();
         }
@@ -156,6 +162,7 @@ const logController: LogController = {
             _id: queryHistory[i]._id,
             counter: queryHistory[i].counter + 1, // counter is 0-indexed
             duration: queryHistory[i].outputMetrics[0].duration,
+            queryType: queryHistory[i].queryType,
           };
           output.push(indivQuery);
         }
