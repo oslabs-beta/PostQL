@@ -40,12 +40,16 @@ npm install
 1. After installing depedencies, make sure Docker is running.
 2. For the local server to work, you'll need your own *.env* file with the following variables:
 
+  ```
   USER_DATABASE=""
   JWT_SECRET=""
   LOGS_DATABASE=""
+  ```
 
   Plug in your own ENV variables for JWTs and a MongoDB and PostgreSQL DBs.
+
 3. Project will run on your localhost/Docker IP. 
+
 *Note: testing will automatically install an instance of MongoDB for mock DB testing purposes.*
 
 ## Credits
