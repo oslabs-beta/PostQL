@@ -72,16 +72,13 @@ const logController: LogController = {
     let queryData: string = queryString;
 
     // parse the initial comment that starts
-    if (queryString.substring(0, 35) === '# Write your query or mutation here') {
-      queryData = queryString.slice(35);
-      console.log(queryData);
-    }
+    if (queryString.substring(0, 35) === '# Write your query or mutation here') queryData = queryString.slice(35);
 
     // parse out what type of query this is
     // take out everything before the first '{'
-    queryData = queryData.slice(queryData.indexOf('{'));
     const queryType = queryData.slice(0, queryData.indexOf('{'));
-
+    queryData = queryData.slice(queryData.indexOf('{'));
+    
     if (!username || !queryString || !outputMetrics) {
       return next({
         code: 400,

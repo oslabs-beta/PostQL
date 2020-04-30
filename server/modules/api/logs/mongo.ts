@@ -9,7 +9,7 @@ mongoose.connect(`${process.env.LOGS_DATABASE}?retryWrites=true&w=majority`, { u
 const queryMetricsSchema = new mongoose.Schema({
   queryIDs: { type: Array, required: true },
   queryString: { type: String, required: true },
-  queryType : { type : String},
+  queryType : { type : String, required: true },
   outputMetrics: { type: Array, required: true },
   timeStamp: { type: Array, required: true },
   counter: { type: Number, default: 0 },
