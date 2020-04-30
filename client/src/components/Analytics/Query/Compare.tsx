@@ -22,9 +22,7 @@ interface GraphProps {
   thunkGraph: any;
 }
 
-// interface PropTypes {
-//   previousUrl: string;
-// }
+//same thing but instanceID is now provided in compare state
 
 const thunkGraph = (queryID: string, instanceID: string): ThunkAction<void, AppState, null, Action<string>> => async (dispatch, getState) => {
   const { graph } = getState();
@@ -40,7 +38,6 @@ const thunkGraph = (queryID: string, instanceID: string): ThunkAction<void, AppS
       });
   }
 };
-
 
 const useStyles = makeStyles({
   table: {
