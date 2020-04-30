@@ -20,9 +20,10 @@ interface GraphProps {
   setGraph: typeof setGraph;
   graphData: any;
   thunkGraph: any;
+  instanceID: string;
 }
 
-//same thing but instanceID is now provided in compare state
+// same thing but instanceID is now provided in compare state
 
 const thunkGraph = (queryID: string, instanceID: string): ThunkAction<void, AppState, null, Action<string>> => async (dispatch, getState) => {
   const { graph } = getState();
@@ -47,9 +48,9 @@ const useStyles = makeStyles({
 
 // adding eslint;
 
-const Graph: FC< GraphProps> = (props: any) => {
+const Graph: FC< GraphProps> = (props: GraphProps) => {
   const classes = useStyles();
-  const { queryID, instanceID } = useParams();
+  const { queryID } = useParams();
   // props.setGraph({ graphData: undefined });
   // const { outputMetrics } = props.graphData
   // const [googleChartData, setGoogleChartData] = useState([]);
@@ -64,7 +65,7 @@ const Graph: FC< GraphProps> = (props: any) => {
     // } else {
     //   props.thunkGraph(queryID, instanceID);
     // }
-    props.thunkGraph(queryID, instanceID);
+    props.thunkGraph(queryID, props.instanceID);
   }, []);
 
   const traceToGoogleChartsData = (data: any) => {
@@ -107,7 +108,7 @@ const Graph: FC< GraphProps> = (props: any) => {
   // }
 
   return (
-    !props.graphData[instanceID] ? <div />
+    !props.graphData[props.instanceID] ? <div />
       : (
         <div>
           <div className="split">
@@ -117,7 +118,7 @@ const Graph: FC< GraphProps> = (props: any) => {
               height="300px"
               chartType="BarChart"
               loader={<div>Loading Chart</div>}
-              data={traceToGoogleChartsData(props.graphData[instanceID])}
+              data={traceToGoogleChartsData(props.graphData[props.instanceID])}
               options={{
                 title: 'Query',
                 chartArea: { width: '50%' },
@@ -168,12 +169,12 @@ const Graph: FC< GraphProps> = (props: any) => {
                   </TableHead>
                   <TableBody>
                     {/* { Array.isArray(props.instanceData[queryID].outputMetrics) && props.instanceData[queryID].outputMetrics.map((om: any, index: number) => ( */}
-                    <TableRow key={props.graphData[instanceID].outputMetrics.startTime}>
+                    <TableRow key={props.graphData[props.instanceID].outputMetrics.startTime}>
                       <TableCell component="th" scope="row">
-                        {props.graphData[instanceID].queryString}
+                        {props.graphData[props.instanceID].queryString}
                       </TableCell>
-                      <TableCell align="right">{props.graphData[instanceID].timeStamp}</TableCell>
-                      <TableCell align="right">{props.graphData[instanceID].outputMetrics.duration / 1000000}</TableCell>
+                      <TableCell align="right">{props.graphData[props.instanceID].timeStamp}</TableCell>
+                      <TableCell align="right">{props.graphData[props.instanceID].outputMetrics.duration / 1000000}</TableCell>
                     </TableRow>
                   </TableBody>
                 </Table>

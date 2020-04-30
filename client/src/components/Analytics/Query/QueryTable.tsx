@@ -15,7 +15,7 @@ import { Action } from 'redux';
 import { ThunkAction } from 'redux-thunk';
 import { AppState } from '../../../store';
 import { setInstance } from '../../../store/query/actions';
-// import { Graph } from "./Compare";
+import Graph from './Compare';
 
 const mapStateToProps = (state: AppState) => ({
   instanceData: state.query.instanceData,
@@ -133,27 +133,35 @@ const QueryTable: FC<QueryProps> = (props: any) => {
   return !props.instanceData[queryID] ? (
     <div />
   ) : (
-    // <div>{
-    //   for(let instanceID in compare) {
-    //     if (compare[instanceID] === true) {
-    //       return (
-    //         <h3></h3>
-    //       )
-    //     }
-    //   }
-    // } </div>
-    <TableContainer component={Paper}>
-      <Table className={classes.table} aria-label="simple table">
-        <TableHead>
-          <TableRow>
-            <TableCell>Compare</TableCell>
-            <TableCell>TimeStamp</TableCell>
-            <TableCell align="right">Total Time duration&nbsp;(ms)</TableCell>
-            <TableCell align="right">Graph</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {Array.isArray(props.instanceData[queryID].outputMetrics)
+  // <div>{
+  //   for(let instanceID in compare) {
+  //     if (compare[instanceID] === true) {
+  //       return (
+  //         <h3></h3>
+  //       )
+  //     }
+  //   }
+  // } </div>
+  // object.keys.map
+  // filter object[key]
+  // props.queryID1
+    <div>
+      <div>{ Object.keys(compare).filter((id) => compare[id]).map((id: string) => <Graph instanceID={id} />)}      </div>
+      {/* <Graph /> */}
+      <br />
+      <br />
+      <TableContainer component={Paper}>
+        <Table className={classes.table} aria-label="simple table">
+          <TableHead>
+            <TableRow>
+              <TableCell>Compare</TableCell>
+              <TableCell>TimeStamp</TableCell>
+              <TableCell align="right">Total Time duration&nbsp;(ms)</TableCell>
+              <TableCell align="right">Graph</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {Array.isArray(props.instanceData[queryID].outputMetrics)
             && props.instanceData[queryID].outputMetrics.map(
               (om: any, index: number) => {
                 if (inp.length === 0) inputs[index] = false;
@@ -186,9 +194,10 @@ const QueryTable: FC<QueryProps> = (props: any) => {
                 );
               },
             )}
-        </TableBody>
-      </Table>
-    </TableContainer>
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </div>
   );
 };
 
