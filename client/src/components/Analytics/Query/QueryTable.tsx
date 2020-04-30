@@ -58,7 +58,10 @@ const thunkQuery = (
   } else {
     // if not, add key value to object
     fetch(`/api/logs/display/${queryID}`)
-      .then((res) => res.json())
+      .then((res) => {
+        if (res.status !== 200) dispatch(setInstance({ instanceData: { } }));
+        else res.json();
+      })
       .then((data) => dispatch(setInstance({ instanceData: { [queryID]: data } })));
   }
 };
@@ -130,40 +133,21 @@ const QueryTable: FC<QueryProps> = (props: any) => {
   //   outputMetrics, queryIDs, timeStamp,
   // } = props.instanceData[queryID];
 
-  return !props.instanceData[queryID] ? (
-    <div />
-  ) : (
-  // <div>{
-  //   for(let instanceID in compare) {
-  //     if (compare[instanceID] === true) {
-  //       return (
-  //         <h3></h3>
-  //       )
-  //     }
-  //   }
-  // } </div>
-  // object.keys.map
-  // filter object[key]
-  // props.queryID1
-    <div>
-      <div>{ Object.keys(compare).filter((id) => compare[id]).map((id: string) => <Graph instanceID={id} />)}      </div>
-      {/* <Graph /> */}
-      <br />
-      <br />
-      <TableContainer component={Paper}>
-        <Table className={classes.table} aria-label="simple table">
-          <TableHead>
-            <TableRow>
-              <TableCell>Compare</TableCell>
-              <TableCell>TimeStamp</TableCell>
-              <TableCell align="right">Total Time duration&nbsp;(ms)</TableCell>
-              <TableCell align="right">Graph</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {Array.isArray(props.instanceData[queryID].outputMetrics)
-            && props.instanceData[queryID].outputMetrics.map(
-              (om: any, index: number) => {
+  return (
+    !props.instanceData[queryID] ? (<div />)
+      : (
+        <TableContainer component={Paper}>
+          <Table className={classes.table} aria-label="simple table">
+            <TableHead>
+              <TableRow>
+                <TableCell>Compare</TableCell>
+                <TableCell>TimeStamp</TableCell>
+                <TableCell align="right">Total Time duration&nbsp;(ms)</TableCell>
+                <TableCell align="right">Graph</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              { Array.isArray(props.instanceData[queryID].outputMetrics) ? props.instanceData[queryID].outputMetrics.map((om: any, index: number) => {
                 if (inp.length === 0) inputs[index] = false;
                 return (
                   <TableRow key={om.startTime}>
@@ -192,12 +176,11 @@ const QueryTable: FC<QueryProps> = (props: any) => {
                     </TableCell>
                   </TableRow>
                 );
-              },
-            )}
-          </TableBody>
-        </Table>
-      </TableContainer>
-    </div>
+              }) : <TableRow><TableCell>No instances found for this query!</TableCell></TableRow>}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      )
   );
 };
 
