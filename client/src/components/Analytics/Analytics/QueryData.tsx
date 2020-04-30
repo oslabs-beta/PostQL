@@ -95,8 +95,8 @@ const QueryData: FC<AnalsProps> = (props: any) => {
                 <TableCell component="th" scope="row">
                   {row.queryString}
                 </TableCell>
-                <TableCell align="right">{row.queryString.includes('query') ? 'Query' : 'Mutation'}</TableCell>
-                <TableCell align="right">{row.counter}</TableCell>
+                <TableCell align="right">{ row.queryType }</TableCell>
+                <TableCell align="right">{ row.counter }</TableCell>
                 <TableCell align="right">{ row.duration / 1000000 }</TableCell>
                 <TableCell align="right">{row.timeStamp}</TableCell>
                 <TableCell align="right"><Link to={`${path}/${row._id}`}>More Details</Link></TableCell>

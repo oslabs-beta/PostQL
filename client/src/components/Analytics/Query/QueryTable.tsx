@@ -1,17 +1,21 @@
 import React, { FC, useEffect, useState } from 'react';
-import {
-  Link, useParams,
-} from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import Table from '@material-ui/core/Table';
 import { makeStyles } from '@material-ui/core/styles';
 import {
-  TableBody, TableCell, TableContainer, TableHead, TableRow, Paper,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
 } from '@material-ui/core';
 import { connect } from 'react-redux';
 import { Action } from 'redux';
 import { ThunkAction } from 'redux-thunk';
 import { AppState } from '../../../store';
 import { setInstance } from '../../../store/query/actions';
+import Graph from './Compare';
 
 const mapStateToProps = (state: AppState) => ({
   instanceData: state.query.instanceData,
@@ -29,11 +33,11 @@ const useStyles = makeStyles({
   },
 });
 
-  interface Table {
-    query: string;
-    timestamp: number;
-    link: string;
-  }
+interface Table {
+  query: string;
+  timestamp: number;
+  link: string;
+}
 
 interface InstanceData {
   outputMetrics: any;
@@ -42,11 +46,15 @@ interface InstanceData {
   queryString: any;
 }
 
-const thunkQuery = (queryID: string): ThunkAction<void, AppState, null, Action<string>> => async (dispatch, getState) => {
+const thunkQuery = (
+  queryID: string,
+): ThunkAction<void, AppState, null, Action<string>> => async (
+  dispatch,
+  getState,
+) => {
   const { query } = getState();
   // if key queryID already exists, do nothing
   if (query.instanceData[queryID]) {
-
   } else {
     // if not, add key value to object
     fetch(`/api/logs/display/${queryID}`)
@@ -71,14 +79,14 @@ const thunkQuery = (queryID: string): ThunkAction<void, AppState, null, Action<s
 const QueryTable: FC<QueryProps> = (props: any) => {
   const classes = useStyles();
   const { queryID } = useParams();
-  const [compare, setCompare] = useState<{[key: string]: boolean}>({});
+  const [compare, setCompare] = useState<{ [key: string]: boolean }>({});
   const [inp, setInp] = useState<boolean[]>([]);
   console.log(compare);
 
   const inputs: boolean[] = [...inp];
 
   function addtoCompare(instanceId: string, index: number): void {
-    const temp: {[key: string]: boolean} = { ...compare };
+    const temp: { [key: string]: boolean } = { ...compare };
     if (compare[instanceId]) {
       inputs[index] = false;
       delete temp[instanceId];
@@ -91,6 +99,9 @@ const QueryTable: FC<QueryProps> = (props: any) => {
       setInp(inputs);
     }
   }
+
+  // iterate through instanceIDs, if true in compare, add text and google charts
+
   // const [instanceData, setInstanceData] = useState<InstanceData>({
   //   outputMetrics: 'Loading...',
   //   queryIDs: 'Loading...',
@@ -105,6 +116,8 @@ const QueryTable: FC<QueryProps> = (props: any) => {
   // }
 
   useEffect(() => {
+    console.log('propsinstance', props.instanceData);
+    console.log(queryID);
     props.thunkQuery(queryID);
   }, []);
 
@@ -115,7 +128,6 @@ const QueryTable: FC<QueryProps> = (props: any) => {
     }
     return true;
   }
-
 
   // const {
   //   outputMetrics, queryIDs, timeStamp,
@@ -139,19 +151,29 @@ const QueryTable: FC<QueryProps> = (props: any) => {
                 if (inp.length === 0) inputs[index] = false;
                 return (
                   <TableRow key={om.startTime}>
-                    <TableCell><input
-                      type="checkbox"
-                      checked={inp.length > 0 ? inp[index] : inputs[index]}
-                      onChange={(): void => {
-                        addtoCompare(props.instanceData[queryID].queryIDs[index], index);
-                      }}
-                    />
+                    <TableCell>
+                      <input
+                        type="checkbox"
+                        checked={inp.length > 0 ? inp[index] : inputs[index]}
+                        onChange={(): void => {
+                          addtoCompare(
+                            props.instanceData[queryID].queryIDs[index],
+                            index,
+                          );
+                        }}
+                      />
                     </TableCell>
                     <TableCell component="th" scope="row">
                       {props.instanceData[queryID].timeStamp[index]}
                     </TableCell>
                     <TableCell align="right">{om.duration / 1000000}</TableCell>
-                    <TableCell align="right"><Link to={`/analytics/${queryID}/${props.instanceData[queryID].queryIDs[index]}`}>Resolver Breakdown</Link></TableCell>
+                    <TableCell align="right">
+                      <Link
+                        to={`/analytics/${queryID}/${props.instanceData[queryID].queryIDs[index]}`}
+                      >
+                        Resolver Breakdown
+                      </Link>
+                    </TableCell>
                   </TableRow>
                 );
               }) : <TableRow><TableCell>No instances found for this query!</TableCell></TableRow>}
@@ -162,7 +184,6 @@ const QueryTable: FC<QueryProps> = (props: any) => {
   );
 };
 
-export default connect(
-  mapStateToProps,
-  { setInstance, thunkQuery },
-)(QueryTable);
+export default connect(mapStateToProps, { setInstance, thunkQuery })(
+  QueryTable,
+);
