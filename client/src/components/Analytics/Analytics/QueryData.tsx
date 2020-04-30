@@ -52,7 +52,7 @@ const QueryData: FC<AnalsProps> = (props: any) => {
   const { path } = useRouteMatch();
   // Query Search Filtering
   const [searchTerm, setSearchTerm] = useState('');
-  const handleChange = (e: EventSource): void => {
+  const handleChange = (e: any): void => {
     setSearchTerm(e.target.value);
   };
   const results = !searchTerm
