@@ -25,9 +25,11 @@ describe('QueriesByUser Model Test', () => {
   const queryIDs = ['1', '2'];
   const outputMetrics = ['om1', 'om2'];
   const timeStamp = ['time1', 'time2'];
+  const queryType = 'type';
 
   const qmData = {
     queryIDs,
+    queryType,
     queryString: 'qString',
     outputMetrics,
     timeStamp,
@@ -47,6 +49,7 @@ describe('QueriesByUser Model Test', () => {
     expect(savedData._id).toBeDefined();
     expect(savedData.username).toBe(validData.username);
     expect(savedData.queryHistory.queryString).toBe(validData.queryString);
+    expect(savedData.queryHistory.queryType).toBe(validData.queryType);
     expect(savedData.queryHistory.queryIDs).toBe(validData.queryIDs);
     expect(savedData.queryHistory.outputMetrics).toBe(validData.outputMetrics);
     expect(savedData.queryHistory.timeStamp).toBe(validData.timeStamp);

@@ -17,12 +17,14 @@ describe('basic', () => {
 const queryIDs = ['1', '2'];
 const outputMetrics = ['om1', 'om2'];
 const timeStamp = ['time1', 'time2'];
+const queryType = 'qType';
 const queryString = 'qString';
 const counter = queryIDs.length - 1;
 const username =  'testdbuser';
 
 const qmData = {
   queryIDs,
+  queryType,
   queryString,
   outputMetrics,
   timeStamp,
