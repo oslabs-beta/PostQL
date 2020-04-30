@@ -3,7 +3,7 @@
 
 PostQL is a web application that specializes in providing metrics for your GraphQL endpoint and then utilizing that data further to provide detailed, historic analytical data. We help you implement structured automatic testing on your GraphQL endpoint as well as giving you all the data you need to make your application more performant.
 
-Try it live on our website: https://postql.io.com
+Try it live on our website: https://postql.io
 
 ## How to use:
 
@@ -11,7 +11,7 @@ Try it live on our website: https://postql.io.com
 
 For any valid query written, Playground will display detailed resolver data on the specific timings of each relevant subquery. These metrics are then logged for future use. 
 
-*note for metrics to appear, your GraphQL implemention will need to have Apollo tracing enabled.*
+*Note: for metrics to appear, your GraphQL implemention will need to have Apollo tracing enabled.*
 
 2. Click on the `Analytics` tab on the top. This screen will show you all previous queries you've run organized by the last runtime. The searchbar gives you a quick way to navigate thorugh your queries.
 
@@ -40,10 +40,6 @@ npm install
 - Make sure Docker is running.
 - Plug in your own ENV variables for a MongoDB and PostgreSQL DBs.
 
-## Issues/ New Features
+## Credits
 
-PostQL is fully open-source and welcomes contributions from the community.
-
-
-## Contributors
-
+Jason H. [@jason-heinowitz](https://github.com/jason-heinowitz), Lisa H.[@hjjinnie](https://github.com/hjjinnie), David Z. [@davidzhang8828](https://github.com/davidzhang8828), Mario D.[@mariodandrea](https://github.com/mariodandrea), Joshua P.[@paganjoshua](https://github.com/paganjoshua)
