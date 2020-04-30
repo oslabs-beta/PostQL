@@ -27,6 +27,7 @@ interface GraphProps {
 // }
 
 const thunkGraph = (queryID: string, instanceID: string): ThunkAction<void, AppState, null, Action<string>> => async (dispatch) => {
+  console.log('FETCH', `/api/logs/display/${queryID}/${instanceID}`);
   fetch(`/api/logs/display/${queryID}/${instanceID}`)
     .then((res) => res.json())
     .then((data) => {
@@ -46,6 +47,7 @@ const useStyles = makeStyles({
 const Graph: FC< GraphProps> = (props: any) => {
   const classes = useStyles();
   const { queryID, instanceID } = useParams();
+  // props.setGraph({ graphData: undefined });
   // const { outputMetrics } = props.graphData
   // const [googleChartData, setGoogleChartData] = useState([]);
 
@@ -53,12 +55,13 @@ const Graph: FC< GraphProps> = (props: any) => {
   useEffect(() => {
     // first time useEffect is run from componentDidLoad and console log will be undefined
     console.log('useeffect', props.graphData);
-    if (props.graphData !== undefined) {
-    // 2nd time useEffect is run is from componentDidUpdate and props.graphData is defined
-      // setGoogleChartData(traceToGoogleChartsData(props.graphData));
-    } else {
-      props.thunkGraph(queryID, instanceID);
-    }
+    // if (props.graphData !== undefined) {
+    // // 2nd time useEffect is run is from componentDidUpdate and props.graphData is defined
+    //   // setGoogleChartData(traceToGoogleChartsData(props.graphData));
+    // } else {
+    //   props.thunkGraph(queryID, instanceID);
+    // }
+    props.thunkGraph(queryID, instanceID);
   }, []);
 
   const traceToGoogleChartsData = (data: any) => {
