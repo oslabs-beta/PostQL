@@ -50,7 +50,10 @@ const thunkQuery = (queryID: string): ThunkAction<void, AppState, null, Action<s
   } else {
     // if not, add key value to object
     fetch(`/api/logs/display/${queryID}`)
-      .then((res) => res.json())
+      .then((res) => {
+        if (res.status !== 200) dispatch(setInstance({ instanceData: { } }));
+        else res.json();
+      })
       .then((data) => dispatch(setInstance({ instanceData: { [queryID]: data } })));
   }
 };
@@ -132,7 +135,7 @@ const QueryTable: FC<QueryProps> = (props: any) => {
               </TableRow>
             </TableHead>
             <TableBody>
-              { Array.isArray(props.instanceData[queryID].outputMetrics) && props.instanceData[queryID].outputMetrics.map((om: any, index: number) => {
+              { Array.isArray(props.instanceData[queryID].outputMetrics) ? props.instanceData[queryID].outputMetrics.map((om: any, index: number) => {
                 if (inp.length === 0) inputs[index] = false;
                 return (
                   <TableRow key={om.startTime}>
@@ -151,7 +154,7 @@ const QueryTable: FC<QueryProps> = (props: any) => {
                     <TableCell align="right"><Link to={`/analytics/${queryID}/${props.instanceData[queryID].queryIDs[index]}`}>Resolver Breakdown</Link></TableCell>
                   </TableRow>
                 );
-              })}
+              }) : <TableRow><TableCell>No instances found for this query!</TableCell></TableRow>}
             </TableBody>
           </Table>
         </TableContainer>
