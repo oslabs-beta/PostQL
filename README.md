@@ -39,3 +39,11 @@ npm install
 
 - Make sure Docker is running.
 - Plug in your own ENV variables for a MongoDB and PostgreSQL DBs.
+
+## Issues/ New Features
+
+PostQL is fully open-source and welcomes contributions from the community.
+
+
+## Contributors
+
