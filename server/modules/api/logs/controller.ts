@@ -76,9 +76,13 @@ const logController: LogController = {
 
     // parse out what type of query this is
     // take out everything before the first '{'
-    const queryType = queryData.slice(0, queryData.indexOf('{'));
-    queryData = queryData.slice(queryData.indexOf('{'));
+    const start = queryData.indexOf('{');
+    const queryType = queryData.slice(0, start);
+    queryData = queryData.slice(start);
     
+    console.log(queryType)
+    console.log(queryData)
+
     if (!username || !queryString || !outputMetrics) {
       return next({
         code: 400,
