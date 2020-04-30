@@ -9,9 +9,9 @@ Try it live on our website: https://postql.io
 
 1. After logging in or registering, you'll be brought to a GraphQL Playground page. You can enter in your specific GraphQL endpoint URL to begin writing queries.
 
-For any valid query written, Playground will display detailed resolver data on the specific timings of each relevant subquery. These metrics are then logged for future use. 
+  For any valid query written, Playground will display detailed resolver data on the specific timings of each relevant subquery. These metrics are then logged for future use. 
 
-*note for metrics to appear, your GraphQL implemention will need to have Apollo tracing enabled.*
+  *Note: for metrics to appear, your GraphQL implemention will need to have Apollo tracing enabled.*
 
 2. Click on the `Analytics` tab on the top. This screen will show you all previous queries you've run organized by the last runtime. The searchbar gives you a quick way to navigate thorugh your queries.
 
@@ -37,9 +37,17 @@ To run this locally, pull down from this repo and you can run in development mod
 npm install
 ```
 
-- Make sure Docker is running.
-- Plug in your own ENV variables for a MongoDB and PostgreSQL DBs.
+1. After installing depedencies, make sure Docker is running.
+2. For the local server to work, you'll need your own *.env* file with the following variables:
+
+  USER_DATABASE=""
+  JWT_SECRET=""
+  LOGS_DATABASE=""
+
+  Plug in your own ENV variables for JWTs and a MongoDB and PostgreSQL DBs.
+3. Project will run on your localhost/Docker IP. 
+*Note: testing will automatically install an instance of MongoDB for mock DB testing purposes.*
 
 ## Credits
 
-[@jason-heinowitz](https://github.com/jason-heinowitz), [@hjjinnie](https://github.com/hjjinnie), [@davidzhang8828](https://github.com/davidzhang8828), [@mariodandrea](https://github.com/mariodandrea), [@paganjoshua](https://github.com/paganjoshua)
+Jason H. [@jason-heinowitz](https://github.com/jason-heinowitz), Lisa H.[@hjjinnie](https://github.com/hjjinnie), David Z. [@davidzhang8828](https://github.com/davidzhang8828), Mario D.[@mariodandrea](https://github.com/mariodandrea), Joshua P.[@paganjoshua](https://github.com/paganjoshua)
