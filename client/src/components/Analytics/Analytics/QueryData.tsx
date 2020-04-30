@@ -109,6 +109,7 @@ const QueryData: FC<AnalsProps> = (props: any) => {
   );
 };
 
+// hotfix
 export default connect(
   mapStateToProps,
   { setQueryData, thunkAnals },
