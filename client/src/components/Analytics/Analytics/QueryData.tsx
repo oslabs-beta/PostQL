@@ -56,10 +56,8 @@ const QueryData: FC<AnalsProps> = (props: any) => {
     setSearchTerm(e.target.value);
   };
   const results = !searchTerm
-    ? props.queryData 
-    : props.queryData.filter((data: any) => 
-      data.queryString.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+    ? props.queryData
+    : props.queryData.filter((data: any) => data.queryString.toLowerCase().includes(searchTerm.toLowerCase()));
 
   useEffect(() => {
     props.thunkAnals();
@@ -111,6 +109,7 @@ const QueryData: FC<AnalsProps> = (props: any) => {
   );
 };
 
+// hotfix
 export default connect(
   mapStateToProps,
   { setQueryData, thunkAnals },
