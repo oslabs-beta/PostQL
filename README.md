@@ -40,11 +40,11 @@ npm install
 1. After installing dependencies, make sure Docker is running.
 2. For the local server to work, you'll need your own *.env* file and plug in the following variables:
 
-  ```
-  USER_DATABASE="PostgreSQL URI"
-  JWT_SECRET="JWT secret"
-  LOGS_DATABASE="MongoDB URI"
-  ```
+```properties
+USER_DATABASE="PostgreSQL URI"
+JWT_SECRET="JWT secret"
+LOGS_DATABASE="MongoDB URI"
+```
 
 3. Project will run on your localhost/Docker IP. 
 
