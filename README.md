@@ -11,13 +11,13 @@ Try it live on our website: https://postql.io
 
   For any valid query written, Playground will display detailed resolver data on the specific timings of each relevant subquery. These metrics are then logged for future use. 
 
-  *Note: for metrics to appear, your GraphQL implemention will need to have Apollo tracing enabled.*
+  *Note: for metrics to appear, your GraphQL implementation will need to have Apollo tracing enabled.*
 
-2. Click on the `Analytics` tab on the top. This screen will show you all previous queries you've run organized by the last runtime. The searchbar gives you a quick way to navigate thorugh your queries.
+2. Click on the `Analytics` tab on the top. This screen will show you all previous queries you've run organized by the last runtime. The searchbar gives you a quick way to navigate through your queries.
 
 3. Click on `More Details` to see all the details about every time you've ran this particular query.
 
-4. On this page, you'll see time stamps for every query runtime along with total duration. This lets you see how well you've optmized this query over time.
+4. On this page, you'll see time stamps for every query runtime along with total duration. This lets you see how well you've optimized this query over time.
 
 5. Click on `Resolver Breakdown` to see a Gantt Chart showing time in nanoseconds for each subresolver request.
 
@@ -25,9 +25,9 @@ Try it live on our website: https://postql.io
 
 1. Automated testing: PostQL has the functionality of automatically sending a query that includes all non-parameterized query types. This will populate the `Analytics` page with all the relevant information to see the performance of your GraphQL endpoint at a glance.  *Coming soon.*
 
-2. Automated querying for parametized queries. These query types will be first displayed to the user in our GUI so they can enter in a valid parameter.
+2. Automated querying for parameterized queries. These query types will be first displayed to the user in our GUI so they can enter in a valid parameter.
 
-3. CRUD functionality test: PostQL will ask what order your mutations should run in order to test full CRUD functionality. Any necessary paramters will be requested from the user.
+3. CRUD functionality test: PostQL will ask what order your mutations should run in order to test full CRUD functionality. Any necessary parameters will be requested from the user.
 
 ## Installation
 
@@ -37,14 +37,14 @@ To run this locally, pull down from this repo and you can run in development mod
 npm install
 ```
 
-1. After installing depedencies, make sure Docker is running.
+1. After installing dependencies, make sure Docker is running.
 2. For the local server to work, you'll need your own *.env* file and plug in the following variables:
 
-  ```
-  USER_DATABASE="PostgreSQL URI"
-  JWT_SECRET="JWT secret"
-  LOGS_DATABASE="MongoDB URI"
-  ```
+```properties
+USER_DATABASE="PostgreSQL URI"
+JWT_SECRET="JWT secret"
+LOGS_DATABASE="MongoDB URI"
+```
 
 3. Project will run on your localhost/Docker IP. 
 
