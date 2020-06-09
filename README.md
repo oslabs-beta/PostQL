@@ -1,9 +1,13 @@
 # PostQL
 [![Build Status](https://travis-ci.com/oslabs-beta/PostQL.svg?branch=dev)](https://travis-ci.com/oslabs-beta/PostQL)
 
-PostQL is a web application that specializes in providing metrics for your GraphQL endpoint and then utilizing that data further to provide detailed, historic analytical data. We help you implement structured automatic testing on your GraphQL endpoint as well as giving you all the data you need to make your application more performant.
+PostQL is a web application tool that helps you optimize the performance of your GraphQL endpoints and desgin efficient resolvers by providing detailed performance metrics for your queries.
 
-Try it live on our website: https://postql.io
+
+Try it live
+
+
+on our website: https://postql.io
 
 ## How to use:
 
