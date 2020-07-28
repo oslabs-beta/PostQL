@@ -7,6 +7,8 @@ Try it live on our website: https://postql.io
 
 ## How to use:
 
+![](images/Login.png)
+
 1. After logging in or registering, you'll be brought to a GraphQL Playground page. You can enter in your specific GraphQL endpoint URL to begin writing queries.
 
   For any valid query written, Playground will display detailed resolver data on the specific timings of each relevant subquery. These metrics are then logged for future use. 
@@ -17,8 +19,10 @@ Try it live on our website: https://postql.io
 
 3. Click on `More Details` to see all the details about every time you've ran this particular query.
 
+![](images/PostQL-queries.png)
 4. On this page, you'll see time stamps for every query runtime along with total duration. This lets you see how well you've optimized this query over time.
 
+![](images/GoogleCharts.png)
 5. Click on `Resolver Breakdown` to see a Gantt Chart showing time in nanoseconds for each subresolver request.
 
 ## Upcoming functionality
