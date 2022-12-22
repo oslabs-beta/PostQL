@@ -24,7 +24,7 @@
     "file-loader": "^6.0.0",
     "graphql": "^15.0.0",
     "graphql-tools": "^5.0.0",
-    "jsonwebtoken": "^8.5.1",
+    "jsonwebtoken": "^9.0.0",
     "moment": "^2.24.0",
     "mongoose": "^5.9.9",
     "nodemon": "^2.0.3",
